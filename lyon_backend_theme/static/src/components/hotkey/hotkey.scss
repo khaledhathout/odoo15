@@ -1,0 +1,10 @@
+
+// Shortcut table ui improvement
+.o_shortcut_table {
+    width: 100%;
+    white-space: nowrap;
+    max-width: 400px;
+    td {
+        padding: 0 20px;
+    }
+}
