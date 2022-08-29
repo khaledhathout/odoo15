@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+mrp_subproduct_secondary_user,mrp_subproduct_secondary_name,bi_mrp_secondary_product_comm.model_mrp_subproduct_secondary,,1,1,1,1
+custom_quality_check_user,custom_quality_check_name,bi_mrp_secondary_product_comm.model_custom_quality_check,,1,1,1,1
+finished_goods_user,finished_goods_name,bi_mrp_secondary_product_comm.model_finished_goods,,1,1,1,1
+

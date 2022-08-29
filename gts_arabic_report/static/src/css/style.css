@@ -1,0 +1,54 @@
+
+.border-black > thead > tr > th,
+.border-black > tbody > tr > th,
+.border-black > tfoot > tr > th,
+.border-black > thead > tr > td,
+.border-black > tbody > tr > td,
+.border-black > tfoot > tr > td,
+.border-black > tr > td,
+.border-black > tr > th {
+    border-color: black !important;;
+    border: 1px solid black !important;
+    padding: 3px !important;
+    vertical-align: middle;
+}
+
+.border-black > tr > th {
+    border-color: black !important;
+    border: 1px solid black !important;
+    padding: 3px !important;
+}
+
+.f-arial {
+    font-family: arial !important;
+}
+
+
+.flex-row > div{
+    padding-right: 20px !important;
+
+}
+.social{
+    text-align:center;
+    font-size:12px;
+
+}
+.social span{
+    margin-left:10px;
+}
+
+.o_list_view .o_list_table thead {
+    color: #ffffff;
+    border-bottom: 1px solid #cacaca;
+}
+
+
+.light_grey{
+    background-color:#C9C9C9;
+}
+
+.custom_div{
+    background-color:blue;
+}
+
+

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_arabic_reports" model="report.paperformat">
+        <field name="name">Arabic Reports</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">25</field>
+        <field name="margin_left">1</field>
+        <field name="margin_right">1</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+    <!--    <template id="assets_pdf_css" name="Custom Report CSS" inherit_id="web.report_layout">-->
+    <!--        <xpath expr="." position="inside">-->
+    <!--            <link href="/gts_arabic_report/static/src/css/style.css" rel="stylesheet"/>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
+
+    <template id="ar_external_layout_header">
+
+        <div class="header">
+            <div class="row" style="border-bottom: 1px solid black; font-size: 12px;">
+                <div class="col-4" name="company_address">
+                    <strong t-field="company.name"/>
+
+                    <br/>
+                    <span style="font-weight: bold;">C.R.</span>
+                    <span t-field="company.company_registry"/>
+                    <br/>
+
+                    <span t-if="company.street" t-field="company.street"/>
+                    <span t-if="company.street2" t-field="company.street2"/>
+                    <span t-if="company.city" t-field="company.city"/>
+                    <span t-if="company.state_id.name" t-field="company.state_id.name"/>
+                    <br/>
+                    <span t-if="company.country_id.name" t-field="company.country_id.name"/>
+                    <span t-if="company.zip" t-field="company.zip"/>
+                    <br/>
+                    <span style="font-weight: bold;">VAT No.</span>
+                    <span t-field="company.vat"/>
+                </div>
+                <div class="col-4 text-center">
+
+                    <img t-if="company.extra_logo" style="max-height: 80px;"
+                         t-att-src="'data:image/png;base64,%s' % to_text(company.extra_logo)" width="200px;"/>
+                    <img t-if="not company.extra_logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"
+                         width="200px;"/>
+<!--                    <div>-->
+<!--                        <span t-field="company.report_header"/>-->
+<!--                        <br/>-->
+<!--                        <span style="font-size: 8px;" t-field="company.ar_repoer_header"/>-->
+<!--                    </div>-->
+                </div>
+                <div class="col-4 text-right">
+                    <strong t-field="company.ar_name"/>
+                    <br/>
+                    <span style="font-weight: bold;">س.ت.:</span>
+                    <span t-field="company.company_registry"/>
+                    <br/>
+                    <span t-if="company.ar_street" t-field="company.ar_street"/>
+                    <span t-if="company.ar_street2" t-field="company.ar_street2"/>
+                    <span t-if="company.ar_city" t-field="company.ar_city"/>
+                    <span t-if="company.state_id" t-field="company.state_id.ar_name"/>
+                    <br/>
+                    <span t-if="company.country_id" t-field="company.country_id.ar_name"/>
+                    <span t-if="company.ar_zip" t-field="company.ar_zip"/>
+                    <br/>
+                    <span style="font-weight: bold;">الرقم الضريبي:</span>
+                    <span t-field="company.vat"/>
+                </div>
+            </div>
+        </div>
+
+
+    </template>
+
+
+    <template id="ar_external_layout_footer">
+
+        <div class="footer" style="border-top: 1px solid black">
+
+            <div class="social">
+
+                <span>Social Media:</span>
+                <span t-if="company.linkedin">Linkedin:</span>
+                <span t-field="company.linkedin"/>
+                <span t-if="company.facebook">Facebook:</span>
+                <span t-field="company.facebook"/>
+                <span t-if="company.social_instagram">Instagram:</span>
+                <span t-field="company.social_instagram"/>
+                <span t-if="company.twitter">Twitter:</span>
+                <span t-field="company.twitter"/>
+                <span t-if="company.map_link">Map:</span>
+                <span t-field="company.map_link"/>
+                <span t-if="company.linkedin">Linkedin:</span>
+                <span t-field="company.linkedin"/>
+                <br/>
+                <span t-if="company.phone"></span>
+                <span t-field="company.phone"/>
+                <span t-if="company.email"></span>
+                <span t-field="company.email"/>
+                <span t-if="company.vat">TIN</span>
+                <span t-field="company.vat"/>
+
+
+            </div>
+            <div>
+                <t t-if="company.custom_footer">
+                    <span t-raw="company.rml_footer"/>
+                </t>
+            </div>
+
+
+            <div class="d-flex flex-row"
+                 style="margin-left:43% !important;">
+                <div>Page:</div>
+                <div>
+                    <span class="page"/>
+                </div>
+                <div>/</div>
+                <div>
+                    <span class="topage"/>
+                </div>
+            </div>
+        </div>
+
+    </template>
+
+
+    <template id="ar_external_layout">
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id.sudo()"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+
+
+        <t t-call="gts_arabic_report.ar_external_layout_header"/>
+        <br/>
+
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-raw="0"/>
+        </div>
+
+        <t t-call="gts_arabic_report.ar_external_layout_footer"/>
+    </template>
+
+    <!--<template id="website_logo" inherit_id="website.layout_logo_show" customize_show="True" name="Show Logo">-->
+    <!--<xpath expr="//header//a[hasclass('navbar-brand')]" position="replace">-->
+    <!--<a href="/" class="navbar-brand logo">-->
+    <!--<span t-field="res_company.website_logo" t-options="{'widget': 'image'}" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name" />-->
+    <!--</a>-->
+    <!--</xpath>-->
+    <!--</template>-->
+
+</odoo>

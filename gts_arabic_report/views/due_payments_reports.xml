@@ -1,0 +1,73 @@
+<odoo>
+	<template id="report_deu_payment_inherit"
+		inherit_id="account.report_overdue_document">
+		<xpath expr="//div[@class='page']//div/div" position="replace">
+<!-- 			<div class="col-xs-4">
+				<div class="row">
+					<div class="col-xs-12">
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="row">
+					<div class="col-xs-12">
+						<span t-if="o.ar_name" t-field="o.ar_name"/>
+						<br/>
+						<br/>
+						<span t-if="o.ar_street" t-field="o.ar_street"/>
+						<br/>
+                        <span t-if="o.ar_street2" t-field="o.ar_street2"/>
+                        <br/>
+                        <span t-if="o.ar_city" t-field="o.ar_city"/>
+                        <span t-if="o.ar_zip" t-field="o.ar_zip"/>
+                        <br/>
+                        <span t-if="o.state_id"
+                              t-field="o.state_id.ar_name"/>
+                        <br/>
+                        <span t-if="o.country_id"
+                              t-field="o.country_id.ar_name"/>
+                        <br/>
+                        
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-4" >
+				<div class="row">
+					<div class="col-xs-12">
+						<span t-field="o.name" />
+						<br />
+						<span t-raw="o.contact_address.replace('\n\n', '\n').replace('\n', '&lt;br&gt;')" />
+						<span t-field="o.vat" />
+					</div>
+				</div>
+			</div> -->
+			<table>
+				<tr style="background-color:white !important">
+					<td style="padding: 3px" width="20%" rowspan="7">
+					    <div name="invoice_address_ar" class="col-xs-6 text-right">
+					        <span t-if="o.ar_name" t-field="o.ar_name"/>
+					        <br/>
+					        <span t-if="o.ar_street" t-field="o.ar_street"/>
+					        <br/>
+					        <span t-if="o.ar_street2" t-field="o.ar_street2"/>
+					        <br/>
+					        <span t-if="o.ar_city" t-field="o.ar_city"/>
+					        <span t-if="o.ar_zip" t-field="o.ar_zip"/>
+					   		<span t-if="o.state_id" t-field="o.state_id.ar_name"/>
+					        <br/>
+					        <span t-if="o.country_id" t-field="o.country_id.ar_name"/>
+					     </div>
+					     <div class="col-xs-6">
+					        <span t-raw="o.contact_address.replace('\n\n', '\n').replace('\n', '&lt;br&gt;')"/>
+							<span t-field="o.vat"/>
+					    </div>
+					    
+					</td>
+				</tr>
+			</table>
+		</xpath>
+<!-- 		<xpath expr="//div[@class='page']//div/div" position="replace">
+			
+		</xpath> -->
+	</template>
+</odoo>

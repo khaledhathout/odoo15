@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+mrp_actual_cost_user,mrp_actual_cost_name,bi_mrp_processcosting_secondary_product_comm.model_actual_costs_final_goods,,1,1,1,1
+
+mrp_plan_cost_user,mrp_plan_cost_name,bi_mrp_processcosting_secondary_product_comm.model_planned_costs_final_goods,,1,1,1,1

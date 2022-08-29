@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_company_form_extra_logo" model="ir.ui.view">
+        <field name="name">res.company.extra.logo.inherited</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="extra_logo" string="Additional Logo">
+                    <group name="extra_logo_settings">
+                        <field name="extra_logo" widget="image"/>
+                    </group>
+                </page>
+            </xpath>
+
+             <xpath expr="//field[@name='extra_logo']" position="after">
+               <field name="pdf_watermark" widget="image"/>
+                 <group>
+                       <field name="opacity"/>
+                       <field name="pos_from_top"/>
+                 </group>
+             </xpath>
+
+
+<!--            291020211824-->
+<!--            Company Short Name-->
+
+                 <xpath expr="//field[@name='website']" position="after" >
+                    <field name="company_short_name"/>
+                </xpath>
+        </field>
+    </record>
+
+</odoo>

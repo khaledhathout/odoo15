@@ -1,0 +1,27 @@
+<odoo>
+
+	<record id="view_sale_order_tree_view_inherit" model="ir.ui.view">
+		<field name="name">res.sale.order.tree.inherited</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_quotation_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='partner_id']" position="after">
+				<field name="tag_ids" widget="many2many_tags" />
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_order_form_with_carrier" model="ir.ui.view">
+            <field name="name">sale.order.form.view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='sale_order_template_id']" position='before'>
+                        <field name="client_order_ref"/>
+                    </xpath>
+				</data>
+			</field>
+	</record>
+
+</odoo>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--    <template id="external_layout_background" inherit_id="web.external_layout_background">-->
+
+<!--        <xpath expr="//div/img" position="replace">-->
+<!--			<img t-if="company.extra_logo"-->
+<!--                 t-att-src="'data:image/png;base64,%s' % to_text(company.extra_logo)" class="pull-left"/>-->
+<!--            <img t-if="not company.extra_logo"-->
+<!--                 t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" class="pull-left"/>-->
+<!--   		</xpath>-->
+
+<!--    </template>-->
+
+
+   	 <template id="external_layout_background_inherit" inherit_id="web.external_layout_striped">
+   	 	<xpath expr="." position="inside">
+   	 		<link rel="stylesheet" href="/odoo_web_login/static/src/css/web_login_style.css"/>
+   	 	</xpath>
+    </template>
+<!--    -->
+<!--   	<template id="login_layout" inherit_id="web.login_layout" name="Login Layout Inherit">-->
+<!--   		<xpath expr="//t[@t-set='body_classname']" position="after">-->
+<!--			<t t-set="body_classname" t-value="''"/>-->
+<!--   		</xpath>-->
+<!--   		-->
+<!--   		<xpath expr="//div[hasclass('row')]" position="attributes">-->
+<!--   			<attribute name="class">body_login</attribute>-->
+<!--			&lt;!&ndash;<attribute name="style">background-image: url(/odoo_web_login/static/src/img/abc4.png);</attribute>&ndash;&gt;-->
+<!--   		</xpath>-->
+<!--   		-->
+<!--   		<xpath expr="//div[hasclass('o_database_list')]" position="before">-->
+<!--   			<div id="background-wrapper"-->
+<!--   				t-attf-style="background-image: url('#{background_src}');"/>-->
+<!--   		</xpath>-->
+<!--   		-->
+<!--   		<xpath expr="//div[hasclass('o_database_list')]" position="attributes">-->
+<!--   			<attribute name="class">col-lg-3 col-md-4 col-sm-4 col-xs-11 o_database_list</attribute>-->
+<!--   		</xpath>-->
+<!--		-->
+<!--		<xpath expr="//div[hasclass('o_database_list')]//div[2]" position="replace">-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//div[hasclass('text-center')]/img" position="replace">-->
+<!--                    <div class="text-center" style="margin-bottom:25px">-->
+<!--                		<img src="/odoo_web_login/static/description/enerj.png" width="230px" height="77px"/>-->
+<!--            	    </div>-->
+<!--                </xpath>-->
+<!--   		-->
+<!--   		&lt;!&ndash;<xpath expr="//div[hasclass('text-center')]/img" position="attributes">-->
+<!--   			<attribute name="class">company_logo</attribute>-->
+<!--   		</xpath>&ndash;&gt;-->
+<!--   	</template>-->
+<!--   	-->
+<!--   	<template id="login" inherit_id="web.login" name="Login Inherit">-->
+<!--   		<xpath expr="//label[@for='db']" position="replace" />-->
+<!--		<xpath expr="//label[@for='login']" position="replace" />-->
+<!--		<xpath expr="//label[@for='password']" position="replace" />-->
+<!--		<xpath expr="//t/form/div[@class='clearfix oe_login_buttons']" position="after">-->
+<!--            <div style="color:#3366BB;">-->
+<!--                <br/>-->
+<!--                <a href="https://www.geotechnosoft.com" target="_blank"><img src="/odoo_web_login/static/description/geotech_logo.png"/></a><br/>-->
+<!--            </div>-->
+<!--            <div style="font-size: 12px; color:#D77D00;">-->
+<!--                support@geotechnosoft.com-->
+<!--            </div>-->
+
+<!--            <div class="text-center">-->
+
+<!--            </div>-->
+
+<!--		</xpath>-->
+<!--		-->
+<!--		<xpath expr="//input[@name='login']" position="attributes">-->
+<!--			<attribute name="placeholder">Email ...</attribute>-->
+<!--			<attribute name="autocomplete">off</attribute>-->
+<!--			<attribute name="autocorrect">off</attribute>-->
+<!--		</xpath>-->
+<!--		-->
+<!--		<xpath expr="//input[@name='password']" position="attributes">-->
+<!--			<attribute name="placeholder">Password ...</attribute>-->
+<!--		</xpath>-->
+<!--		-->
+<!--		<xpath expr="//span[hasclass('input-group-btn')]/a[@href='/web/database/selector']" position="replace">-->
+<!--			<a href="/web/database/selector" class="btn btn-default btn-select"><i class="fa fa-database"></i></a>-->
+<!--		</xpath>-->
+<!--	</template>-->
+
+</odoo>

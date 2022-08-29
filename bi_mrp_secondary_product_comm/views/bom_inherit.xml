@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="mrp_secondproduct_view_inherit_extend" model="ir.ui.view">
+            <field name="name">mrp.bom.second.product.inherit.extend</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+             <xpath expr="//notebook/page[2]" position="after">
+                 <page string="Secondary">
+                      <field name="secondary_byproduct">
+                         <tree string="Secondary"  editable="top">
+                             <field name="product_id" />
+                             <field name="product_planned_qty"/>
+                             <field name="product_uom_id"/>
+                             <field name="cost"  widget="monetary" sum="cost" invisible="1"/>
+                             <field name="total_planned_cost"  widget="monetary" sum="total_planned_cost" invisible="1"/>
+                         </tree>
+                         <form string="Secondary">
+	                         <group>
+	                             <field name="product_id"/>
+	                             <field name="product_planned_qty"/>
+	                             <field name="cost" invisible="1"/>
+	                             <field name="product_uom_id"/>
+	                             <field name="total_planned_cost" invisible="1"/>
+	                         </group>
+                         </form>
+                    </field>
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="total_bom_secondary_byproduct_cost">
+                       <div class="oe_inline o_td_label">
+                           <label for="total_bom_secondary_byproduct_cost" />
+                       </div>
+                       <field name="total_bom_secondary_byproduct_cost" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' />
+                       
+                   </group>
+ 				</page>
+            </xpath>
+
+            
+
+            
+            </field>
+        </record>
+
+
+
+
+</odoo>

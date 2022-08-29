@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_purchase_order_quote_ar">
+            <t t-call="web.html_container">
+                <t t-call="gts_arabic_report.ar_external_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <div t-if="o.company_id.pdf_watermark" style="margin:auto;width:80%">
+                            <img t-if="o.company_id.pdf_watermark"
+                                 t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.pdf_watermark)"
+                                 t-attf-style="top:#{o.company_id.pos_from_top}; opacity:#{o.company_id.opacity}; position:absolute;width:80%;height:auto;"/>
+                        </div>
+                        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                        <div class="page" style="font-size: 11px; font-family: arial;">
+                            <h3 align="center" style="padding-top:10px;">
+                                <strong>
+                                    <t t-if="o.state in ['draft','sent','wf_approval','to approve','quote approved']">
+                                        Request for Quotation
+                                    </t>
+                                    <t t-if="o.state in ['approved','purchase', 'done']">
+                                        Purchase Order
+                                    </t>
+                                    <t t-if="o.state == 'cancel'">
+                                        Cancelled Purchase Order
+                                    </t>
+                                    <br/>
+                                    <t t-if="o.state in ['draft','sent','wf_approval','to approve','quote approved']">
+                                        طلب التسعيرة
+                                    </t>
+                                    <t t-if="o.state in ['approved','purchase', 'done']">
+                                        أمر الشراء
+                                    </t>
+                                    <t t-if="o.state == 'cancel'">
+                                        أمر الشراء ملغي
+                                    </t>
+                                </strong>
+                            </h3>
+                            <table width="100%" class="table-bordered border-black">
+                                <tbody>
+                                    <tr style="font-weight: bold;padding: 3px">
+                                        <th colspan="2" style="background-color:#C9C9C9;width: 25%">
+                                            Supplier Information
+                                        </th>
+                                        <th colspan="2" class="text-right" style="background-color:#C9C9C9;width: 25%">
+                                            بيانات المورد
+                                        </th>
+                                        <th colspan="2" style="background-color:#C9C9C9;width: 25%">
+                                            Delivery Information
+                                        </th>
+                                        <th colspan="2" class="text-right" style="background-color:#C9C9C9;width: 25%">
+                                            بيانات التوريد
+                                        </th>
+                                    </tr>
+                                    <tr style="padding: 3px;">
+                                        <td class="text-center"
+                                            style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+                                            Contact
+                                            <br/>
+                                            التواصل
+                                        </td>
+                                        <td colspan="3" class="text-center" style="margin-left:0px" width="35%">
+                                            <t t-if="not o.partner_id.parent_id.name">
+                                            </t>
+                                            <t t-if="o.partner_id.parent_id.name">
+                                                <span t-field="o.partner_id.name"/>
+                                                <t t-if="o.partner_id.ar_name">
+                                                    |
+                                                    <span t-field="o.partner_id.ar_name"/>
+                                                </t>
+                                                <br/>
+                                                <span t-if="o.partner_id.mobile" t-field="o.partner_id.mobile"/>
+                                                <t t-if="o.partner_id.email and o.partner_id.mobile">
+                                                    |
+                                                    <span t-field="o.partner_id.email"/>
+                                                </t>
+                                                <t t-if="o.partner_id.email and not o.partner_id.mobile">
+                                                    <span t-field="o.partner_id.email"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td class="text-center"
+                                            style="font-weight: bold;background-color:#C9C9C9;width: 20%">
+                                            Purchasing Agent
+                                            <br/>
+                                            مندوب الشراء
+                                        </td>
+                                        <td colspan="3" class="text-center" width="30%">
+                                            <t t-if="o.user_id">
+                                                <span t-field="o.user_id"/>
+                                                <t t-if="o.user_id and o.user_id.ar_name">
+                                                    |
+                                                    <span t-field="o.user_id.ar_name"/>
+                                                </t>
+                                                <br/>
+                                                <span t-if="o.user_id.mobile" t-field="o.user_id.mobile"/>
+                                                <t t-if="o.user_id.mobile and o.user_id.email">
+                                                    |
+                                                    <span t-field="o.user_id.email"/>
+                                                </t>
+                                                <t t-if="not o.user_id.mobile and o.user_id.email">
+                                                    <span t-field="o.user_id.email"/>
+                                                </t>
+                                            </t>
+                                            <t t-if="not o.user_id">
+                                                <span t-field="o.write_uid"/>
+                                                <t t-if="o.write_uid and o.write_uid.ar_name">
+                                                    |
+                                                    <span t-field="o.write_uid.ar_name"/>
+                                                </t>
+                                                <br/>
+                                                <span t-if="o.write_uid.mobile" t-field="o.write_uid.mobile"/>
+                                                <t t-if="o.write_uid.mobile and o.write_uid.email">
+                                                    |
+                                                    <span t-field="o.write_uid.email"/>
+                                                </t>
+                                                <t t-if="not o.write_uid.mobile and o.write_uid.email">
+                                                    <span t-field="o.write_uid.email"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 3px;">
+                                        <td class="text-center"
+                                            style="font-weight: bold;margin-left:0px; background-color:#C9C9C9;width: 15%">
+                                            Company Name
+                                            <br/>
+                                            اسم الشركة
+                                        </td>
+                                        <td colspan="3" class="text-center" style="margin-left:0px" width="35%">
+                                            <t t-if="not o.partner_id.parent_id.name">
+                                                <span t-field="o.partner_id.name"/>
+                                            </t>
+                                            <t t-if="o.partner_id.parent_id.name">
+                                                <span t-field="o.partner_id.parent_id.name"/>
+                                            </t>
+                                            <br/>
+                                            <t t-if="not o.partner_id.parent_id.name">
+                                                <span t-if="o.partner_id.ar_name" t-field="o.partner_id.ar_name"/>
+                                            </t>
+                                            <t t-if="o.partner_id.parent_id.name">
+                                                <span t-if="o.partner_id.parent_id.ar_name"
+                                                      t-field="o.partner_id.parent_id.ar_name"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-center"
+                                            style="font-weight: bold;background-color:#C9C9C9;width: 20%">
+                                            Purchase Order Date
+                                            <br/>
+                                            تاريخ الأمر الشراء
+                                        </td>
+                                        <td colspan="3" class="text-center" width="30%">
+                                            <span t-field="o.date_order"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 3px;">
+                                        <td class="text-center"
+                                            style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+                                            VAT NO
+                                            <br/>
+                                            الرقم الضريبي
+                                        </td>
+                                        <td colspan="3" class="text-center" width="35%">
+                                            <span t-field="o.partner_id.vat"/>
+                                        </td>
+                                        <td class="text-center"
+                                            style="font-weight: bold;background-color:#C9C9C9;width: 20%">
+                                            <t t-if="o.state in ['draft','sent','wf_approval','to approve','quote approved']">
+                                                RFQ#
+                                            </t>
+                                            <t t-if="o.state in ['approved','purchase', 'done']">
+                                                Purchase Order#
+                                            </t>
+                                            <t t-if="o.state == 'cancel'">
+                                                Cancelled Purchase Order
+                                            </t>
+                                            <br/>
+                                            <t t-if="o.state in ['draft','sent','wf_approval','to approve','quote approved']">
+                                                رقم طلب التسعيرة
+                                            </t>
+                                            <t t-if="o.state in ['approved','purchase', 'done']">
+                                                رقم أمر الشراء
+                                            </t>
+                                            <t t-if="o.state == 'cancel'">
+                                                أمر الشراء ملغي
+                                            </t>
+                                        </td>
+                                        <td colspan="3" class="text-center" width="30%">
+                                            <strong t-field="o.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 3px;">
+                                        <td class="text-center"
+                                            style="font-weight: bold;background-color:#C9C9C9;width: 15%">
+                                            Reference#
+                                            <br/>
+                                            الرقم المرجعي
+                                        </td>
+                                        <td colspan="3" class="text-center" width="35%">
+                                            <span t-field="o.partner_ref"/>
+                                        </td>
+
+                                        <td class="text-center"
+                                            style="font-weight: bold;background-color:#C9C9C9;width: 15%">
+                                            Purchase Agreement
+                                            <br/>
+                                            اتفاقية شراء
+                                        </td>
+                                        <td colspan="3" class="text-center" width="35%">
+                                            <span t-field="o.requisition_id"/>
+                                        </td>
+
+<!--                                        <t t-if="not o.opportunity_id">-->
+<!--                                            <td class="text-center"-->
+<!--                                                style="font-weight: bold;background-color:#C9C9C9;width: 20%">-->
+<!--                                                Purchase Agreement-->
+<!--                                                <br/>-->
+<!--                                                اتفاقية الشراء-->
+<!--                                            </td>-->
+<!--                                            <td colspan="3" class="text-center" width="30%">-->
+<!--                                                <span t-field="o.requisition_id"/>-->
+<!--                                            </td>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="o.opportunity_id">-->
+<!--                                            <td class="text-center"-->
+<!--                                                style="font-weight: bold;background-color:#C9C9C9;width: 20%">-->
+<!--                                                Purchase Agreement-->
+<!--                                                <br/>-->
+<!--                                                اتفاقية الشراء-->
+<!--                                            </td>-->
+<!--                                            <td class="text-center" width="15%">-->
+<!--                                                <span t-field="o.requisition_id"/>-->
+<!--                                            </td>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="o.opportunity_id">-->
+<!--                                            <td class="text-center" style="padding: 3px;width:5%">-->
+<!--                                                <span t-field="o.opportunity_id.reference_number"/>-->
+<!--                                            </td>-->
+<!--                                            <td class="text-center"-->
+<!--                                                style="font-weight: bold;padding: 3px; background-color:#C9C9C9;width:10%">-->
+<!--                                                Internal#-->
+<!--                                                <br/>-->
+<!--                                                رقم داخلي-->
+<!--                                            </td>-->
+<!--                                        </t>-->
+                                    </tr>
+                                    <tr style="padding: 3px;">
+                                        <td class="text-center"
+                                            style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+                                            Address
+                                            <br/>
+                                            العنوان
+                                        </td>
+                                        <td colspan="3" class="text-center" width="35%">
+                                            <t t-if="o.partner_id.street">
+                                                <span t-field="o.partner_id.street"/>
+                                            </t>
+                                            <t t-if="o.partner_id.street2">
+                                                ,
+                                                <span t-field="o.partner_id.street2"/>
+                                            </t>
+                                            <t t-if="o.partner_id.state_id">
+                                                ,
+                                                <span t-field="o.partner_id.state_id.name"/>
+                                            </t>
+                                            <t t-if="o.partner_id.zip">
+                                                ,
+                                                <span t-field="o.partner_id.zip"/>
+                                            </t>
+                                            <br/>
+                                            <t t-if="not o.partner_id.parent_id.name">
+                                                <t t-if="o.partner_id.ar_street">
+                                                    <span t-field="o.partner_id.ar_street"/>
+                                                </t>
+                                                <t t-if="o.partner_id.state_id">
+                                                    ,
+                                                    <span t-field="o.partner_id.state_id.ar_name"/>
+                                                </t>
+                                                <t t-if="o.partner_id.ar_zip">
+                                                    ,
+                                                    <span t-field="o.partner_id.ar_zip"/>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.partner_id.parent_id.name">
+                                                <t t-if="o.partner_id.parent_id.ar_street">
+                                                    <span t-field="o.partner_id.parent_id.ar_street"/>
+                                                </t>
+                                                <t t-if="o.partner_id.parent_id.state_id">
+                                                    ,
+                                                    <span t-field="o.partner_id.parent_id.state_id.ar_name"/>
+                                                </t>
+                                                <t t-if="o.partner_id.parent_id.ar_zip">
+                                                    ,
+                                                    <span t-field="o.partner_id.parent_id.ar_zip"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td rowspan="3" class="text-center"
+                                            style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 20%">
+                                            Delivery Destination
+                                            <br/>
+                                            جهة التوريد
+                                        </td>
+                                        <td rowspan="3" colspan="3" class="text-center" width="30%">
+                                            <span t-field="o.picking_type_id.warehouse_id.partner_id"/>
+                                            <br/>
+                                            <span t-field="o.picking_type_id.warehouse_id.name"/>
+                                            <br/>
+                                            <span t-field="o.picking_type_id.warehouse_id.partner_id.city"/>
+                                            |
+                                            <span t-field="o.picking_type_id.warehouse_id.partner_id.street2"/>
+                                            |
+                                            <span t-field="o.picking_type_id.warehouse_id.partner_id.street"/>
+                                            |
+                                            <span t-field="o.picking_type_id.warehouse_id.partner_id.state_id"/>
+                                            |
+                                            <span t-field="o.picking_type_id.warehouse_id.partner_id.zip"/>
+                                            <br/>
+                                            <span t-field="o.picking_type_id.warehouse_id.partner_id.ar_street"/>
+                                            ,
+                                            <span t-field="o.picking_type_id.warehouse_id.partner_id.ar_street2"/>
+                                            ,
+                                            <span t-field="o.picking_type_id.warehouse_id.partner_id.ar_zip"/>
+                                            <br/>
+                                            <p t-field="o.picking_type_id.warehouse_id.company_id.map_link"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center"
+                                            style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+                                            City
+                                            <br/>
+                                            المدينة
+                                        </td>
+                                        <td colspan="3" class="text-center" width="35%">
+                                            <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>
+                                            <br/>
+                                            <t t-if="not o.partner_id.parent_id.name">
+                                                <span t-if="o.partner_id.ar_street2" t-field="o.partner_id.ar_street2"/>
+                                            </t>
+                                            <t t-if="o.partner_id.parent_id.name">
+                                                <span t-if="o.partner_id.parent_id.ar_street2"
+                                                      t-field="o.partner_id.parent_id.ar_street2"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 3px;">
+                                        <td class="text-center"
+                                            style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+                                            Country
+                                            <br/>
+                                            الدولة
+                                        </td>
+                                        <td colspan="3" class="text-center" width="35%">
+                                            <span t-if="o.partner_id.country_id"
+                                                  t-field="o.partner_id.country_id.name"/>
+                                            <br/>
+                                            <t t-if="not o.partner_id.parent_id.name">
+                                                <span t-if="o.partner_id.ar_city" t-field="o.partner_id.ar_city"/>
+                                            </t>
+                                            <t t-if="o.partner_id.parent_id.name">
+                                                <span t-if="o.partner_id.parent_id.ar_city"
+                                                      t-field="o.partner_id.parent_id.ar_city"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <t t-if="o.state not in ['draft','sent','wf_approval','to approve','quote approved']">
+                                <table class="table table-bordered border-black" name="invoice_line_table">
+                                    <thead style="page-break-inside: auto;">
+                                        <tr>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black; background-color:#C9C9C9"
+                                                width="5%">#
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:5%; background-color:#C9C9C9">
+                                                Item No.
+                                                <br/>
+                                                رقم الصنف
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:35%; background-color:#C9C9C9">
+                                                Description
+                                                <br/>
+                                                الوصف
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:5%; background-color:#C9C9C9"
+                                                groups="product.group_uom">
+                                                UoM
+                                                <br/>
+                                                لوحدة
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:5%; background-color:#C9C9C9">
+                                                Qty
+                                                <br/>
+                                                الكمیة
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:5%; background-color:#C9C9C9">
+                                                Date Req.
+                                                <br/>
+                                                تاريخ التوريد
+                                                <br/>
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:5%; background-color:#C9C9C9">
+                                                U/Price
+                                                <br/>
+                                                سعر الوحدة
+                                                <br/>
+                                                (<span t-field="o.currency_id"/>)
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:10%; background-color:#C9C9C9">
+                                                Total excl. VAT
+                                                <br/>
+                                                المبلغ قبل الضریبة
+                                                <br/>
+                                                (<span t-field="o.currency_id"/>)
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:5%; background-color:#C9C9C9">
+                                                VAT(%)
+                                                <br/>
+                                                نسبة الضریبة
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:10%; background-color:#C9C9C9">
+                                                VAT Amount
+                                                <br/>
+                                                مبلغ الضریبة
+                                                <br/>
+                                                (<span t-field="o.currency_id"/>)
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:10%; background-color:#C9C9C9">
+                                                Total incl. VAT
+                                                <br/>
+                                                إجمالي بعد الضريبة
+                                                <br/>
+                                                (<span t-field="o.currency_id"/>)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <t t-set="current_subtotal" t-value="0"/>
+                                        <tr t-foreach="o.order_line" t-as="l" style="page-break-inside: auto;">
+                                            <t t-set="current_subtotal" t-value="current_subtotal + l.price_subtotal"
+                                               groups="account.group_show_l_subtotals_tax_excluded"/>
+                                            <t t-set="current_subtotal" t-value="current_subtotal + l.price_total"
+                                               groups="account.group_show_l_subtotals_tax_included"/>
+                                            <td class="text-center">
+                                                <span t-esc="l_index + 1"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="l.product_id.barcode"/>
+                                            </td>
+                                            <td>
+                                                <p style="padding:0px;margin:0px" t-field="l.name"/>
+                                                <p style="padding:0px;margin:0px" class="text-right"
+                                                   t-field="l.product_id.ar_name"/>
+                                            </td>
+                                            <td class="text-center" groups="product.group_uom">
+                                                <span t-field="l.product_uom"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="'{0:,.2f}'.format(float(l.product_uom_qty))"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="l.date_planned"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="'{0:,.2f}'.format(float(l.price_unit))"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="'{0:,.2f}'.format(float(l.price_subtotal))"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.taxes_id))"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="'{0:,.2f}'.format(float(l.price_tax))"/>
+                                            </td>
+                                            <td class="text-right" id="subtotal">
+                                                <span t-esc="'{0:,.2f}'.format(float(l.price_total))"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered border-black" width="100%"
+                                       style="page-break-inside:avoid;padding:0px;margin-top:10px;">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color:#C9C9C9;width:65%" class="text-center">
+                                                Payment Terms &amp; Conditions
+                                                <br/>
+                                                قوانين وشروط الدفع
+                                            </th>
+                                            <th class="text-right" style="background-color:#C9C9C9;width:25%">
+                                                Total Before VAT (<span t-field="o.currency_id"/>)
+                                                <br/>
+                                                (المجموع قبل الضريبة (ر.س
+                                            </th>
+                                            <th class="text-right" style="width:10%">
+                                                <span t-esc="'{0:,.2f}'.format(float(o.amount_untaxed))"/>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td rowspan="2">
+                                                <t t-if="o.notes">
+                                                    <span style="font-weight: bold;">Terms &amp; Conditions:</span>
+                                                    <br/>
+                                                    <span t-field="o.notes"/>
+                                                    <br/>
+                                                    <br/>
+                                                </t>
+                                                <t t-if="o.payment_term_id.note">
+                                                    <span style="font-weight: bold;">Payment Terms:</span>
+                                                    <br/>
+                                                    <span t-field="o.payment_term_id.note"/>
+                                                </t>
+                                            </td>
+                                            <th class="text-right" style="font-weight: bold;background-color:#C9C9C9">
+                                                Total VAT (<span t-field="o.currency_id"/>)
+                                                <br/>
+                                                (إجمالي الضريبة المضافة (ر.س
+                                            </th>
+                                            <th class="text-right">
+                                                <span t-esc="'{0:,.2f}'.format(float(o.amount_tax))"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-right" style="font-weight: bold;background-color:#C9C9C9">
+                                                Total with VAT (<span t-field="o.currency_id"/>)
+                                                <br/>
+                                                (إجمالي شامل الضريبة (ر.س
+                                            </th>
+                                            <th class="text-right">
+                                                <span t-esc="'{0:,.2f}'.format(float(o.amount_total))"/>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                            <t t-if="o.state in ['draft','sent','wf_approval','to approve','quote approved']">
+                                <table class="table table-bordered border-black" name="invoice_line_table">
+                                    <thead style="page-break-inside: auto;">
+                                        <tr>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black; background-color:#C9C9C9"
+                                                width="5%">#
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:10%; background-color:#C9C9C9">
+                                                Item No.
+                                                <br/>
+                                                رقم الصنف
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:60%; background-color:#C9C9C9">
+                                                Description
+                                                <br/>
+                                                الوصف
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:5%; background-color:#C9C9C9"
+                                                groups="product.group_uom">
+                                                UoM
+                                                <br/>
+                                                لوحدة
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:5%; background-color:#C9C9C9">
+                                                Qty
+                                                <br/>
+                                                الكمیة
+                                            </th>
+                                            <th class="text-center"
+                                                style="vertical-align:top;border-top: 1px solid black;width:15%; background-color:#C9C9C9">
+                                                Date Req.
+                                                <br/>
+                                                تاريخ التوريد
+                                                <br/>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <t t-set="current_subtotal" t-value="0"/>
+                                        <tr t-foreach="o.order_line" t-as="l" style="page-break-inside: auto;">
+                                            <t t-set="current_subtotal" t-value="current_subtotal + l.price_subtotal"
+                                               groups="account.group_show_l_subtotals_tax_excluded"/>
+                                            <t t-set="current_subtotal" t-value="current_subtotal + l.price_total"
+                                               groups="account.group_show_l_subtotals_tax_included"/>
+                                            <td class="text-center">
+                                                <span t-esc="l_index + 1"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="l.product_id.barcode"/>
+                                            </td>
+                                            <td>
+                                                <p style="padding:0px;margin:0px" t-field="l.name"/>
+                                                <p style="padding:0px;margin:0px" class="text-right"
+                                                   t-field="l.product_id.ar_name"/>
+                                            </td>
+                                            <td class="text-center" groups="product.group_uom">
+                                                <span t-field="l.product_uom"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="'{0:,.2f}'.format(float(l.product_uom_qty))"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="l.date_planned"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered border-black" width="100%"
+                                       style="page-break-inside:avoid;padding:0px;margin-top:10px;">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color:#C9C9C9;width:100%" class="text-center">
+                                                Payment Terms &amp; Conditions
+                                                <br/>
+                                                قوانين وشروط الدفع
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <t t-if="o.notes or o.payment_term_id.note">
+                                                    <t t-if="o.notes">
+                                                        <span style="font-weight: bold;">Terms &amp; Conditions:</span>
+                                                        <br/>
+                                                        <span t-field="o.notes"/>
+                                                        <br/>
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="o.payment_term_id.note">
+                                                        <span style="font-weight: bold;">Payment Terms:</span>
+                                                        <br/>
+                                                        <span t-field="o.payment_term_id.note"/>
+                                                    </t>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                            <table width="100%" height="100%" class="table table-bordered border-black"
+                                   style="page-break-inside:avoid;margin-top:20px;">
+                                <tr style="font-weight: bold;text-align:left;padding:0px;background-color:#C9C9C9">
+                                    <th colspan="3" width="50%">
+                                        <t t-if="not o.partner_id.parent_id.name">
+                                            For<span t-field="o.partner_id"/>, Received and Accepted by
+                                        </t>
+                                        <t t-if="o.partner_id.parent_id.name">
+                                            For<span t-field="o.partner_id.parent_id"/>, Received and Accepted by
+                                        </t>
+                                    </th>
+                                    <th colspan="3" width="50%">
+                                        For<span t-field="o.company_id"/>, Reviewed and Approved By
+                                    </th>
+                                </tr>
+                                <tr style="font-weight: bold;text-align:right;padding:0px; background-color:#C9C9C9">
+                                    <td colspan="3" width="50%">
+                                        <t t-if="not o.partner_id.parent_id.name">
+                                            نيابة عن<span t-field="o.partner_id.ar_name"/>، تم الإستلام والقبول من قبل
+                                        </t>
+                                        <t t-if="o.partner_id.parent_id.name">
+                                            نيابة عن<span t-field="o.partner_id.parent_id.ar_name"/>، تم الإستلام
+                                            والقبول من قبل
+                                        </t>
+                                    </td>
+                                    <td colspan="3" width="50%">
+                                        نيابة عن<span t-field="o.company_id.ar_name"/>، مراجعة و مصادقة من قبل
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;text-align:center;padding:0px; width:10%; background-color:#C9C9C9">
+                                        Signature
+                                        <br/>
+                                        التوقيع
+                                    </td>
+                                    <td colspan="2" style="text-align:center;width:40%">
+                                        <div style="visibility: hidden">
+                                            <p>1</p>
+                                            <p>2</p>
+                                        </div>
+                                    </td>
+                                    <td style="font-weight: bold;text-align:center;padding:0px; width:10%; background-color:#C9C9C9">
+                                        Signature
+                                        <br/>
+                                        التوقيع
+                                    </td>
+                                    <td colspan="2" style="width:40%">
+                                        <div style="visibility: hidden">
+                                            <p>1</p>
+                                            <p>2</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;text-align:left;padding:0px; width:10%; background-color:#C9C9C9">
+                                        Date
+                                    </td>
+                                    <td style="text-align:center;width:30%">
+                                    </td>
+                                    <td style="font-weight: bold;text-align:right;padding:0px; width:10%; background-color:#C9C9C9">
+                                        تاريخ
+                                    </td>
+                                    <td style="font-weight: bold;text-align:left;padding:0px; width:10%; background-color:#C9C9C9">
+                                        Date
+                                    </td>
+                                    <td style="width:30%">
+                                    </td>
+                                    <td style="font-weight: bold;text-align:right;padding:0px; width:10%; background-color:#C9C9C9">
+                                        تاريخ
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <report id="purchase.action_report_purchase_order" model="purchase.order"
+                string="Purchase Order" report_type="qweb-pdf"
+                name="gts_arabic_report.report_purchase_order_quote_ar"
+                file="gts_arabic_report.report_purchase_order_quote_ar"
+                paperformat="gts_arabic_report.paperformat_arabic_reports"
+                print_report_name="('%s-Purchase Order-%s' % (object.company_id.company_short_name, object.name))"/>
+
+
+    </data>
+</odoo>

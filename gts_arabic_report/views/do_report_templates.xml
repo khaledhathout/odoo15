@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_do_ar">
+			<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="o">
+				<t t-call="gts_arabic_report.ar_external_layout">
+						<div t-if="o.company_id.pdf_watermark" style="margin:auto;width:80%">
+							<img t-if="o.company_id.pdf_watermark" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.pdf_watermark)" t-attf-style="top:#{o.company_id.pos_from_top}; opacity:#{o.company_id.opacity}; position:absolute;width:80%;height:auto;"/>
+                        </div>
+						<t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+						<div class="page" style="font-size: 11px; font-family: arial;">
+							<h3 align="center" style="padding-top:10px;">
+								<span>DELIVERY- NOTE And JOB COMPLETION</span>
+							</h3>
+							<h3 align="center">
+								<span style="padding-left: 15px;">مذكرة تسليم وإنجاز العمل</span>
+							</h3>
+							<table width="100%" class="table-bordered border-black">
+								<tbody>
+										<tr style="font-weight: bold;padding: 3px">
+											<th colspan="2" style="background-color:#C9C9C9;width: 25%">
+												Customer Information
+											</th>
+											<th colspan="2" class="text-right" style="background-color:#C9C9C9;width: 25%">
+												بيانات العميل
+											</th>
+											<th colspan="2" style="background-color:#C9C9C9;width: 25%">
+												Delivery Information
+											</th>
+											<th colspan="2" class="text-right" style="background-color:#C9C9C9;width: 25%">
+												بيانات التوريد
+											</th>
+										</tr>
+										<tr style="padding: 3px;">
+											<td class="text-center" style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+												Contact
+												<br/>
+												التواصل
+											</td>
+											<td colspan="3" class="text-center" style="margin-left:0px" width="35%">
+												<t t-if="not o.partner_id.parent_id.name">
+												</t>
+												<t t-if="o.partner_id.parent_id.name">
+													<span t-field="o.partner_id.name"/>
+													<t t-if="o.partner_id.ar_name">
+														| <span t-field="o.partner_id.ar_name"/>
+													</t>
+													<br/>
+													<span t-if="o.partner_id.mobile" t-field="o.partner_id.mobile"/>
+													<t t-if="o.partner_id.email and o.partner_id.mobile">
+														| <span t-field="o.partner_id.email"/>
+													</t>
+													<t t-if="o.partner_id.email and not o.partner_id.mobile">
+														<span t-field="o.partner_id.email"/>
+													</t>
+												</t>
+											</td>
+											<td class="text-center" style="font-weight: bold;background-color:#C9C9C9;width: 15%">
+												Salesperson
+												<br/>
+												البائع
+											</td>
+											<td colspan="3" class="text-center" width="35%">
+												<t t-if="o.user_id">
+													<span t-field="o.user_id"/>
+													<t t-if="o.user_id and o.user_id.ar_name">
+														| <span t-field="o.user_id.ar_name"/>
+													</t>
+													<br/>
+													<span t-if="o.user_id.mobile" t-field="o.user_id.mobile"/>
+													<t t-if="o.user_id.mobile and o.user_id.email">
+														| <span t-field="o.user_id.email"/>
+													</t>
+													<t t-if="not o.user_id.mobile and o.user_id.email">
+														<span t-field="o.user_id.email"/>
+													</t>
+												</t>
+												<t t-if="not o.user_id">
+													<span t-field="o.write_uid"/>
+													<t t-if="o.write_uid and o.write_uid.ar_name">
+														| <span t-field="o.write_uid.ar_name"/>
+													</t>
+													<br/>
+													<span t-if="o.write_uid.mobile" t-field="o.write_uid.mobile"/>
+													<t t-if="o.write_uid.mobile and o.write_uid.email">
+														| <span t-field="o.write_uid.email"/>
+													</t>
+													<t t-if="not o.write_uid.mobile and o.write_uid.email">
+														<span t-field="o.write_uid.email"/>
+													</t>
+												</t>
+											</td>
+										</tr>
+										<tr style="padding: 3px;">
+											<td class="text-center" style="font-weight: bold;margin-left:0px; background-color:#C9C9C9;width: 15%">
+												Company Name
+												<br/>
+												اسم الشركة
+											</td>
+											<td colspan="3" class="text-center" style="margin-left:0px" width="35%">
+												<t t-if="not o.partner_id.parent_id.name">
+													<span t-field="o.partner_id.name"/>
+												</t>
+												<t t-if="o.partner_id.parent_id.name">
+													<span t-field="o.partner_id.parent_id.name"/>
+												</t>
+												<br/>
+												<t t-if="not o.partner_id.parent_id.name">
+													<span t-if="o.partner_id.ar_name" t-field="o.partner_id.ar_name"/>
+												</t>
+												<t t-if="o.partner_id.parent_id.name">
+													<span t-if="o.partner_id.parent_id.ar_name" t-field="o.partner_id.parent_id.ar_name"/>
+												</t>
+											</td>
+											<td class="text-center" style="font-weight: bold;background-color:#C9C9C9;width: 15%">
+												Issue On
+												<br/>
+												اصدارت في
+											</td>
+											<td colspan="3" class="text-center" width="35%">
+												<span t-field="o.create_date"/>
+											</td>
+										</tr>
+										<tr style="padding: 3px;">
+											<td class="text-center" style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+												VAT NO
+												<br/>
+												الرقم الضريبي
+											</td>
+											<td colspan="3" class="text-center" width="35%">
+												<span t-field="o.partner_id.vat"/>
+											</td>
+											<td class="text-center"  style="font-weight: bold;background-color:#C9C9C9;width: 15%">
+											Delivery No
+											<br/>
+											رقم التوريد
+											</td>
+											<td colspan="3" class="text-center" width="35%">
+												<strong t-field="o.name"/>
+											</td>
+										</tr>
+										<tr style="padding: 3px;">
+											<td class="text-center" style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+												Address
+												<br/>
+												العنوان
+											</td>
+											<td colspan="3" class="text-center" width="35%">
+												<t t-if="o.partner_id.street">
+													<span t-field="o.partner_id.street"/>
+												</t>
+												<t t-if="o.partner_id.street2">
+													,<span t-field="o.partner_id.street2"/>
+												</t>
+												<t t-if="o.partner_id.state_id">
+													,<span t-field="o.partner_id.state_id.name"/>
+												</t>
+												<t t-if="o.partner_id.zip">
+													,<span t-field="o.partner_id.zip"/>
+												</t>
+												<br/>
+												<t t-if="not o.partner_id.parent_id.name">
+													<t t-if="o.partner_id.ar_street">
+														<span t-field="o.partner_id.ar_street"/>
+													</t>
+													<t t-if="o.partner_id.state_id">
+														,<span t-field="o.partner_id.state_id.ar_name"/>
+													</t>
+													<t t-if="o.partner_id.ar_zip">
+														,<span t-field="o.partner_id.ar_zip"/>
+													</t>
+												</t>
+												<t t-if="o.partner_id.parent_id.name">
+													<t t-if="o.partner_id.parent_id.ar_street">
+														<span t-field="o.partner_id.parent_id.ar_street"/>
+													</t>
+													<t t-if="o.partner_id.parent_id.state_id">
+														,<span t-field="o.partner_id.parent_id.state_id.ar_name"/>
+													</t>
+													<t t-if="o.partner_id.parent_id.ar_zip">
+														,<span t-field="o.partner_id.parent_id.ar_zip"/>
+													</t>
+												</t>
+											</td>
+											<td class="text-center" style="font-weight: bold;background-color:#C9C9C9;width: 15%">
+												SO No
+												<br/>
+												رقم أمر البيع
+											</td>
+											<td colspan="3" class="text-center" width="35%">
+												<span t-field="o.origin"/>
+											</td>
+										</tr>
+										<tr style="padding: 3px;">
+											<td class="text-center" style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+												City
+												<br/>
+												المدينة
+											</td>
+											<td colspan="3" class="text-center" width="35%">
+												<span t-if="o.partner_id.city" t-field="o.partner_id.city"/>
+											<br/>
+												<t t-if="not o.partner_id.parent_id.name">
+													<span t-if="o.partner_id.ar_street2" t-field="o.partner_id.ar_street2"/>
+												</t>
+												<t t-if="o.partner_id.parent_id.name">
+													<span t-if="o.partner_id.parent_id.ar_street2" t-field="o.partner_id.parent_id.ar_street2"/>
+												</t>
+											</td>
+											<td class="text-center" style="font-weight: bold;background-color:#C9C9C9;width: 15%">
+												PO No
+												<br/>
+												رقم أمر شراء
+											</td>
+											<td colspan="3" class="text-center" width="35%">
+												<span t-field="o.sale_id.client_order_ref"/>
+											</td>
+										</tr>
+										<tr style="padding: 3px;">
+                                            <td class="text-center" style="font-weight: bold;margin-left:0px;background-color:#C9C9C9;width: 15%">
+                                                Country
+												<br/>
+                                                الدولة
+                                            </td>
+                                            <td colspan="3" class="text-center" width="35%">
+                                                <span t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/>
+												<br/>
+												<t t-if="not o.partner_id.parent_id.name">
+													<span t-if="o.partner_id.ar_city" t-field="o.partner_id.ar_city"/>
+												</t>
+												<t t-if="o.partner_id.parent_id.name">
+													<span t-if="o.partner_id.parent_id.ar_city" t-field="o.partner_id.parent_id.ar_city"/>
+												</t>
+                                            </td>
+											<td class="text-center" style="font-weight: bold;padding: 3px; background-color:#C9C9C9;width: 15%">
+												Internal No.
+												<br/>
+												رقم داخلي
+											</td>
+<!--											<td colspan="3" class="text-center" style="padding: 3px;width: 35%">-->
+<!--												<strong>-->
+<!--													<span t-field="o.sale_id.opportunity_id.reference_number"/>-->
+<!--												</strong>-->
+<!--											</td>-->
+										</tr>
+								</tbody>
+							</table>
+							<div class="row" style="padding: 10px 0px 5px 0px;">
+								<div class="col-12 text-right" style="font-weight: bold">
+									:نحن <span t-esc="o.company_id.ar_name"/> قمنا بتوريد البضاعة
+									وإنجاز الأعمال الموضحة
+									أوصافها في القائمة أدناه
+								</div>
+							</div>
+							<div class="row" style="padding: 10px 0px 5px 0px;">
+								<div class="col-12 text-left" style="font-weight: bold">
+									We,<span t-field="o.company_id"/> delivered the
+									goods and completed the
+									work described below:
+								</div>
+							</div>
+							<table class="table table-bordered border-black" name="invoice_line_table">
+								<thead>
+									<tr>
+										<th class="text-center" style="border-top: 1px solid black;width:5%;background-color:#C9C9C9">
+											SN.No.
+											<br/>
+											تسلسل
+										</th>
+										<th class="text-center" style="border-top: 1px solid black;width:10%;background-color:#C9C9C9">
+											Item No.
+											<br/>
+											رقم الصنف
+										</th>
+										<th class="text-center" style="border-top: 1px solid black;width:50%;background-color:#C9C9C9">
+											Description
+											<br/>
+											الوصف
+										</th>
+										<th class="text-center" style="border-top: 1px solid black;width:10%;background-color:#C9C9C9" groups="product.group_uom">
+											UoM
+											<br/>
+											لوحدة
+										</th>
+										<th class="text-center" style="border-top: 1px solid black;background-color:#C9C9C9">
+											Ordered Quantity
+											<br/>
+											الكمية المطلوبة
+										</th>
+<!--										<th class="text-center" style="border-top: 1px solid black;background-color:#C9C9C9">-->
+<!--											Checked Quantity-->
+<!--											<br/>-->
+<!--											الكمية المعاينة-->
+<!--										</th>-->
+									</tr>
+								</thead>
+								<tbody class="invoice_tbody">
+									<tr t-foreach="o.move_lines" t-as="l">
+										<td class="text-center">
+											<span t-esc="l_index + 1"/>
+										</td>
+										<td class="text-center">
+											<span t-field="l.product_id.default_code"/>
+										</td>
+										<td>
+											<p style="padding:0px;margin:0px" t-field="l.name"/>
+											<p style="padding:0px;margin:0px" class="text-right" t-field="l.product_id.ar_name"/>
+										</td>
+										<td class="text-center" groups="product.group_uom">
+											<span t-field="l.product_id.uom_id"/>
+										</td>
+										<td class="text-center">
+											<span t-esc="'{0:,.2f}'.format(float(l.product_qty))"/>
+										</td>
+<!--										<td class="text-center">-->
+<!--											-->
+<!--										</td>-->
+									</tr>
+								</tbody>
+							</table>
+                            <table class="table table-bordered border-black" width="100%">
+                                <tr class="text-center" >
+                                    <td width="15%" style="background-color:#C9C9C9">
+                                        <strong>Remarks</strong>
+										<br/>
+                                        <strong>ملاحظات</strong>
+                                    </td>
+                                    <td width="85%">
+                                        <div style="visibility: hidden">
+                                            <p>1</p>
+                                            <p>2</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered border-black" width="100%" style="page-break-inside:avoid;margin-top:20px;">
+                                <tr>
+                                    <td width="50%" style="padding: 3px;background-color:#C9C9C9" colspan="2">
+                                        <strong>
+                                            I, the undersigned, received the above goods intact and
+                                            verified the services in good condition on behalf of:
+                                        </strong>
+                                    </td>
+                                    <td width="50%" style="padding: 3px;background-color:#C9C9C9" colspan="2" class="text-right">
+                                        <strong>
+                                            أنا، الموقع أدناه، إستلمت البضاعة وعاينت العمل المنجز حسب
+                                            المذكور أعلاه نيابة عن
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <strong>
+                                        <td style="padding: 3px;width:50%;background-color:#C9C9C9;font-weight: bold" colspan="2">
+											<t t-if="not o.partner_id.parent_id.name">
+												<span t-field="o.partner_id.name"/>
+											</t>
+											<t t-if="o.partner_id.parent_id.name">
+												<span t-field="o.partner_id.parent_id.name"/>
+											</t>
+                                        </td>
+                                        <td style="padding: 3px;width:50%;background-color:#C9C9C9;font-weight: bold" colspan="2" class="text-right">
+											<t t-if="not o.partner_id.parent_id.name">
+												<span t-field="o.partner_id.ar_name"/>
+											</t>
+											<t t-if="o.partner_id.parent_id.name">
+												<span t-field="o.partner_id.parent_id.ar_name"/>
+											</t>
+                                        </td>
+                                    </strong>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 3px;width:20%;background-color:#C9C9C9">
+                                        <strong>Receiver</strong>
+                                    </td>
+                                    <td colspan="2" width="60%" style="padding: 3px;">
+
+                                    </td>
+                                    <td style="padding: 3px;width:20%;background-color:#C9C9C9" class="text-right">
+                                        <strong>المستلم</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 3px;width:20%;background-color:#C9C9C9">
+                                        <strong>Job Title</strong>
+                                    </td>
+                                    <td colspan="2" width="60%" style="padding: 3px;">
+
+                                    </td>
+                                    <td style="padding: 3px;width:20%;background-color:#C9C9C9" class="text-right">
+                                        <strong>الوظيفة</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:3px;width:20;background-color:#C9C9C9">
+                                        <strong>Date</strong>
+                                    </td>
+                                    <td colspan="2" width="60%" style="padding: 3px;">
+                                    </td>
+                                    <td style="padding:3px;width:20;background-color:#C9C9C9" class="text-right">
+                                        <strong>التاريخ</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 3px;width:20%;background-color:#C9C9C9">
+                                        <strong>Signature</strong>
+                                    </td>
+                                    <td colspan="2" width="60%" style="padding: 3px;">
+                                        <div style="visibility: hidden">
+                                            <p>1</p>
+                                            <p>2</p>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 3px;width:20%;background-color:#C9C9C9" class="text-right">
+                                        <strong>التوقيع</strong>
+                                    </td>
+                                </tr>
+                            </table>
+							<div class="row zero_min_height">
+								<div class="col-xs-12">
+									<div style="border-bottom: 1px solid black;"/>
+								</div>
+							</div>
+							<div class="row" style="font-size: 8px;page-break-inside:avoid">
+								<div class="col-4">
+									<span>Salesperson:</span>
+									<span t-field="o.sale_id.user_id"/>
+								</div>
+								<div class="col-4">
+									<span>Prepared by:</span>
+									<span t-esc="user.name"/>
+									&amp;nbsp; on
+									<span t-field="o.write_date"/>
+								</div>
+								<div class="col-4">
+									<span>Printed by:</span>
+									<span t-esc="user.name"/>
+									&amp;nbsp; on
+									<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+
+								</div>
+							</div>
+
+<!--							<div style="font-size: 8px;page-break-inside:avoid;">-->
+<!--								<p>-->
+<!--									<span>Salesperson:</span>-->
+<!--									<span t-field="o.sale_id.user_id"/>-->
+
+<!--									&amp;nbsp;&amp;nbsp;-->
+
+<!--									<span>Prepared by:</span>-->
+<!--									<span t-esc="user.name"/>-->
+<!--									&amp;nbsp; on-->
+<!--									<span t-field="o.write_date"/>-->
+
+<!--									&amp;nbsp;&amp;nbsp;-->
+<!--									<span>Printed by:</span>-->
+<!--									<span t-esc="user.name"/>-->
+<!--									&amp;nbsp; on-->
+<!--									<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M')"/>-->
+<!--								</p>-->
+<!--							</div>-->
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+
+		<report id="stock.action_report_delivery" model="stock.picking"
+			string="Delivery Slip" report_type="qweb-pdf"
+			name="gts_arabic_report.report_do_ar" file="arabic_report.report_do_ar"
+			paperformat="gts_arabic_report.paperformat_arabic_reports"
+			print_report_name="('%s-Delivery-%s' % (object.company_id.company_short_name, object.name))" />
+
+
+		<!-- <record id="stock_picking_action_ar" model="ir.actions.report.xml"> 
+			<field name="paperformat_id" ref="arabic_report.paperformat_arabic_reports"/> 
+			<field name="print_report_name">'Vision_Arabia_Delivery_'+(object.name or '')+'.pdf'</field>
+			</record>  -->
+
+		<!-- <record id="stock.action_report_delivery" model="ir.actions.report">
+            <field name="name">Delivery Slip</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">arabic_report.report_do_ar</field>
+            <field name="report_file">arabic_report.report_do_ar</field>
+            <field name="print_report_name">'Al_Ammar_Delivery_'+(object.name or '')</field>
+            <field name="binding_model_id" ref="model_stock_picking"/>
+            <field name="binding_type">report</field>
+        </record> -->
+
+
+
+
+	</data>
+</odoo>
