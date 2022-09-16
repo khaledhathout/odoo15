@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_normal_form_view_inh" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h1" position="after">
+
+                    <label class="oe_edit_only" for="translated_product"/>
+                    <h1>
+                        <field name='translated_product'/>
+                    </h1>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="product_product_template_only_form_view_inh" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h1" position="after">
+
+                    <label class="oe_edit_only" for="translated_product"/>
+                    <h1>
+                        <field name='translated_product' />
+                    </h1>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

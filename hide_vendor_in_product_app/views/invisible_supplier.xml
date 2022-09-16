@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data> 
+    	
+       <record id="template_inherit_visible_vendor" model="ir.ui.view">
+            <field name="name">product.template.visible.vendor.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='seller_ids']" position="attributes">
+                        <attribute name="groups">hide_vendor_in_product_app.visible_supplier</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='variant_seller_ids']" position="attributes">
+                        <attribute name="groups">hide_vendor_in_product_app.visible_supplier</attribute>
+                    </xpath>
+            </field>
+        </record> 
+
+    </data>
+</odoo>
