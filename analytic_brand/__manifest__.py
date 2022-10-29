@@ -11,7 +11,7 @@
     "license": "AGPL-3",
     "author": "ACSONE SA/NV," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/brand",
-    "depends": ["analytic", "brand"],
+    "depends": ["analytic", "brand", "om_account_accountant"],
     "data": ["views/res_brand.xml"],
     "demo": [],
     "maintainers": ["sbejaoui"],
