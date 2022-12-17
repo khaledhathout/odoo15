@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="contract_wizard_form_view" model="ir.ui.view">
+            <field name="name">contract.wizard.form.view</field>
+            <field name="model">contract.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="company_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="property_id" invisible="1" required="1"/>
+                            <field name="total_rent" invisible="1"/>
+                            <field name="customer_id" required="1"/>
+                            <field name="payment_term" required="1"/>
+                            <field name="duration_id" required="1"
+                                   options="{'no_quick_create':True,'no_create_edit':True}"/>
+                        </group>
+                        <group>
+                            <field name="is_any_broker"/>
+                            <field name="broker_id" options="{'no_quick_create':True,'no_create_edit':True}"
+                                   attrs="{'invisible':[('is_any_broker','=',False)],'required':[('is_any_broker','=',True)]}"/>
+                            <field name="start_date" required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Create Contract" type="object" class="btn btn-outline-success"
+                                name="contract_action" attrs="{'invisible':[('payment_term','!=','monthly')]}"/>
+                        <button string="Create Invoice" type="object" class="btn btn-outline-success"
+                                name="contract_action" attrs="{'invisible':[('payment_term','!=','full_payment')]}"/>
+                        <button string="Cancel" special="cancel" class="btn btn-outline-danger"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="contract_wizard_action" model="ir.actions.act_window">
+            <field name="name">Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">contract.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

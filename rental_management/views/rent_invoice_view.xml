@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="rent_invoice_form_view" model="ir.ui.view">
+            <field name="name">rent.invoice.form.view</field>
+            <field name="model">rent.invoice</field>
+            <field name="arch" type="xml">
+                <form string="ModelTitle">
+                    <field name="company_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="tenancy_id"/>
+                            <h1>
+                                <field name="tenancy_id" required="1"
+                                       options="{'no_quick_create':True,'no_create_edit':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="customer_id" required="1"
+                                       options="{'no_quick_create':True,'no_create_edit':True}"/>
+                            </group>
+                            <group>
+                                <field name="rent_invoice_id" readonly="1" force_save="1"/>
+                            </group>
+                        </group>
+                        <group string="Payment Information">
+                            <group>
+                                <field name="type" required="1"/>
+                                <field name="rent_amount" required="1" widget="monetary"
+                                       attrs="{'invisible':[('type','!=','rent')]}"/>
+                                <field name="amount" widget="monetary" attrs="{'invisible':[('type','=','rent')]}"/>
+                            </group>
+                            <group>
+                                <field name="invoice_date" required="1"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="rent_invoice_tree_view" model="ir.ui.view">
+            <field name="name">rent.invoice.tree.view</field>
+            <field name="model">rent.invoice</field>
+            <field name="arch" type="xml">
+                <tree string="Rent Invoice">
+                    <field name="tenancy_id"/>
+                    <field name="customer_id"/>
+                    <field name="invoice_date"/>
+                    <field name="type"/>
+                    <field name="description"/>
+                    <field name="rent_invoice_id" widget="many2onebutton"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="rent_invoice_calendar_view" model="ir.ui.view">
+            <field name="name">rent.invoice.calendar.view</field>
+            <field name="model">rent.invoice</field>
+            <field name="arch" type="xml">
+                <calendar string="Invoices" date_start="invoice_date" color="type" mode="month" quick_add="False"
+                          hide_time="True" event_open_popup="True">
+                    <field name="tenancy_id"/>
+                    <field name="customer_id"/>
+                    <field name="type"/>
+                    <field name="description"/>
+                    <field name="rent_invoice_id" widget="many2onebutton"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="rent_invoice_pivot_view" model="ir.ui.view">
+            <field name="name">rent.invoice.pivot.view</field>
+            <field name="model">rent.invoice</field>
+            <field name="arch" type="xml">
+                <pivot string="Statistic">
+                    <field name="tenancy_id" type="row"/>
+                    <field name="amount" type="measure"/>
+                    <field name="invoice_date" type="col" interval="month"/>
+                    <field name="type" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="rent_invoice_action" model="ir.actions.act_window">
+            <field name="name">Rent Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rent.invoice</field>
+            <field name="view_mode">tree,form,calendar,pivot,activity</field>
+        </record>
+    </data>
+</odoo>
