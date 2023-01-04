@@ -1,3 +1,0 @@
-{
-    'name': 'School Secondary Manage'
-}
