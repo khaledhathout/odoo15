@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-15 06:44+0000\n"
-"PO-Revision-Date: 2022-04-15 06:44+0000\n"
+"POT-Creation-Date: 2022-07-07 07:28+0000\n"
+"PO-Revision-Date: 2022-07-07 07:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,62 +20,62 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "<strong>End Date:</strong>"
-msgstr "<strong>Bitiş Tarihi:</strong>"
+msgstr "<strong>Кінцева дата:</strong>"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "<strong>Journals:</strong>"
-msgstr "<strong>Defterler:</strong>"
+msgstr "<strong>Журнали:</strong>"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 msgid "<strong>Sorted By:</strong>"
-msgstr "<strong>Sıralama:</strong>"
+msgstr "<strong>Сортовано за:</strong>"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "<strong>Start Date:</strong>"
-msgstr "<strong>Başlangıç Tarihi:</strong>"
+msgstr "<strong>Дата початку: </strong>"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "<strong>Target Moves:</strong>"
-msgstr "<strong>Hedef Hareketler:</strong>"
+msgstr "<strong>Відповідні проведення:</strong>"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 msgid "Account Bank Book"
-msgstr "Hesap Banka Defteri"
+msgstr "Облікова банківська книга"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 msgid "Account Cash Book"
-msgstr "Hesap Nakit Defteri"
+msgstr "Облікова касова книга"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Account Day Book"
-msgstr "Hesap Yevmiye Defteri"
+msgstr "Облікова денна книга"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__account_ids
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__account_ids
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__account_ids
 msgid "Accounts"
-msgstr "Hesaplar"
+msgstr "Рахунки"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_bankbook_report__display_account__all
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_cashbook_report__display_account__all
 msgid "All"
-msgstr "Tümü"
+msgstr "Всі"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_bankbook_report__target_move__all
@@ -85,14 +85,14 @@ msgstr "Tümü"
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "All Entries"
-msgstr "Tüm Kayıtlar"
+msgstr "Всі записи"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Balance"
-msgstr "Bakiye"
+msgstr "Сальдо"
 
 #. module: om_account_daily_reports
 #: model:ir.actions.act_window,name:om_account_daily_reports.action_account_bankbook_menu
@@ -100,19 +100,19 @@ msgstr "Bakiye"
 #: model:ir.model,name:om_account_daily_reports.model_report_om_account_daily_reports_report_bankbook
 #: model:ir.ui.menu,name:om_account_daily_reports.menu_bankbook
 msgid "Bank Book"
-msgstr "Banka Defteri"
+msgstr "Банківська книга"
 
 #. module: om_account_daily_reports
 #: model:ir.model,name:om_account_daily_reports.model_account_bankbook_report
 msgid "Bank Book Report"
-msgstr "Banka Defteri Raporu"
+msgstr "Банківська книга звіт"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_bankbook_view
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_cashbook_view
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_daybook_view
 msgid "Cancel"
-msgstr "İptal"
+msgstr "Скасувати"
 
 #. module: om_account_daily_reports
 #: model:ir.actions.act_window,name:om_account_daily_reports.action_account_cashbook_menu
@@ -120,45 +120,45 @@ msgstr "İptal"
 #: model:ir.model,name:om_account_daily_reports.model_report_om_account_daily_reports_report_cashbook
 #: model:ir.ui.menu,name:om_account_daily_reports.menu_cashbook
 msgid "Cash Book"
-msgstr "Nakit Defteri"
+msgstr "Касова книга"
 
 #. module: om_account_daily_reports
 #: model:ir.model,name:om_account_daily_reports.model_account_cashbook_report
 msgid "Cash Book Report"
-msgstr "Nakit Defteri Raporu"
+msgstr "Касова книга звіт"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__create_uid
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__create_uid
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__create_uid
 msgid "Created by"
-msgstr "Oluşturan"
+msgstr ""
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__create_date
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__create_date
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__create_date
 msgid "Created on"
-msgstr "Oluşturulma Tarihi"
+msgstr ""
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Credit"
-msgstr "Alacak"
+msgstr "Кредит"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Currency"
-msgstr "Para Birimi"
+msgstr ""
 
 #. module: om_account_daily_reports
 #: model:ir.ui.menu,name:om_account_daily_reports.menu_finance_daily_reports
 msgid "Daily Reports"
-msgstr "Günlük Raporlar"
+msgstr "Щоденні звіти"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_bankbook_report__sortby__sort_date
@@ -167,7 +167,7 @@ msgstr "Günlük Raporlar"
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Date"
-msgstr "Tarih"
+msgstr "Дата"
 
 #. module: om_account_daily_reports
 #: model:ir.actions.act_window,name:om_account_daily_reports.action_account_daybook_menu
@@ -175,51 +175,54 @@ msgstr "Tarih"
 #: model:ir.model,name:om_account_daily_reports.model_report_om_account_daily_reports_report_daybook
 #: model:ir.ui.menu,name:om_account_daily_reports.menu_daybook
 msgid "Day Book"
-msgstr "Yevmiye Defteri"
+msgstr "Денна книга"
 
 #. module: om_account_daily_reports
 #: model:ir.model,name:om_account_daily_reports.model_account_daybook_report
 msgid "Day Book Report"
-msgstr "Yevmiye Defteri Raporu"
+msgstr "Денна книга звіт"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Debit"
-msgstr "Borç"
+msgstr "Дебет"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__display_account
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__display_account
 msgid "Display Accounts"
-msgstr "Görüntülenen Hesaplar"
+msgstr "Показувати рахунки"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__display_name
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__display_name
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__display_name
+#: model:ir.model.fields,field_description:om_account_daily_reports.field_report_om_account_daily_reports_report_bankbook__display_name
+#: model:ir.model.fields,field_description:om_account_daily_reports.field_report_om_account_daily_reports_report_cashbook__display_name
+#: model:ir.model.fields,field_description:om_account_daily_reports.field_report_om_account_daily_reports_report_daybook__display_name
 msgid "Display Name"
-msgstr "Görüntülenen Ad"
+msgstr ""
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__date_to
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__date_to
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__date_to
 msgid "End Date"
-msgstr "Bitiş Tarihi"
+msgstr "Дата закінчення"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Entry Label"
-msgstr "Giriş Etiketi"
+msgstr "Позначка входу"
 
 #. module: om_account_daily_reports
-#: code:addons/om_account_daily_reports/report/report_bankbook.py:0
-#: code:addons/om_account_daily_reports/report/report_cashbook.py:0
-#: code:addons/om_account_daily_reports/report/report_daybook.py:0
+#: code:addons/om_account_daily_reports/reports/report_bankbook.py:0
+#: code:addons/om_account_daily_reports/reports/report_cashbook.py:0
+#: code:addons/om_account_daily_reports/reports/report_daybook.py:0
 #, python-format
 msgid "Form content is missing, this report cannot be printed."
 msgstr ""
@@ -228,6 +231,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__id
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__id
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__id
+#: model:ir.model.fields,field_description:om_account_daily_reports.field_report_om_account_daily_reports_report_bankbook__id
+#: model:ir.model.fields,field_description:om_account_daily_reports.field_report_om_account_daily_reports_report_cashbook__id
+#: model:ir.model.fields,field_description:om_account_daily_reports.field_report_om_account_daily_reports_report_daybook__id
 msgid "ID"
 msgstr ""
 
@@ -238,76 +244,76 @@ msgid ""
 "If you selected date, this field allow you to add a row to display the "
 "amount of debit/credit/balance that precedes the filter you've set."
 msgstr ""
-"Şayet tarih seçtiyseniz, bu alan size ayarladığınız filtreden önce "
-"borç/alacak/bakiye miktarını görüntülemek için bir satır eklemenize izin "
-"verir."
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__initial_balance
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__initial_balance
 msgid "Include Initial Balances"
-msgstr "Açılış Bakiyelerini Dahil Et"
+msgstr "Додати початкові залишки"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "JRNL"
-msgstr "DFTR"
+msgstr "Журнал"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_bankbook_report__sortby__sort_journal_partner
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_cashbook_report__sortby__sort_journal_partner
 msgid "Journal & Partner"
-msgstr "Defter & İş Ortağı"
+msgstr "Журналам та Контрагентам"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 msgid "Journal and Partner"
-msgstr "Defter ve İş Ortağı"
+msgstr ""
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__journal_ids
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__journal_ids
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__journal_ids
 msgid "Journals"
-msgstr "Defterler"
+msgstr "Журнали"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report____last_update
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report____last_update
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report____last_update
+#: model:ir.model.fields,field_description:om_account_daily_reports.field_report_om_account_daily_reports_report_bankbook____last_update
+#: model:ir.model.fields,field_description:om_account_daily_reports.field_report_om_account_daily_reports_report_cashbook____last_update
+#: model:ir.model.fields,field_description:om_account_daily_reports.field_report_om_account_daily_reports_report_daybook____last_update
 msgid "Last Modified on"
-msgstr "Son Değişiklik Tarihi"
+msgstr ""
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__write_uid
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__write_uid
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__write_uid
 msgid "Last Updated by"
-msgstr "Son Güncellemeyi Yapan"
+msgstr ""
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__write_date
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__write_date
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__write_date
 msgid "Last Updated on"
-msgstr "Son Güncelleme Tarihi"
+msgstr ""
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Move"
-msgstr "Taşı"
+msgstr "Рух"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Partner"
-msgstr "İş Ortağı"
+msgstr "Партнер"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_bankbook_report__target_move__posted
@@ -317,57 +323,57 @@ msgstr "İş Ortağı"
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Posted Entries"
-msgstr "Gönderilen Kayıtlar"
+msgstr "Опубліковані проведення"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_bankbook_view
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_cashbook_view
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_daybook_view
 msgid "Print"
-msgstr "Yazdır"
+msgstr "Друк"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
 msgid "Ref"
-msgstr ""
+msgstr "Посилання"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_bankbook_view
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_cashbook_view
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_daybook_view
 msgid "Report Options"
-msgstr "Rapor Seçenekleri"
+msgstr ""
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__sortby
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__sortby
 msgid "Sort by"
-msgstr "Sıralama"
+msgstr "Сортувати за"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__date_from
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__date_from
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__date_from
 msgid "Start Date"
-msgstr "Başlangıç Tarihi"
+msgstr "Дата початку"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__target_move
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_cashbook_report__target_move
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_daybook_report__target_move
 msgid "Target Moves"
-msgstr "Hedef Hareketler"
+msgstr "Вибрати проведення"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_bankbook_report__display_account__not_zero
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_cashbook_report__display_account__not_zero
 msgid "With balance is not equal to 0"
-msgstr "Sıfırdan farklı bakiyelerle"
+msgstr "З не нульовим сальдо"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_bankbook_report__display_account__movement
 #: model:ir.model.fields.selection,name:om_account_daily_reports.selection__account_cashbook_report__display_account__movement
 msgid "With movements"
-msgstr "Taşımalarla Birlikte"
+msgstr "По яких був рух"
