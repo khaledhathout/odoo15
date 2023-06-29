@@ -10,7 +10,7 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     asset_ids = fields.One2many('account.asset.asset', 'invoice_id',
-                                string="Assets")
+                                string="Assets", copy=False)
 
     def button_draft(self):
         res = super(AccountMove, self).button_draft()
@@ -49,7 +49,7 @@ class AccountMove(models.Model):
         for inv in self:
             context = dict(self.env.context)
             context.pop('default_type', None)
-            for mv_line in inv.invoice_line_ids:
+            for mv_line in inv.invoice_line_ids.filtered(lambda line: line.move_id.move_type in ('in_invoice','out_invoice')):
                 mv_line.with_context(context).asset_create()
         return result
 
@@ -89,12 +89,12 @@ class AccountMoveLine(models.Model):
                                       'your asset category cannot be 0.'))
                 months = cat.method_number * cat.method_period
                 if rec.move_id.move_type in ['out_invoice', 'out_refund']:
-                    price_subtotal = self.currency_id._convert(
-                        self.price_subtotal,
-                        self.company_currency_id,
-                        self.company_id,
-                        self.move_id.invoice_date or fields.Date.context_today(
-                            self))
+                    price_subtotal = rec.currency_id._convert(
+                        rec.price_subtotal,
+                        rec.company_currency_id,
+                        rec.company_id,
+                        rec.move_id.invoice_date or fields.Date.context_today(
+                            rec))
 
                     rec.asset_mrr = price_subtotal / months
                 if rec.move_id.invoice_date:
