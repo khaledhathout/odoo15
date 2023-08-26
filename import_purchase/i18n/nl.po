@@ -1,0 +1,220 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* import_purchase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-22 14:45+0000\n"
+"PO-Revision-Date: 2021-07-22 14:45+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: import_purchase
+#: code:addons/import_purchase/purchase.py:0
+#, python-format
+msgid " \"%s\" Currency are not available."
+msgstr " \"%s\" Valuta zijn niet beschikbaar."
+
+#. module: import_purchase
+#: code:addons/import_purchase/purchase.py:0
+#, python-format
+msgid " \"%s\" Product UOM category is not available."
+msgstr " \"%s\" Producteenheidscategorie is niet beschikbaar."
+
+#. module: import_purchase
+#: code:addons/import_purchase/purchase.py:0
+#: code:addons/import_purchase/purchase.py:0
+#: code:addons/import_purchase/purchase.py:0
+#, python-format
+msgid "\"%s\" Tax not in your system"
+msgstr "\"%s\" Belasting niet in uw systeem"
+
+#. module: import_purchase
+#: code:addons/import_purchase/purchase.py:0
+#, python-format
+msgid ""
+"%s product is not found\" .\n"
+" If you want to create product then first select Import Product By Name option ."
+msgstr ""
+
+#. module: import_purchase
+#: code:addons/import_purchase/purchase.py:0
+#, python-format
+msgid "'%s' No such record found for Deliver To field."
+msgstr "'%s' Een dergelijk record is niet gevonden voor het veld Bezorgen aan."
+
+#. module: import_purchase
+#: model:ir.model.fields.selection,name:import_purchase.selection__gen_purchase__import_prod_option__barcode
+msgid "Barcode"
+msgstr "Streepjescode"
+
+#. module: import_purchase
+#: model:ir.model.fields.selection,name:import_purchase.selection__gen_purchase__import_option__csv
+msgid "CSV File"
+msgstr "CSV-bestand"
+
+#. module: import_purchase
+#: model:ir.model.fields.selection,name:import_purchase.selection__gen_purchase__import_prod_option__code
+msgid "Code"
+msgstr "Code"
+
+#. module: import_purchase
+#: model:ir.model.fields.selection,name:import_purchase.selection__gen_purchase__stage__confirm
+msgid "Confirm Purchase Automatically With Import"
+msgstr "Bevestig aankoop automatisch met import"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__create_uid
+msgid "Created by"
+msgstr "Gemaakt door"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__create_date
+msgid "Created on"
+msgstr "Gemaakt op"
+
+#. module: import_purchase
+#: code:addons/import_purchase/purchase.py:0
+#, python-format
+msgid ""
+"Currency is different for \"%s\" .\n"
+" Please define same."
+msgstr ""
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_purchase_order__custom_seq
+msgid "Custom Sequence"
+msgstr "Aangepaste volgorde"
+
+#. module: import_purchase
+#: code:addons/import_purchase/purchase.py:0
+#, python-format
+msgid ""
+"Customer name is different for \"%s\" .\n"
+" Please define same."
+msgstr ""
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__display_name
+msgid "Display Name"
+msgstr "Weergavenaam"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__file
+msgid "File"
+msgstr "Bestand"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__id
+msgid "ID"
+msgstr "ID kaart"
+
+#. module: import_purchase
+#: model_terms:ir.ui.view,arch_db:import_purchase.gen_purchase_wizard_view
+msgid "Import"
+msgstr "Importeren"
+
+#. module: import_purchase
+#: model:ir.model.fields.selection,name:import_purchase.selection__gen_purchase__stage__draft
+msgid "Import Draft Purchase"
+msgstr "Conceptaankoop importeren"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__import_prod_option
+msgid "Import Product By "
+msgstr "Product importeren door"
+
+#. module: import_purchase
+#: model:ir.actions.act_window,name:import_purchase.gen_pur_wizard
+#: model:ir.ui.menu,name:import_purchase.gen_pur_wizard_import
+#: model_terms:ir.ui.view,arch_db:import_purchase.gen_purchase_wizard_view
+msgid "Import Purchase"
+msgstr "Aankoop importeren"
+
+#. module: import_purchase
+#: code:addons/import_purchase/purchase.py:0
+#, python-format
+msgid "Invalid file!"
+msgstr "Ongeldig bestand!"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase____last_update
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__write_uid
+msgid "Last Updated by"
+msgstr "Laatst bijgewerkt door"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__write_date
+msgid "Last Updated on"
+msgstr "Laatst geupdate op"
+
+#. module: import_purchase
+#: model:ir.model.fields.selection,name:import_purchase.selection__gen_purchase__import_prod_option__name
+msgid "Name"
+msgstr "Naam"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_purchase_order__purchase_name
+msgid "Purchase Name"
+msgstr "Aankoopnaam:"
+
+#. module: import_purchase
+#: model:ir.model,name:import_purchase.model_purchase_order
+msgid "Purchase Order"
+msgstr "Bestelling"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__stage
+msgid "Purchase Stage Option"
+msgstr "Aankoopfase-optie"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__import_option
+msgid "Select"
+msgstr "Selecteer"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_gen_purchase__sequence_opt
+msgid "Sequence Option"
+msgstr "Volgorde Optie:"
+
+#. module: import_purchase
+#: model:ir.model.fields,field_description:import_purchase.field_purchase_order__system_seq
+msgid "System Sequence"
+msgstr "Systeemvolgorde"
+
+#. module: import_purchase
+#: model:ir.model.fields.selection,name:import_purchase.selection__gen_purchase__sequence_opt__custom
+msgid "Use Excel/CSV Sequence Number"
+msgstr "Excel/CSV-volgnummer gebruiken"
+
+#. module: import_purchase
+#: model:ir.model.fields.selection,name:import_purchase.selection__gen_purchase__sequence_opt__system
+msgid "Use System Default Sequence Number"
+msgstr "Standaardvolgnummer van systeem gebruiken"
+
+#. module: import_purchase
+#: code:addons/import_purchase/purchase.py:0
+#, python-format
+msgid "We cannot import data in validated or confirmed order."
+msgstr "We kunnen geen gegevens in gevalideerde of bevestigde volgorde importeren."
+
+#. module: import_purchase
+#: model:ir.model.fields.selection,name:import_purchase.selection__gen_purchase__import_option__xls
+msgid "XLS File"
+msgstr "XLS-bestand"
+
+#. module: import_purchase
+#: model:ir.model,name:import_purchase.model_gen_purchase
+msgid "gen.purchase"
+msgstr ""
