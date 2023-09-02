@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_order_form_extended_for_total_qty_fields">
+            <field name="name">sale.order.extended</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref = "sale.view_order_form"/>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <field name='note' position="before">
+                    <field name= "total_demand_qty" />
+                    <field name= "total_delivery_qty" />
+                    <field name= "total_invoice_qty" />
+                    <field name= "remaining_delivery_qty" />
+                    <field name= "pending_invoice_qty" />
+                </field>
+
+                <xpath expr="//tree/field[@name='product_uom_qty']" position="attributes">
+                    <attribute name='sum'>Total Demand</attribute>
+                </xpath>
+                <xpath expr="//tree/field[@name='qty_delivered']" position="attributes">
+                    <attribute name='sum'>Total Delivered</attribute>
+                </xpath>
+                <xpath expr="//tree/field[@name='qty_invoiced']" position="attributes">
+                    <attribute name='sum'>Total Invoiced</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
