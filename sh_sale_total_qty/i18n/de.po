@@ -1,0 +1,105 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sh_sale_total_qty
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-16 10:07+0000\n"
+"PO-Revision-Date: 2022-05-16 10:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sh_sale_total_qty
+#: model:ir.model,name:sh_sale_total_qty.model_res_company
+msgid "Companies"
+msgstr "Firmen"
+
+#. module: sh_sale_total_qty
+#: model:ir.model,name:sh_sale_total_qty.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: sh_sale_total_qty
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_res_company__sh_invoice_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_res_config_settings__sh_invoice_config
+msgid "Enable Total number of Qty in Invoice"
+msgstr "Aktivieren Sie die Gesamtzahl der Qty in Rechnung"
+
+#. module: sh_sale_total_qty
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_account_bank_statement_line__sh_invoice_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_account_move__sh_invoice_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_account_payment__sh_invoice_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_res_company__sh_sale_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_res_config_settings__sh_sale_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_sale_order__sh_sale_config
+msgid "Enable Total number of Qty in Sale order"
+msgstr "Aktivieren Sie die Gesamtzahl der Qty in Verkaufsbestellung"
+
+#. module: sh_sale_total_qty
+#: model:ir.model,name:sh_sale_total_qty.model_account_move
+msgid "Journal Entry"
+msgstr "Tagebucheintrag"
+
+#. module: sh_sale_total_qty
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_account_bank_statement_line__sh_invoice_quantity
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_account_move__sh_invoice_quantity
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_account_payment__sh_invoice_quantity
+msgid "No. Invoice Quantity"
+msgstr "Rechnungsmenge"
+
+#. module: sh_sale_total_qty
+#: model_terms:ir.ui.view,arch_db:sh_sale_total_qty.sh_account_move_inherited_report
+msgid "No. Invoice Quantity :"
+msgstr "Rechnungsmenge:"
+
+#. module: sh_sale_total_qty
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_sale_order__sh_invoiced_quantity
+msgid "No. Invoiced Quantity"
+msgstr "Quantität in Rechnung"
+
+#. module: sh_sale_total_qty
+#: model_terms:ir.ui.view,arch_db:sh_sale_total_qty.sh_sale_order_inherited_report
+msgid "No. Invoiced Quantity :"
+msgstr "Nr. Rechnungsmenge:"
+
+#. module: sh_sale_total_qty
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_sale_order__sh_ordered_quantity
+msgid "No. Ordered Quantity"
+msgstr "Nr. Bestellte Menge"
+
+#. module: sh_sale_total_qty
+#: model_terms:ir.ui.view,arch_db:sh_sale_total_qty.sh_sale_order_inherited_report
+msgid "No. Ordered Quantity :"
+msgstr "Nr. Bestellte Menge:"
+
+#. module: sh_sale_total_qty
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_account_bank_statement_line__sh_print_invoice_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_account_move__sh_print_invoice_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_account_payment__sh_print_invoice_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_res_company__sh_print_invoice_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_res_config_settings__sh_print_invoice_config
+msgid "Print Total number of Qty In Invoice Report"
+msgstr "Drucken Sie die Gesamtzahl der Qty im Rechnungsbericht aus"
+
+#. module: sh_sale_total_qty
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_res_company__sh_print_sale_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_res_config_settings__sh_print_sale_config
+#: model:ir.model.fields,field_description:sh_sale_total_qty.field_sale_order__sh_print_sale_config
+msgid "Print Total number of Qty In Sale Report"
+msgstr "Drucken Sie die Gesamtzahl der Qty im Verkaufsbericht aus"
+
+#. module: sh_sale_total_qty
+#: model_terms:ir.ui.view,arch_db:sh_sale_total_qty.sh_sale_total_qty_config_setting_view
+msgid "Sale Total Quantity Configuration"
+msgstr "Verkauf Gesamtmengenkonfiguration"
+
+#. module: sh_sale_total_qty
+#: model:ir.model,name:sh_sale_total_qty.model_sale_order
+msgid "Sales Order"
+msgstr "Vertriebsauftrag"

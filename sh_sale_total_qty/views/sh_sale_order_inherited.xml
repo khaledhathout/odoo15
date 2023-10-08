@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sh_sale_order_inherit_view_form" model="ir.ui.view">
+        <field name="name">sale.order.inherit.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="after">
+                <group>
+                    <group>
+                        <field name="sh_sale_config" invisible="1" />
+                        <field name="sh_print_sale_config" invisible="1" />
+                        <field name="sh_ordered_quantity" attrs="{'invisible':[('sh_sale_config','=',False)]}"
+                        />
+                        <field name="sh_invoiced_quantity" attrs="{'invisible':[('sh_sale_config','=',False)]}" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sh_account_move_inherited_report" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='total']" position="after">
+            <t t-if="o.sh_print_invoice_config == True">
+                No. Invoice Quantity :
+                <span t-field="o.sh_invoice_quantity" />
+                <br></br>
+            </t>
+        </xpath>
+    </template>
+</odoo>

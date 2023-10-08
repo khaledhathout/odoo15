@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sh_sale_total_qty_config_setting_view" model="ir.ui.view">
+        <field name="name">res.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='sale_management']" position="inside">
+                <h2>Sale Total Quantity Configuration</h2>
+                <div class="row o_settings_container">
+                    <div class="col-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_sale_config" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_sale_config" />
+                        </div>
+                    </div>
+                    <div class="col-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_print_sale_config" attrs="{'invisible':[('sh_sale_config','=',False)]}" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_print_sale_config" attrs="{'invisible':[('sh_sale_config','=',False)]}" />
+                        </div>
+                    </div>
+                    <div class="col-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_invoice_config" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_invoice_config" />
+                        </div>
+                    </div>
+                    <div class="col-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_print_invoice_config" attrs="{'invisible':[('sh_invoice_config','=',False)]}" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_print_invoice_config" attrs="{'invisible':[('sh_invoice_config','=',False)]}" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

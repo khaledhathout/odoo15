@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sh_sale_order_inherited_report" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='total']" position="after">
+            <t t-if="doc.sh_print_sale_config == True">
+                No. Ordered Quantity :
+                <span t-field="doc.sh_ordered_quantity" />
+                <br></br>
+            </t>
+            <t t-if="doc.sh_print_sale_config == True">
+                No. Invoiced Quantity :
+                <span t-field="doc.sh_invoiced_quantity" />
+                <br></br>
+            </t>
+        </xpath>
+    </template>
+</odoo>

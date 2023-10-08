@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sh_account_move_inherit_view_form" model="ir.ui.view">
+        <field name="name">account.move.inherit.view.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="after">
+                <group>
+                    <group>
+                        <field name="sh_invoice_config" invisible="1" />
+                        <field name="sh_print_invoice_config" invisible="1" />
+                        <field name="sh_invoice_quantity" attrs="{'invisible':[('sh_invoice_config','=',False)]}" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
