@@ -119,7 +119,7 @@
 
         <!-- Salary Structure -->
 
-         <record id="structure_base" model="hr.payroll.structure">
+	<record id="structure_base" model="hr.payroll.structure">
             <field name="code">Saudi</field>
             <field name="name">Saudi Employee Structures</field>
             <field eval="[(6, 0, [ref('hr_rule_basic'), ref('hr_rule_taxable'),ref('hr_rule_net')])]" name="rule_ids"/>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_saleorder_document_inherited" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//th[@name='th_description']" position="after">
+                <t t-if="doc.show_measure == True">
+                    <th name="th_length"><strong>Length</strong></th>
+                    <th name="th_width"><strong>Width</strong></th>
+                    <th name="th_height"><strong>Height</strong></th>
+                    <th name="unit_qty"><strong>Quantity Of units</strong></th>
+                </t>
+            </xpath>
+
+            <xpath expr="//td[@name='td_name']" position="after">
+                <t t-if="doc.show_measure == True">
+                    <td class="text-center">
+                        <span t-field="line.length"/>
+                    </td>
+                    <td class="text-center">
+                        <span t-field="line.width"/>
+                    </td>
+                    <td class="text-center">
+                        <span t-field="line.height"/>
+                    </td>
+                    <td class="text-center">
+                        <span t-field="line.unit_qty"/>
+                    </td>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

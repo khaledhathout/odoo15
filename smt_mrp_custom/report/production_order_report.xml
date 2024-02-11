@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="smt_mrp_custom_report_mrporder" inherit_id="mrp.report_mrporder">
+            <xpath expr="//div[hasclass('col-5')]" position="replace">
+            </xpath>
+        </template>
+
+        <template id="smt_mrp_custom_mrp_cost_structure" inherit_id="mrp_account_enterprise.mrp_cost_structure">
+
+            <xpath expr="//div[hasclass('row')]" position="replace">
+                <!-- Direct Equipment Cost table -->
+                <h3 class="o_mrp_header o_mrp_table_header">Direct Equipment Costs</h3>
+                <table class="table table-sm o_mrp_report_table">
+                    <thead>
+                        <t t-set="total_equipment_cost" t-value="0.0"/>
+                        <tr class="o_mrp_report_header">
+                            <th class="o_mrp_report_line_header">
+                                <span>Operation</span>
+                            </th>
+                            <th class="o_mrp_report_line_header">
+                                <span>Equipment</span>
+                            </th>
+                            <th class="text-right o_mrp_report_line_header">
+                                <span>Actual Hour</span>
+                            </th>
+                            <th class="text-right o_mrp_report_line_header">
+                                <span>Cost/Hour</span>
+                            </th>
+                            <th class="text-right o_mrp_report_line_header">
+                                <span>Total Cost</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="line['productions']" t-as="row" class="text-muted">
+                            <t t-foreach="row.pro_equipment_cost_ids" t-as="equipment_cost">
+                                <td>
+                                    <span t-field="equipment_cost.operation_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="equipment_cost.equipment_id.name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="equipment_cost.actual_qty"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="equipment_cost.cost"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="equipment_cost.total_actual_cost"/>
+                                </td>
+                                <t t-set="total_equipment_cost"
+                                   t-value="total_equipment_cost + equipment_cost.total_actual_cost"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-right">
+                                <strong>Direct Equipment Cost</strong>
+                            </td>
+                            <td class="text-right">
+                                <strong t-esc="total_equipment_cost"
+                                        t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </td>
+                        </tr>
+                        <tr t-if="not line['qty_by_byproduct_w_costshare']">
+                            <td colspan="4" class="text-right">
+                                <strong>Direct Equipment Cost per unit (in<t t-esc="line['product'].uom_id.name"/>)
+                                </strong>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="total_equipment_cost / line['mo_qty']"
+                                      t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Direct Labour Cost table -->
+                <h3 class="o_mrp_header o_mrp_table_header">Direct Labour Costs</h3>
+                <table class="table table-sm o_mrp_report_table">
+                    <thead>
+                        <t t-set="total_labour_cost" t-value="0.0"/>
+                        <tr class="o_mrp_report_header">
+                            <th class="o_mrp_report_line_header">
+                                <span>Operation</span>
+                            </th>
+                            <th class="o_mrp_report_line_header">
+                                <span>Employee</span>
+                            </th>
+                            <th class="text-right o_mrp_report_line_header">
+                                <span>Actual Hour</span>
+                            </th>
+                            <th class="text-right o_mrp_report_line_header">
+                                <span>Cost/Hour</span>
+                            </th>
+                            <th class="text-right o_mrp_report_line_header">
+                                <span>Total Cost</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="line['productions']" t-as="row" class="text-muted">
+                            <t t-foreach="row.pro_labour_cost_ids" t-as="labour_cost">
+                                <td>
+                                    <span t-field="labour_cost.operation_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="labour_cost.employee_id.name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="labour_cost.actual_qty"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="labour_cost.cost"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="labour_cost.total_actual_cost"/>
+                                </td>
+                                <t t-set="total_labour_cost"
+                                   t-value="total_labour_cost + labour_cost.total_actual_cost"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-right">
+                                <strong>Direct Labour Cost</strong>
+                            </td>
+                            <td class="text-right">
+                                <strong t-esc="total_labour_cost"
+                                        t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </td>
+                        </tr>
+                        <tr t-if="not line['qty_by_byproduct_w_costshare']">
+                            <td colspan="4" class="text-right">
+                                <strong>Direct Labour Cost per unit (in<t t-esc="line['product'].uom_id.name"/>)
+                                </strong>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="total_labour_cost / line['mo_qty']"
+                                      t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Manufacturing Overhead Cost table -->
+                <h3 class="o_mrp_header o_mrp_table_header">Manufacturing Overhead Cost</h3>
+                <table class="table table-sm o_mrp_report_table">
+                    <thead>
+                        <t t-set="total_overhead_cost" t-value="0.0"/>
+                        <tr class="o_mrp_report_header">
+                            <th class="o_mrp_report_line_header">
+                                <span>Operation</span>
+                            </th>
+                            <th class="text-right o_mrp_report_line_header">
+                                <span>Actual Hour</span>
+                            </th>
+                            <th class="text-right o_mrp_report_line_header">
+                                <span>Cost/Hour</span>
+                            </th>
+                            <th class="text-right o_mrp_report_line_header">
+                                <span>Total Cost</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="line['productions']" t-as="row" class="text-muted">
+                            <t t-foreach="row.pro_overhead_cost_ids" t-as="overhead_cost">
+                                <td>
+                                    <span t-field="overhead_cost.operation_id.name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="overhead_cost.actual_qty"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="overhead_cost.cost"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="overhead_cost.total_actual_cost"/>
+                                </td>
+                                <t t-set="total_overhead_cost"
+                                   t-value="total_overhead_cost + overhead_cost.total_actual_cost"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right">
+                                <strong>Manufacturing Overhead Cost</strong>
+                            </td>
+                            <td class="text-right">
+                                <strong t-esc="total_overhead_cost"
+                                        t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </td>
+                        </tr>
+                        <tr t-if="not line['qty_by_byproduct_w_costshare']">
+                            <td colspan="3" class="text-right">
+                                <strong>Manufacturing Overhead Cost per unit (in
+                                    <t t-esc="line['product'].uom_id.name"/>
+                                    )
+                                </strong>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="total_overhead_cost / line['mo_qty']"
+                                      t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-6 offset-6">
+                        <table class="table table-sm o_mrp_report_table">
+                            <tr t-if="line['mo_qty'] + len(line['qty_by_byproduct_w_costshare']) &gt; 1">
+                                <td class="text-right">
+                                    <strong>Total Production Cost</strong>
+                                </td>
+                                <td class="text-right">
+                                    <strong t-esc="line['total_cost']  + line['total_actual_cost']"
+                                            t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                            </tr>
+                            <tr t-if="not line['qty_by_byproduct_w_costshare']">
+                                <td class="text-right">
+                                    <strong>Total Cost per unit (in<t t-esc="line['product'].uom_id.name"/>)
+                                    </strong>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="(line['total_cost']  + line['total_actual_cost']) / line['mo_qty']"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//t[@t-if=&quot;line['qty_by_byproduct_w_costshare']&quot;]" position="replace">
+                <t t-if="line['qty_by_byproduct_w_costshare']">
+                    <h3 class="o_mrp_header o_mrp_table_header">Cost Breakdown of Products</h3>
+                    <table class="table table-sm o_mrp_report_table">
+                        <thead>
+                            <tr class="o_mrp_report_header">
+                                <th class="o_mrp_report_line_header">
+                                    <span>Product</span>
+                                </th>
+                                <th class="text-right o_mrp_report_line_header">
+                                    <span>Avg Cost of Components Per Unit</span>
+                                </th>
+                                <th t-if="line['operations']" class="text-right o_mrp_report_line_header">
+                                    <span>Avg Cost of Operations Per Unit</span>
+                                </th>
+                                <th class="text-right o_mrp_report_line_header">
+                                    <span>Avg Cost of Equipment Per Unit</span>
+                                </th>
+                                <th class="text-right o_mrp_report_line_header">
+                                    <span>Avg Cost of Labour Per Unit</span>
+                                </th>
+                                <th class="text-right o_mrp_report_line_header">
+                                    <span>Avg Cost of Overhead Per Unit</span>
+                                </th>
+                                <th class="text-right o_mrp_report_line_header">
+                                    <span>Avg Total Cost Per Unit</span>
+                                </th>
+                                <th class="o_mrp_report_line_header text-right" groups="uom.group_uom">
+                                    <span>Unit of Measure</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-muted">
+                                <td>
+                                    <span t-esc="line['product'].name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['component_cost_by_product'][line['product']] / line['mo_qty']"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td t-if="line['operations']" class="text-right">
+                                    <span t-esc="line['operation_cost_by_product'][line['product']] / line['mo_qty']"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['equipment_cost_by_product'][line['product']] / line['mo_qty']"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['labour_cost_by_product'][line['product']] / line['mo_qty']"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['overhead_cost_by_product'][line['product']] / line['mo_qty']"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['total_cost_by_product'][line['product']] / line['mo_qty']"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td groups="uom.group_uom" class="text-right">
+                                    <span t-esc="line['product'].uom_id.name"/>
+                                </td>
+                            </tr>
+                            <tr t-foreach="line['qty_by_byproduct_w_costshare'].items()" t-as="byproduct"
+                                class="text-muted">
+                                <td>
+                                    <span t-esc="byproduct[0].name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['component_cost_by_product'][byproduct[0]] / byproduct[1]"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td t-if="line['operations']" class="text-right">
+                                    <span t-esc="line['operation_cost_by_product'][byproduct[0]] / byproduct[1]"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['equipment_cost_by_product'][byproduct[0]] / byproduct[1]"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['labour_cost_by_product'][byproduct[0]] / byproduct[1]"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['overhead_cost_by_product'][byproduct[0]] / byproduct[1]"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="line['total_cost_by_product'][byproduct[0]] / byproduct[1]"
+                                          t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td groups="uom.group_uom" class="text-right">
+                                    <span t-esc="byproduct[0].uom_id.name"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

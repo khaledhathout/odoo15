@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="purchase_report_paperformat" model="report.paperformat">
+            <field name="name">Purchase Report Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">36</field>
+            <field name="margin_bottom">7</field>
+            <field name="header_spacing">38</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report id="purchase_report"
+                model="purchase.order.line"
+                string="Purchase Order Report"
+                file="smt_alrasheed_purchase_custom.purchase_template"
+                name="smt_alrasheed_purchase_custom.purchase_template"
+                report_type="qweb-pdf"
+                menu="False"
+                paperformat="smt_alrasheed_purchase_custom.purchase_report_paperformat"
+        />
+
+        <report id="sale_report"
+                model="sale.order.line"
+                string="Sale Order Report"
+                file="smt_alrasheed_purchase_custom.sale_template"
+                name="smt_alrasheed_purchase_custom.sale_template"
+                report_type="qweb-pdf"
+                menu="False"
+                paperformat="smt_alrasheed_purchase_custom.purchase_report_paperformat"
+        />
+
+        <report id="purchase_report_xlsx"
+                model="purchase.order.line"
+                string="Purchase Order Report"
+                file="smt_alrasheed_purchase_custom.purchase_report_wizard"
+                name="smt_alrasheed_purchase_custom.purchase_template_xlsx"
+                report_type="xlsx"
+                menu="False"
+        />
+
+        <report id="sale_report_xlsx"
+                model="sale.order.line"
+                string="Sale Order Report"
+                file="smt_alrasheed_purchase_custom.sale_report_wizard"
+                name="smt_alrasheed_purchase_custom.sale_template_xlsx"
+                report_type="xlsx"
+                menu="False"
+        />
+
+    </data>
+</odoo>

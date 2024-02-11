@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record forcecreate="True" id="decimal_dimension" model="decimal.precision">
+            <field name="name">Dimension Decimal</field>
+            <field name="digits" eval="2"/>
+            <field name="is_dimension" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

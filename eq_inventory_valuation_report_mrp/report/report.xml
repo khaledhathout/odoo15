@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="inventory_valuation_mrp_paperformat" model="report.paperformat">
+            <field name="name">Inventory Valuation Report With MRP</field>
+            <field name="default" eval="True"/>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="header_spacing">25</field>
+        </record>
+
+        <record id="action_inventory_valuation_mrp_template" model="ir.actions.report">
+            <field name="name">Inventory Valuation Report</field>
+            <field name="model">wizard.inventory.valuation.mrp</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">eq_inventory_valuation_report_mrp.valuation_report</field>
+            <field name="report_file">eq_inventory_valuation_report_mrp.valuation_report</field>
+            <field name="paperformat_id" ref="eq_inventory_valuation_report_mrp.inventory_valuation_mrp_paperformat"/>
+        </record>
+
+    </data>
+</odoo>

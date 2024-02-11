@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="delivery_slip_inherit" inherit_id="stock.report_delivery_document">
+        <xpath expr="//div[@class='page']" position="inside">
+            <!-- Add your fields or attributes here -->
+                <div class="col-auto">
+                    <strong>vehicle Number</strong>
+                    <p t-field="o.vehicle_no"/>
+                    <strong>Driver Name</strong>
+                    <p t-field="o.driver_name"/>
+                    <strong>Picking Reference</strong>
+                    <p t-field="o.picking_ref"/>
+                </div>
+        </xpath>
+    </template>
+    <template id="picking_opearation_inherit" inherit_id="stock.report_picking">
+        <xpath expr="//div[@class='page']" position="inside">
+            <!-- Add your fields or attributes here -->
+                <div class="col-auto">
+                    <strong>vehicle Number</strong>
+                    <p t-field="o.vehicle_no"/>
+                    <strong>Driver Name</strong>
+                    <p t-field="o.driver_name"/>
+                    <strong>Picking Reference</strong>
+                    <p t-field="o.picking_ref"/>
+                </div>
+        </xpath>
+    </template>
+</odoo>

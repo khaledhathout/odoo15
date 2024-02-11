@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="vat_invoice_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="header">
+                        <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                        <font style="font-family: 'Almarai';">
+                            <div class="row"
+                                 style="width: 100%;height: 155px;margin-left: 5px;">
+                                <div style="width: 35%">
+                                    <img t-att-src="'data:image/png/*;base64,%s' % to_text(doc.company_id.logo)"
+                                         style="width: 120px; height: 120px;"/>
+                                </div>
+
+                                <div class="text-center pull-center" style="width: 30%;margin-top: 16px;">
+                                    <br/>
+                                    <br/>
+                                    <strong>فاتورة ضريبية</strong>
+                                    <br/>
+                                    <strong>TAX INVOICE</strong>
+                                </div>
+
+                                <div dir="rtl" class="text-right" style="width: 35%;">
+                                    <img t-if="doc.l10n_sa_qr_code_str"
+                                         t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', doc.l10n_sa_qr_code_str, 120, 120)"/>
+                                </div>
+                            </div>
+                        </font>
+                    </div>
+
+                    <div class="article">
+                        <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                        <font style="font-family: 'Almarai';font-size: 15px;">
+                            <div class="row"
+                                 style="width: 100%;height: 132px;margin-left: 3px;">
+                                <div style="width: 50%;">
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-6 bm-2">
+                                            <strong>Bill To</strong>
+                                        </div>
+                                        <div class="col-6 bm-2 text-right">
+                                            <strong>فاتورة إلى</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-2 bm-2">
+                                            <span>Name</span>
+                                        </div>
+                                        <div class="col-8 bm-2 text-center">
+                                            <span t-field="doc.partner_id.name"/>
+                                        </div>
+                                        <div class="col-2 bm-2 text-right">
+                                            <span>اﻹسم</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-3 bm-2">
+                                            <span>Address</span>
+                                        </div>
+                                        <div class="col-6 bm-2 text-center">
+                                            <span t-field="doc.partner_id.state_id.name"/>
+                                        </div>
+                                        <div class="col-3 bm-2 text-right">
+                                            <span>العنوان</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-3 bm-2">
+                                            <span>VAT No.</span>
+                                        </div>
+                                        <div class="col-5 bm-2 text-center">
+                                            <span t-field="doc.partner_id.vat"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>الرقم الضريبي</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-3 bm-2">
+                                            <span>CR No.</span>
+                                        </div>
+                                        <div class="col-5 bm-2 text-center">
+                                            <span t-field="doc.partner_id.company_registry"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>السجل التجاري</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;height: 40px;"/>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-3 bm-2">
+                                            <span>Source</span>
+                                        </div>
+                                        <div class="col-6 bm-2 text-center">
+                                            <span t-field="doc.invoice_origin"/>
+                                        </div>
+                                        <div class="col-3 bm-2 text-right">
+                                            <span>المصدر</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-2 bm-2">
+                                            <span>Notice</span>
+                                        </div>
+                                        <div class="col-8 bm-2 text-center">
+                                            <span t-field="doc.notice"/>
+                                        </div>
+                                        <div class="col-2 bm-2 text-right">
+                                            <span>بيان</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="width: 50%;">
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-6 bm-2">
+                                            <strong>Bill From</strong>
+                                        </div>
+                                        <div class="col-6 bm-2 text-right">
+                                            <strong>فاتورة من</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-2 bm-2">
+                                            <span>Name</span>
+                                        </div>
+                                        <div class="col-8 bm-2 text-center">
+                                            <span t-field="doc.company_id.name"/>
+                                        </div>
+                                        <div class="col-2 bm-2 text-right">
+                                            <span>اﻹسم</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-3 bm-2">
+                                            <span>Address</span>
+                                        </div>
+                                        <div dir="rtl" class="col-6 bm-2 text-center">
+                                            <span t-field="doc.company_id.state_id.name"/>
+                                            -
+                                            <span t-field="doc.company_id.city"/>
+                                        </div>
+                                        <div class="col-3 bm-2 text-right">
+                                            <span>العنوان</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-3 bm-2">
+                                            <span>VAT No.</span>
+                                        </div>
+                                        <div class="col-5 bm-2 text-center">
+                                            <span t-field="doc.company_id.vat"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>الرقم الضريبي</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-3 bm-2">
+                                            <span>CR No.</span>
+                                        </div>
+                                        <div class="col-5 bm-2 text-center">
+                                            <span t-field="doc.company_id.company_registry"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>السجل التجاري</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;height: 40px;"/>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Invoice Number</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.name"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>رقم الفاتورة</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Invoice Date</span>
+                                        </div>
+                                        <div dir="rtl" class="col-4 bm-2 text-center">
+                                            <span t-field="doc.invoice_date"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>تاريخ الفاتورة</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Sales Man</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.invoice_user_id.name"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>إسم المندوب</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <table class="table table-bordered" style="width: 100%;margin-left: 3px;">
+                                <t t-set="total_quantity" t-value="0"/>
+                                <t t-foreach="docs" t-as="doc">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#ccd1d1;">
+                                                <strong>#</strong>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#ccd1d1;">
+                                                <span>Items Number</span>
+                                                <br/>
+                                                <span>رقم الصنف</span>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#ccd1d1;">
+                                                <span>Items Name</span>
+                                                <br/>
+                                                <span>إسم الصنف</span>
+                                            </th>
+                                            <t t-if="doc.company_id.print_unt_qty">
+                                                <th class="text-center"
+                                                    style="border: 1px solid black;background-color:#ccd1d1;">
+                                                    <span>Unit QTY</span>
+                                                    <br/>
+                                                    <span>الكمية بالوحدة</span>
+                                                </th>
+                                            </t>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#ccd1d1;">
+                                                <span>UOM</span>
+                                                <br/>
+                                                <span>الوحدة</span>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#ccd1d1;">
+                                                <span>QTY</span>
+                                                <br/>
+                                                <span>الكمية</span>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#ccd1d1;">
+                                                <span>PRICE</span>
+                                                <br/>
+                                                <span>السعر</span>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#ccd1d1;">
+                                                <span>TAXABLE AMOUNT</span>
+                                                <br/>
+                                                <span>المبلغ الخاضع</span>
+                                            </th>
+<!--                                            <th class="text-center"-->
+<!--                                                style="border: 1px solid black;background-color:#ccd1d1;">-->
+<!--                                                <span>Disc.</span>-->
+<!--                                                <br/>-->
+<!--                                                <span>الخصم</span>-->
+<!--                                            </th>-->
+<!--                                            <th class="text-center"-->
+<!--                                                style="border: 1px solid black;background-color:#ccd1d1;">-->
+<!--                                                <span>TAX Amount</span>-->
+<!--                                                <br/>-->
+<!--                                                <span>الضريبة</span>-->
+<!--                                            </th>-->
+<!--                                            <th class="text-center"-->
+<!--                                                style="border: 1px solid black;background-color:#ccd1d1;">-->
+<!--                                                <span>TOTAL</span>-->
+<!--                                                <br/>-->
+<!--                                                <span>اﻹجمالي</span>-->
+<!--                                            </th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="doc.invoice_line_ids" t-as="line"
+                                            style="font-family: 'Almarai';">
+                                            <td class="text-center"
+                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">
+                                                <span t-esc="line_index+1"/>
+                                            </td>
+                                            <td class="text-center"
+                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">
+                                                <span t-field="line.product_id.default_code"/>
+                                            </td>
+                                            <td class="text-center"
+                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">
+                                                <span t-field="line.product_id.name"/>
+                                            </td>
+                                            <t t-if="doc.company_id.print_unt_qty">
+                                                <td class="text-center"
+                                                    style="border: 1px solid black;line-height: 20px;line-height: 18px;">
+                                                    <span t-field="line.unit_qty"/>
+                                                </td>
+                                            </t>
+                                            <td class="text-center"
+                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">
+                                                <span t-field="line.product_uom_id.name"/>
+                                            </td>
+                                            <td class="text-center"
+                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">
+                                                <span t-field="line.quantity"/>
+                                            </td>
+                                            <td class="text-center"
+                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">
+                                                <span t-field="line.price_unit"/>
+                                            </td>
+                                            <td class="text-center"
+                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">
+                                                <span t-field="line.price_subtotal"/>
+                                            </td>
+<!--                                            <td class="text-center"-->
+<!--                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">-->
+<!--                                                <span t-esc="((line.price_unit * line.quantity) * (line.discount / 100))" t-options="{'widget': 'float', 'precision': 2}"/>-->
+<!--                                            </td>-->
+<!--                                            <td class="text-center"-->
+<!--                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">-->
+<!--                                                <span t-esc="sum((line.price_subtotal * tax.amount) for tax in line.tax_ids) / 100" t-options="{'widget': 'float', 'precision': 2}"/>-->
+<!--                                            </td>-->
+<!--                                            <td class="text-center"-->
+<!--                                                style="border: 1px solid black;line-height: 20px;line-height: 18px;">-->
+<!--                                                <span t-esc="(sum((line.price_subtotal * tax.amount) for tax in line.tax_ids) / 100) + line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}"/>-->
+<!--                                            </td>-->
+                                        </tr>
+                                    </tbody>
+                                </t>
+                            </table>
+
+                            <div class="row"
+                                 style="width: 100%;height: 132px;margin-left: 3px;">
+                                <div style="width: 50%;">
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Subtotal Excl. Tax</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.amount_untaxed"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>إجمالي القيمة بدون الضريبة</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Disc. Amount</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.ks_amount_discount"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>قيمة الخصم</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Taxable Amount</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.amount_untaxed"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>المبلغ الخاضع</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Total VAT</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.amount_tax"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>إجمالي الضريبة</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Total Inc. VAT</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.amount_total"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>المجموع مع الضريبة</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-12 bm-2">
+                                            <span>Invoice Total (In words)</span>
+                                            <br/>
+                                            <strong>
+                                                <span t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div style="width: 50%;">
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-6 bm-2">
+                                            <strong>Bank Details</strong>
+                                        </div>
+                                        <div class="col-6 bm-2 text-right">
+                                            <strong>تفاصيل البنك</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Account Name</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.partner_bank_id.display_name"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>إسم الحساب</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Account No</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.partner_bank_id.acc_number"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>رقم الحساب</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-3 bm-2">
+                                            <span>IBAN</span>
+                                        </div>
+                                        <div class="col-6 bm-2 text-center">
+                                            <span t-field="doc.partner_bank_id.iban"/>
+                                        </div>
+                                        <div class="col-3 bm-2 text-right">
+                                            <span>أبيان</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Swift Code/BIC</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.partner_bank_id.bank_bic"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>سويفت كود/ بيك</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Bank Name</span>
+                                        </div>
+                                        <div class="col-4 bm-2 text-center">
+                                            <span t-field="doc.partner_bank_id.bank_id.name"/>
+                                        </div>
+                                        <div class="col-4 bm-2 text-right">
+                                            <span>إسم البنك</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-4 bm-2">
+                                            <span>Bank Address</span>
+                                        </div>
+                                        <div class="col-5 bm-2 text-center">
+                                            <span t-field="doc.partner_bank_id.bank_id.country.name"/>
+                                            -
+                                            <span t-field="doc.partner_bank_id.bank_id.state.name"/>
+                                        </div>
+                                        <div class="col-3 bm-2 text-right">
+                                            <span>عنوان البنك</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;height: 30px;"/>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-6 bm-2">
+                                            <strong>Terms &amp; Conditions</strong>
+                                        </div>
+                                        <div class="col-6 bm-2 text-right">
+                                            <strong>الشروط واﻷحكام</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-12 bm-2">
+                                            <span t-field="doc.narration"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="footer"
+                                 style="font-family: 'Almarai', 'serif';border-top: 1px solid black;">
+                                <div class="row">
+                                    <div dir="rtl" class="col-12 text-center">
+                                        <span t-field="doc.company_id.partner_id.contact_address_complete"/>
+                                    </div>
+                                </div>
+                                <div class="text-muted text-center">
+                                    <span class="page"/>
+                                    /
+                                    <span class="topage"/>
+                                </div>
+                            </div>
+
+                        </font>
+                    </div>
+
+                </t>
+            </t>
+
+        </template>
+    </data>
+</odoo>

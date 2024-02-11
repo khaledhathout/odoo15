@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="production_template">
+            <t t-call="web.html_container">
+                <div class="header" style="border-bottom: 2px solid black;">
+                    <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                    <font style="font-family: 'Arial-Bold';">
+                        <div class="row"
+                             style="width: 100%;height: 170px;margin-left: 5px;">
+                            <div style="width: 43%">
+                                <br/>
+                                <strong>
+                                    <t t-esc="company_name"/>
+                                    <br/>
+                                    <span>Website:</span>
+                                    <t t-esc="company_web"/>
+                                    <br/>
+                                    <span>E-mail:</span>
+                                    <t t-esc="company_email"/>
+                                    <br/>
+                                    <span>C.r.:</span>
+                                    <t t-esc="company_cr"/>
+                                    <br/>
+                                    <span>Address:</span>
+                                    <t t-esc="street"/>
+                                    -
+                                    <t t-esc="state"/>
+                                    -
+                                    <t t-esc="country"/>
+                                </strong>
+                            </div>
+
+                            <div class="text-center pull-center" style="width: 14%;margin-top: 16px;">
+                                <img t-att-src="'data:image/png/*;base64,%s' % to_text(logo)"
+                                     style="width: 120px; height: 120px;"/>
+                            </div>
+
+                            <div dir="rtl" class="text-right" style="width: 43%;">
+                                <br/>
+                                <strong>
+                                    <t t-esc="company_ar_name"/>
+                                    <br/>
+                                    <span>تلفون:</span>
+                                    <t t-esc="company_phone"/>
+                                    <br/>
+                                    <span>فاكس:</span>
+                                    <t t-esc="company_mobile"/>
+                                    <br/>
+                                    <span>ص.ب:</span>
+                                    <t t-esc="ar_state"/>
+                                    -
+                                    <t t-esc="zip_code"/>
+                                    <br/>
+                                    <span>العنوان:</span>
+                                    <t t-esc="ar_street"/>
+                                    -
+                                    <t t-esc="ar_state"/>
+                                    -
+                                    <t t-esc="ar_country"/>
+                                </strong>
+                                <br/>
+                            </div>
+                        </div>
+                    </font>
+                </div>
+                <div class="article">
+                    <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                    <font style="font-family: 'Arial-Bold';">
+                        <div class="row"
+                             style="width: 100%;height: 55px;margin-left: 7px;">
+
+                            <div style="width: 30%;"/>
+
+                            <div class="text-center pull-center"
+                                 style="border: 1px solid black;width: 40%;border-radius: 5px;">
+                                <span class="pull-center text-center" style="font-size: 37px;">Production Report
+                                </span>
+                            </div>
+
+                            <div dir="rtl" class="text-right" style="width: 30%;"/>
+                        </div>
+                        <br/>
+                        <div class="text-center"
+                             style="border: 1px solid black;width: 100%;border-radius: 5px;margin-left: 3px;">
+                            <strong class="text-center">
+                                <span>From Date:</span>
+                                <t t-esc="from_date"/>
+                                <span>To Date:</span>
+                                <t t-esc="to_date"/>
+                            </strong>
+                        </div>
+                        <br/>
+                        <t t-foreach="docs" t-as="doc">
+                            <table class="table table-bordered"
+                                   style="width: 100%;margin-left: 2px;page-break-inside: avoid;">
+                                <thead>
+                                    <tr>
+                                        <td colspan="6"
+                                            style="border: 1px solid black;background-color:#ccd1d1;line-height: 18px;">
+                                            <div id="mo_information" class="row mt32 mb32"
+                                                 style="width: 100%;margin-left: 2px;background-color:#ccd1d1;">
+                                                <div class="col-4 bm-2">
+                                                    <strong>Production Order:</strong>
+                                                    <p t-field="doc.name" class="m-0"/>
+                                                </div>
+                                                <div class="col-4 bm-2">
+                                                    <strong>Operation Name:</strong>
+                                                    <p t-esc="(doc.workorder_ids[0].name if doc.workorder_ids else '')"
+                                                       class="m-0"/>
+                                                </div>
+                                                <div class="col-4 bm-2">
+                                                    <strong>Scheduled Date:</strong>
+                                                    <p t-field="doc.date_planned_start" class="m-0"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"
+                                            style="border: 1px solid black;background-color:#ccd1d1;line-height: 18px;">
+                                            <div id="mo_information2" class="row mt32 mb32"
+                                                 style="width: 100%;margin-left: 2px;background-color:#ccd1d1;">
+                                                <div class="col-4 bm-2">
+                                                    <strong>Workcenter:</strong>
+                                                    <p t-esc="(doc.workorder_ids[0].workcenter_id.name if doc.workorder_ids else '')"
+                                                       class="m-0"/>
+                                                </div>
+                                                <div class="col-4 bm-2">
+                                                    <strong>Component Location:</strong>
+                                                    <p t-field="doc.location_src_id.name" class="m-0"/>
+                                                </div>
+                                                <div class="col-4 bm-2">
+                                                    <strong>Finish Location:</strong>
+                                                    <p t-field="doc.location_dest_id.name" class="m-0"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="6"
+                                            style="border: 1px solid black;background-color:#ccd1d1;font-size: 27px;line-height: 20px;">
+                                            <span>Components</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center"
+                                            style="border: 1px solid black;background-color:#ccd1d1;line-height: 20px;">
+                                            <strong>Product Name</strong>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border: 1px solid black;background-color:#ccd1d1;line-height: 20px;">
+                                            <strong>Code</strong>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border: 1px solid black;background-color:#ccd1d1;line-height: 20px;">
+                                            <strong>QTY</strong>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border: 1px solid black;background-color:#ccd1d1;line-height: 20px;">
+                                            <strong>UOM</strong>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border: 1px solid black;background-color:#ccd1d1;line-height: 20px;">
+                                            <strong>Valuation Price</strong>
+                                        </td>
+                                        <td class="text-center"
+                                            style="border: 1px solid black;background-color:#ccd1d1;line-height: 20px;">
+                                            <strong>Serial No</strong>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.move_raw_ids" t-as="raw" style="font-family: 'Arial';">
+                                        <t t-if="raw.quantity_done > 0">
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="raw.product_id.name"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="raw.product_id.default_code"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="raw.quantity_done"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="raw.product_uom.name"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="raw.valuation_value"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-esc="', '.join(map(lambda x: x.name, raw.lot_ids))"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="6"
+                                            style="border: 1px solid black;background-color:#ccd1d1;font-size: 27px;line-height: 20px;">
+                                            <span>Finish Products</span>
+                                        </td>
+                                    </tr>
+                                    <tr t-foreach="doc.move_finished_ids" t-as="finish" style="font-family: 'Arial';">
+                                        <t t-if="finish.quantity_done > 0">
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="finish.product_id.name"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="finish.product_id.default_code"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="finish.quantity_done"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="finish.product_uom.name"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-field="finish.valuation_value"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 16px;">
+                                                <span t-esc="', '.join(map(lambda x: x.name, finish.lot_ids))"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                    </font>
+                </div>
+                <div t-attf-class="footer o_standard_footer">
+                    <div class="text-center" style="border-top: 2px solid black;">
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            /
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+        </template>
+    </data>
+</odoo>

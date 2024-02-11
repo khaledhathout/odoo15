@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="stock_report_paperformat" model="report.paperformat">
+            <field name="name">Stock Report Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">36</field>
+            <field name="margin_bottom">7</field>
+            <field name="header_spacing">38</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report id="stock_report"
+                model="stock.move"
+                string="Stock Report"
+                file="smt_alrasheed_stock_custom.stock_template"
+                name="smt_alrasheed_stock_custom.stock_template"
+                report_type="qweb-pdf"
+                menu="False"
+                paperformat="smt_alrasheed_stock_custom.stock_report_paperformat"
+        />
+
+        <report id="stock_report_xlsx"
+                model="stock.move"
+                string="Stock Report"
+                file="smt_alrasheed_stock_custom.stock_report_wizard"
+                name="smt_alrasheed_stock_custom.stock_template_xlsx"
+                report_type="xlsx"
+                menu="False"
+        />
+
+        <report id="delivery_note_report"
+                model="stock.picking"
+                string="Delivery Note Report"
+                file="smt_alrasheed_stock_custom.delivery_note_template"
+                name="smt_alrasheed_stock_custom.delivery_note_template"
+                report_type="qweb-pdf"
+        />
+
+    </data>
+</odoo>

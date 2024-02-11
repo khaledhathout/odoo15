@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="mrp_routing_workcenter_form_view" model="ir.ui.view">
+        <field name="name">mrp.routing.workcenter</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='workorder']" position="after">
+                <group name="manufacture" string="Manufacture">
+                    <field name="tag_ids"/>
+                    <field name="workcenter_ids" force_save="1" widget="many2many_tags"/>
+                    <field name="picking_type_id" domain="[('code','=','mrp_operation')]"/>
+                    <field name="default_location_src_id"/>
+                    <field name="default_location_dest_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_bom_form_view" model="ir.ui.view">
+        <field name="name">mrp.bom.production.form</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="mrp_operation_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="inherit_mrp_production_form_view" model="ir.ui.view">
+        <field name="name">inherit.mrp.production.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="operation_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="mrp_production_workorder_tree_view" model="ir.ui.view">
+        <field name="name">mrp.production.work.order.tree</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="workcenter_ids" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='workcenter_id']" position="attributes">
+                <attribute name="domain">[('id', 'in', workcenter_ids)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <record id="mrp_mrp_routing_workcenter_kanban" model="ir.ui.view">
+        <field name="name">mrp.routing.workcenter.kanban</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_emphasize_colors o_stock_kanban" create="0" group_create="false">
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''}" name="stock_picking">
+                            <div t-attf-class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary" t-if="!selection_mode">
+                                        <a type="object" name="action_open_mo_tree">
+                                            <field name="name"/>
+                                        </a>
+                                    </div>
+                                    <div class="o_primary" t-if="selection_mode">
+                                        <field name="name"/>
+                                    </div>
+                                    <div class="o_secondary">
+                                        <field class="o_secondary" name="picking_type_id" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_manage_button_section" t-if="!selection_mode">
+                                    <!-- <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a> -->
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content" t-if="!selection_mode">
+                                <div class="row">
+                                    <div class="col-6 o_kanban_primary_left">
+                                        <button class="btn btn-primary" name="action_open_mo" type="object">
+                                            <span>
+												Create Order
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="col-6 o_kanban_primary_right">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                <div class="row">
+                                    <div class="col-6 o_kanban_card_manage_section o_kanban_manage_view">
+                                        <!-- <div role="menuitem" class="o_kanban_card_manage_title">
+                                            <span t-if="record.code.raw_value == 'internal'">Transfers</span>
+                                            <span t-else="">View</span>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a name="get_stock_picking_action_picking_type" type="object">All</a>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a name="get_action_picking_tree_ready" type="object">Ready</a>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a name="get_action_picking_tree_waiting" type="object">Waiting</a>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a name="get_action_picking_type_operations" type="object">Operations</a>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-6 o_kanban_card_manage_section o_kanban_manage_new">
+
+                                    </div>
+                                </div>
+
+                                <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                    <div class="col-8" role="menuitem" aria-haspopup="true">
+                                        <ul class="oe_kanban_colorpicker" data-field="color" role="menu"/>
+                                    </div>
+                                    <div role="menuitem" class="col-4">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="mrp_mrp_routing_workcenter_action" model="ir.actions.act_window">
+        <field name="name">MRP Opertation</field>
+        <field name="res_model">mrp.routing.workcenter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban</field>
+        <!-- <field name="domain">[('code','=','mrp_operation')]</field> -->
+        <field name="view_id" ref="mrp_mrp_routing_workcenter_kanban" />
+    </record>
+
+
+    <menuitem action="mrp_mrp_routing_workcenter_action" id="mrp_routing_workcenter_menu" parent="mrp.menu_mrp_root" sequence="2" name="MRP Operation"/>
+</odoo>

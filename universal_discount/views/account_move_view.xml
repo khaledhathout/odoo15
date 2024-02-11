@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form - fixed_discount</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath
+                    expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']"
+                    position="before"
+            >
+                <field
+                        name="discount_fixed"
+                />
+                <field
+                        name="subtotal_discount"
+                />
+            </xpath>
+            <xpath
+                    expr="//field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']"
+                    position="after"
+            >
+                <field
+                        name="subtotal_new"
+                />
+            </xpath>
+            <xpath
+                    expr="//field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']"
+                    position="attributes"
+            >
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath
+                    expr="//field[@name='invoice_line_ids']/form/sheet/group/field[@name='discount']"
+                    position="before"
+            >
+                <field name="discount_fixed"/>
+            </xpath>
+            <xpath
+                    expr="//field[@name='line_ids']/tree/field[@name='discount']"
+                    position="before"
+            >
+                <field name="discount_fixed" />
+                <field name="subtotal_discount"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

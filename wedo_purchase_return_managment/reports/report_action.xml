@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="purchase_return_report_paperformat" model="report.paperformat">
+            <field name="name">Purchase Report Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">36</field>
+            <field name="margin_bottom">7</field>
+            <field name="header_spacing">38</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report id="purchase_return_report"
+                model="purchase.return.line"
+                string="Purchase Return Order Report"
+                file="wedo_purchase_return_managment.purchase_return_template"
+                name="wedo_purchase_return_managment.purchase_return_template"
+                report_type="qweb-pdf"
+                menu="False"
+                paperformat="wedo_purchase_return_managment.purchase_return_report_paperformat"
+        />
+
+        <report id="purchase_return_report_xlsx"
+                model="purchase.return.line"
+                string="Purchase Return Order Report"
+                file="wedo_purchase_return_managment.purchase_return_report_wizard"
+                name="wedo_purchase_return_managment.purchase_r_template_xlsx"
+                report_type="xlsx"
+                menu="False"
+        />
+
+    </data>
+</odoo>

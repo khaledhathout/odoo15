@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_statement_report,account.statement.report,model_account_statement_report,account.group_account_invoice,1,1,1,1
+access_report_line,account.report.line,model_report_line,,1,1,1,1
+

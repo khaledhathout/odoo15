@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mrp_workcenter_view_inherit" model="ir.ui.view">
+            <field name="name">mrp.workcenter.inherit.view</field>
+            <field name="model">mrp.workcenter</field>
+            <field name="inherit_id"
+                   ref="bi_odoo_process_costing_manufacturing.mrp_workcenter_view_inherit_extend_view_1_pro"/>
+            <field name="arch" type="xml">
+                <field name="labour_costs_hour" position="after">
+                    <field name="equipment_cost_hour"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="mrp_bom_form_view" model="ir.ui.view">
+            <field name="name">mrp.bom.form</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="bi_odoo_process_costing_manufacturing.mrp_bom_material_cost_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="mo_auto_create" attrs="{'invisible':[('type','!=','normal')]}"/>
+                    <field name="calendar_ids" widget="many2many_tags"
+                           attrs="{'invisible':[('mo_auto_create','=',False)],'required':[('mo_auto_create','=',True)]}"/>
+                </xpath>
+                <xpath expr="//page[6]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[5]" position="after">
+                    <page string="Direct Equipment Cost">
+                        <field name="bom_equipment_cost_ids" widget="one2many_list">
+                            <tree string="Direct Equipment Cost" editable="bottom">
+                                <field name="operation_id"/>
+                                <field name="equipment_id"/>
+                                <field name="planned_qty" groups="smt_mrp_custom.group_show_bom_planned_cost"/>
+                                <field name="cost" widget="monetary"/>
+                                <field name="total_cost" widget="monetary"
+                                       groups="smt_mrp_custom.group_show_bom_planned_cost"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="bom_total_equipment_cost">
+                            <div class="oe_inline o_td_label">
+                                <label for="bom_total_equipment_cost"/>
+                            </div>
+                            <field name="bom_total_equipment_cost" nolabel="1" class="oe_subtotal_footer_separator"
+                                   widget='monetary'/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='costing']//field[@name='bom_total_labour_cost']" position="replace">
+                    <field name="bom_total_equipment_cost"/>
+                </xpath>
+                <xpath expr="//page[@name='costing']" position="attributes">
+                    <attribute name="groups">smt_mrp_custom.group_show_bom_planned_cost</attribute>
+                </xpath>
+                <xpath expr="//field[@name='bom_overhead_cost_ids']/tree/field[@name='planned_qty']"
+                       position="attributes">
+                    <attribute name="groups">smt_mrp_custom.group_show_bom_planned_cost</attribute>
+                </xpath>
+                <xpath expr="//field[@name='bom_overhead_cost_ids']/tree/field[@name='total_cost']"
+                       position="attributes">
+                    <attribute name="groups">smt_mrp_custom.group_show_bom_planned_cost</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mrp_production_material_cost_form_view" model="ir.ui.view">
+            <field name="name">mrp.production.material.cost.form.view</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id"
+                   ref="bi_odoo_process_costing_manufacturing.mrp_production_material_cost_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='pro_labour_cost_ids']//field[@name='planned_qty']" position="attributes">
+                    <attribute name="widget">float_time</attribute>
+                </xpath>
+                <xpath expr="//field[@name='pro_labour_cost_ids']//field[@name='actual_qty']" position="attributes">
+                    <attribute name="widget">float_time</attribute>
+                </xpath>
+                <xpath expr="//field[@name='pro_overhead_cost_ids']//field[@name='planned_qty']" position="attributes">
+                    <attribute name="widget">float_time</attribute>
+                </xpath>
+                <xpath expr="//field[@name='pro_overhead_cost_ids']//field[@name='actual_qty']" position="attributes">
+                    <attribute name="widget">float_time</attribute>
+                </xpath>
+                <xpath expr="//field[@name='pro_labour_cost_ids']/tree/field[@name='operation_id']" position="after">
+                    <field name="employee_id"/>
+                </xpath>
+                <xpath expr="//field[@name='bom_id']" position="after">
+                    <field name="calendar_id"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+
+                    <label for="calendar_attendance_id" string="Shift"/>
+                    <div>
+                        <field name="calendar_attendance_id" domain="[('calendar_id','=',calendar_id)]"
+                               class="oe_inline"/>
+                        -
+                        <field name="shift_hours" readonly="1" force_save="1" class="oe_inline" widget="float_time"/>Hrs
+                    </div>
+                </xpath>
+
+                <xpath expr="//page[5]" position="after">
+                    <page string="Direct Equipment Cost">
+                        <field name="pro_equipment_cost_ids" widget="one2many_list">
+                            <tree string="Direct equipment Cost" editable="bottom">
+                                <field name="operation_id"/>
+                                <field name="equipment_id"/>
+                                <field name="planned_qty" widget="float_time"/>
+                                <field name="actual_qty" widget="float_time"/>
+                                <field name="cost" widget="monetary" sum="cost"/>
+                                <field name="total_cost" widget="monetary" sum="total_cost"/>
+                                <field name="total_actual_cost" widget="monetary" sum="total_actual_cost"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="total_equipment_cost">
+                            <div class="oe_inline o_td_label">
+                                <label for="total_equipment_cost"/>
+                            </div>
+                            <field name="total_equipment_cost" nolabel="1" class="oe_subtotal_footer_separator"
+                                   widget='monetary'/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="///page[@name='costing']//field[@name='total_labour_cost']" position="after">
+                    <field name="total_equipment_cost"/>
+                </xpath>
+
+                <xpath expr="//field[@name='total_actual_labour_cost']" position="after">
+                    <field name="total_actual_equipment_cost"/>
+                </xpath>
+                <xpath expr="//field[@name='total_actual_overhead_cost']" position="after">
+                    <field name="direct_operation_cost"/>
+                    <field name="approved" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//header" position="inside">
+                    <button name="action_draft" string="Set To Draft" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', 'in', ('draft', 'to_close', 'done', 'cancel'))]}"/>
+                </xpath>
+
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='components']/field[@name='move_raw_ids']/tree[1]/field[@name='location_id']"
+                       position="replace">
+                    <field name="available_location_ids" invisible="1" widget="many2many_tags"/>
+                    <field name="source_stock_location_id" groups="stock.group_stock_multi_locations"
+                           domain="[('id','in',available_location_ids)]" required="1" force_save="1" string="From"
+                           readonly="0" optional="show"/>
+                    <field name="location_id" groups="stock.group_stock_multi_locations"
+                           domain="[('id','in',available_location_ids)]" required="1" force_save="1" string="From"
+                           readonly="0" invisible="1" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='move_raw_ids']" position="attributes">
+                    <attribute name="context">{'force_available_qty':True,'default_date': date_planned_start,
+                        'default_date_deadline': date_deadline,'default_location_dest_id': production_location_id,
+                        'default_state': 'draft', 'default_raw_material_production_id': id, 'default_picking_type_id':
+                        picking_type_id, 'default_company_id': company_id}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='button_mark_done'][1]" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_mark_done'][2]" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_mark_done'][3]" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_mark_done'][4]" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="stock_valuation_layer_form_inherit" model="ir.ui.view">
+            <field name="name">stock.valuation.layer.form.inherit</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='valuation']" position="replace">
+                    <page string="Valuation" name="valuation">
+                        <group>
+                            <group>
+                                <field name="quantity"/>
+                                <field name="uom_id" groups="uom.group_uom"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="unit_cost"/>
+                                <field name="value"/>
+                                <field name="remaining_qty"/>
+                            </group>
+
+                            <group>
+                                <field name="direct_equipment_cost"
+                                       attrs="{'invisible': [('direct_equipment_cost', '=', 0.0)]}"/>
+                                <field name="direct_labour_cost"
+                                       attrs="{'invisible': [('direct_labour_cost', '=', 0.0)]}"/>
+                                <field name="direct_overhead_cost"
+                                       attrs="{'invisible': [('direct_overhead_cost', '=', 0.0)]}"/>
+                                <field name="direct_material_cost"
+                                       attrs="{'invisible': [('direct_material_cost', '=', 0.0)]}"/>
+                                <field name="direct_operation_cost"
+                                       attrs="{'invisible': [('direct_operation_cost', '=', 0.0)]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_valuation_layer_tree_inherit" model="ir.ui.view">
+            <field name="name">stock.valuation.layer.tree.inherit</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='value']" position="before">
+                    <field name="direct_material_cost"/>
+                    <field name="direct_equipment_cost"/>
+                    <field name="direct_labour_cost"/>
+                    <field name="direct_overhead_cost"/>
+                    <field name="direct_operation_cost"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherited product.category form view -->
+        <record id="inherit_product_category_form_view" model="ir.ui.view">
+            <field name="name">inherit.product.category.form.view</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_stock_account_output_categ_id']" position="after">
+                    <field name="manufacturing_cost_account_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherited stock.landed.cost form view -->
+        <record id="inherit_stock_landed_cost_form_view" model="ir.ui.view">
+            <field name="name">inherit.stock.landed.cost.form.view</field>
+            <field name="model">stock.landed.cost</field>
+            <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vendor_bill_id']" position="after">
+                    <field name="date_from" attrs="{'invisible': [('target_model', '=', 'picking')]}"/>
+                    <field name="date_to" attrs="{'invisible': [('target_model', '=', 'picking')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_mrp_production_form" model="ir.ui.view">
+            <field name="name">inherit.mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button name="action_get_unbuild_order"
+                            class="oe_stat_button"
+                            icon="fa-undo"
+                            type="object"
+                            attrs="{'invisible': [('unbuild_count', '=', 0)]}">
+                        <field name="unbuild_count" widget="statinfo" string="UB Orders"/>
+                    </button>
+                    <button name="action_get_journal_entry"
+                            class="oe_stat_button"
+                            string="Entries"
+                            icon="fa-bars"
+                            type="object"
+                            attrs="{'invisible': [('have_entry', '!=', True)]}">
+                        <field name="have_entry" widget="statinfo" string="Entries" invisible="1"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='bom_id']" position="after">
+                    <field name="production_mechanism" attrs="{'invisible': [('product_tracking', '!=', 'lot')],
+                                                               'required': [('product_tracking', '=', 'lot')]}"/>
+                </xpath>
+                <xpath expr="//label[@for='lot_producing_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', ('state', '=', 'draft'), ('product_tracking', 'in', ('none', False)), ('production_mechanism', '=', 'multiple_lot')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lot_producing_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', ('state', '=', 'draft'), ('product_tracking', 'in', ('none', False)), ('production_mechanism', '=', 'multiple_lot')]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_generate_serial']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', ('product_tracking', 'in', ('none', False)), ('lot_producing_id', '!=', False), ('production_mechanism', '=', 'multiple_lot')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='qty_producing']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', '|', ('production_mechanism', '=', 'multiple_lot'), ('state', '=', 'cancel'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(mrp.action_change_production_qty)d'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath> 
+                <xpath expr="//page[@name='components']" position="after">
+                    <page string="Lot/Serial Number" name="lot_serial"
+                          attrs="{'invisible': ['|', ('product_tracking', '!=', 'lot'), ('production_mechanism', '!=', 'multiple_lot')]}">
+                        <field name="lot_line_ids" nolabel="1" attrs="{'invisible': [('product_tracking', '!=', 'lot')],
+                            'readonly': [('state', '!=', 'draft')]}">
+                            <tree editable="bottom" string="Lot/Serial Number">
+                                <field name="product_id" invisible="1"/>
+                                <field name="product_tracking" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <!--                                <label for="lot_producing_id"-->
+                                <!--                                       attrs="{'invisible': ['|', ('state', '=', 'draft'), ('product_tracking', 'in', ('none', False))]}"/>-->
+                                <!--                                <div class="o_row"-->
+                                <!--                                     attrs="{'invisible': ['|', ('state', '=', 'draft'), ('product_tracking', 'in', ('none', False))]}">-->
+                                <field name="lot_producing_id"
+                                       context="{'default_product_id': product_id, 'default_company_id': company_id}"
+                                       attrs="{'invisible': [('product_tracking', 'in', ('none', False))]}"/>
+                                <button name="action_generate_serial_line" type="object"
+                                        class="btn btn-primary fa fa-plus-square-o"
+                                        aria-label="Creates a new serial/lot number"
+                                        title="Creates a new serial/lot number" role="img"
+                                        attrs="{'invisible': ['|', ('product_tracking', '!=', 'lot'), ('lot_producing_id', '!=', False)]}"/>
+                                <!--                                </div>-->
+                                <field name="product_qty" required="1"/>
+                                <field name="product_uom_id" readonly="1"/>
+                                <field name="unit_qty" required="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_mrp_unbuild_form_view" model="ir.ui.view">
+            <field name="name">inherit.mrp.unbuild.form.view</field>
+            <field name="model">mrp.unbuild</field>
+            <field name="inherit_id" ref="mrp.mrp_unbuild_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button name="action_get_unbuild_valuation"
+                            class="oe_stat_button"
+                            string="Valuation"
+                            icon="fa-dollar"
+                            type="object"
+                            attrs="{'invisible': [('have_valuation', '!=', True)]}">
+                        <field name="have_valuation" widget="statinfo" string="Valuation" invisible="1"/>
+                    </button>
+                    <button name="action_get_journal_entry"
+                            class="oe_stat_button"
+                            string="Entries"
+                            icon="fa-bars"
+                            type="object"
+                            attrs="{'invisible': [('have_entry', '!=', True)]}">
+                        <field name="have_entry" widget="statinfo" string="Entries" invisible="1"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="menu_production_order_report" name="Production Order Report"
+                  action="production_report_wizard_action"
+                  parent="mrp.menu_mrp_reporting" sequence="999"/>
+
+    </data>
+</odoo>

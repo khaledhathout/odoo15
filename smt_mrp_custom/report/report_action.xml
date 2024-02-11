@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="production_report_paperformat" model="report.paperformat">
+            <field name="name">Production Report Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">43</field>
+            <field name="margin_bottom">7</field>
+            <field name="header_spacing">44</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report id="production_report"
+                model="mrp.production"
+                string="Production Order Report"
+                file="smt_mrp_custom.production_template"
+                name="smt_mrp_custom.production_template"
+                report_type="qweb-pdf"
+                menu="False"
+                paperformat="smt_mrp_custom.production_report_paperformat"
+        />
+
+        <report id="production_report_xlsx"
+                model="mrp.production"
+                string="Production Order Report"
+                file="smt_mrp_custom.production_report_wizard"
+                name="smt_mrp_custom.production_template_xlsx"
+                report_type="xlsx"
+                menu="False"
+        />
+
+    </data>
+</odoo>

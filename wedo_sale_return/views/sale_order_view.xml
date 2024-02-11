@@ -1,0 +1,32 @@
+<odoo>
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">view.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_return" type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                        attrs="{'invisible': [('return_count', '=', 0)]}">
+                    <field name="return_count" widget="statinfo" string="Returns"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='qty_to_invoice']" position="after">
+                <field name="qty_returned" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.inherit.sale.return</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale_project.product_template_form_view_invoice_policy_inherit_sale_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='service_tracking']" position="before">
+                <field name="fsm_return" attrs="{'invisible': [('type', '!=', 'service')]}"
+                       groups="smt_fsm_team_management.group_allow_product_service_configration"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

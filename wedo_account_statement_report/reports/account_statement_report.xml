@@ -1,0 +1,130 @@
+<openerp>
+    <data>
+        <report
+                id="report_account_statement_report"
+                model="account.statement.report"
+                string="Account Statement"
+                report_type="qweb-pdf"
+                name="wedo_account_statement_report.account_statement_report"
+                file="wedo_account_statement_report.account_statement_report"
+        />
+        <template id="wedo_account_statement_report.account_statement_report">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                                <table style="table-layout: auto;width:100%" class="table-sm">
+                                    <tr style="background-color: #F1F1F1;">
+                                        <th style="border:solid 1px;" class="text-center">Account</th>
+                                        <th style="border:solid 1px;" class="text-center">Opening Balance</th>
+                                        <th style="border:solid 1px;" class="text-center">Closing Balance</th>
+                                        <th style="border:solid 1px;" class="text-center">Currency</th>
+                                        <th style="border:solid 1px;" class="text-center">From Date</th>
+                                        <th style="border:solid 1px;" class="text-center">To Date</th>
+                                        <th style="border:solid 1px;" class="text-center">Status</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:solid 1px;" class="text-center">
+                                            <t t-if="not data['partner_report']">
+                                                <t t-esc="data['account_name']"/> -
+                                            </t>
+                                            <t t-if="data['partner_name']">
+                                                 <t t-esc="data['partner_name']"/>
+                                            </t>
+                                        </td>
+                                        <td style="border:solid 1px;" class="text-center">
+                                            <t t-esc="initial_balance" t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+                                        <td style="border:solid 1px;" class="text-center">
+                                            <t t-esc="end_balance" t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+                                        <td style="border:solid 1px;" class="text-center">
+                                            <t t-esc="data['currency_name']"/>
+                                        </td><td style="border:solid 1px;" class="text-center">
+                                            <t t-esc="data['from_date']"/>
+                                        </td>
+                                        <td style="border:solid 1px;" class="text-center">
+                                            <t t-esc="data['to_date']"/>
+                                        </td>
+                                        <td style="border:solid 1px;" class="text-center">
+                                            <t t-if="data['posted_moves']">
+                                                Posted Only
+                                            </t>
+                                            <t t-if="not data['posted_moves']">
+                                                All Moves
+                                            </t>
+
+                                        </td>
+
+                                    </tr>
+                                </table>
+                                <br></br>
+                                <table style="table-layout: auto;width:100%" class="table-sm">
+                                    <tr style="background-color: #F1F1F1;">
+                                        <th style="border:solid 1px;" class="text-center">#</th>
+                                        <th style="border:solid 1px;" class="text-center">MNo</th>
+                                        <th style="border:solid 1px;" class="text-center">Date</th>
+                                        <th style="border:solid 1px;" class="text-center">Label</th>
+                                        <th style="border:solid 1px;" class="text-center">Debit</th>
+                                        <th style="border:solid 1px;" class="text-center">Credit</th>
+                                        <th style="border:solid 1px;" class="text-center">Balance</th>
+                                    </tr>
+                                    <t t-foreach="docs" t-as="line">
+                                            <tr>
+                                                <td style="border:solid 1px;" class="text-center">
+                                                    <t t-esc="line['seq']"/>
+                                                </td>
+                                                <td style="border:solid 1px;" class="text-center">
+                                                    <t t-esc="line['mno']"/>
+                                                </td>
+                                                <td style="border:solid 1px;" class="text-center">
+                                                    <t t-esc="line['date']"/>
+                                                </td>
+                                                <td style="border:solid 1px;" class="text-center">
+                                                    <t t-esc="line['name']"/>
+                                                </td>
+                                                <td style="border:solid 1px;" class="text-center">
+                                                    <t t-esc="line['debit']"
+                                                       t-options='{"widget": "float", "precision": 2}'/>
+                                                </td>
+                                                <td style="border:solid 1px;" class="text-center">
+                                                    <t t-esc="line['credit']" t-options='{"widget": "float", "precision": 2}'/>
+                                                </td>
+
+                                                <td style="border:solid 1px;" class="text-center">
+                                                    <t t-esc="line['balance']"
+                                                       t-options='{"widget": "float", "precision": 2}'/>
+                                                </td>
+
+                                            </tr>
+                                    </t>
+                                    <tr>
+                                                <td style="border:solid 1px; border: 0;" class="text-center">
+                                                </td>
+                                                <td style="border:solid 1px; border: 0;" class="text-center">
+                                                </td>
+                                                <td style="border:solid 1px; border: 0;" class="text-center">
+                                                </td>
+                                                <td style="border:solid 1px; border: 0;" class="text-center">
+                                                </td>
+                                                <td style="border:solid 1px; background-color: #F1F1F1;" class="text-center">
+                                                    <t t-esc="total_debit"
+                                                       t-options='{"widget": "float", "precision": 2}'/>
+                                                </td>
+                                                <td style="border:solid 1px; background-color: #F1F1F1;" class="text-center">
+                                                    <t t-esc="total_credit" t-options='{"widget": "float", "precision": 2}'/>
+                                                </td>
+
+                                                <td style="border:solid 1px; border: 0;" class="text-center">
+
+                                                </td>
+
+                                            </tr>
+
+                                </table>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

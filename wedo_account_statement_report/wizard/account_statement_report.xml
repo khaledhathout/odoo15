@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+
+    <record id="view_report_line" model="ir.ui.view">
+        <field name="name">Export XLSX</field>
+        <field name="model">report.line</field>
+        <field name="arch" type="xml">
+            <tree export_xlsx="true">
+                <field name="seq"/>
+                <field name="mno"/>
+                <field name="date"/>
+                <field name="label"/>
+                <field name="debit"/>
+                <field name="credit"/>
+                <field name="balance"/>
+
+
+
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_statement_report" model="ir.ui.view">
+        <field name="name">Account Statement</field>
+        <field name="model">account.statement.report</field>
+        <field name="arch" type="xml">
+            <form js_class="wizard_template">
+                <group>
+                    <group>
+                        <field name="partner_report"/>
+                        <field name="account_id" attrs="{'required': [('partner_report', '=', False)], 'invisible': [('partner_report', '=', True)]}"/>
+                        <field name="partner_id" attrs="{'required': [('partner_report', '=', True)]}"/>
+                        <field name="currency_id" required="True" groups="base.group_multi_currency"/>
+                    </group>
+                    <group>
+                        <field name="from_date" required="True"/>
+                        <field name="to_date" required="True"/>
+                        <field name="payment_detail"/>
+                        <field name="posted_moves"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+
+
+                </group>
+                <footer>
+                    <button name="export_html" type="object" string="View" class="btn-primary"/>
+                        or
+                    <button name="print_report" type="object" string="Export PDF" class="btn-primary"/>
+                      or
+                    <button
+                        name="button_export_xlsx"
+                        string="Export XLSX"
+                        type="object"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_statement_report" model="ir.actions.act_window">
+        <field name="name">Account Statement</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.statement.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_account_statement_report"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            action="action_account_statement_report"
+            id="menu_account_statement_report"
+            parent="account.account_reports_legal_statements_menu"
+            sequence="1"
+            name="Account Statement"
+    />
+
+</odoo>

@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="picking_inherit" model="ir.ui.view">
+            <field name="name">picking_inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <field name="vehicle_no"/>
+                    <field name="driver_name"/>
+                    <field name="picking_ref"/>
+                    <field name="location_well"/>
+                    <field name="well_ref"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <menuitem id="menu_stock_move_report" name="Stock Move Report"
+                  action="stock_report_wizard_action"
+                  parent="stock.menu_warehouse_report" sequence="999"/>
+    </data>
+</odoo>

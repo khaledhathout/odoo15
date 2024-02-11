@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="purchase_template">
+            <t t-call="web.html_container">
+                <div class="header" style="border-bottom: 2px solid black;">
+                    <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                    <font style="font-family: 'Arial-Bold';">
+                        <div class="row"
+                             style="width: 100%;height: 145px;margin-left: 5px;">
+                            <div style="width: 43%">
+                                <br/>
+                                <strong>
+                                    <t t-esc="company_name"/>
+                                    <br/>
+                                    <span>Website:</span>
+                                    <t t-esc="company_web"/>
+                                    <br/>
+                                    <span>E-mail:</span>
+                                    <t t-esc="company_email"/>
+                                    <br/>
+                                    <span>C.r.:</span>
+                                    <t t-esc="company_cr"/>
+                                    <br/>
+                                    <span>Address:</span>
+                                    <t t-esc="street"/>
+                                    -
+                                    <t t-esc="state"/>
+                                    -
+                                    <t t-esc="country"/>
+                                </strong>
+                            </div>
+
+                            <div class="text-center pull-center" style="width: 14%;margin-top: 16px;">
+                                <img t-att-src="'data:image/png/*;base64,%s' % to_text(logo)"
+                                     style="width: 120px; height: 120px;"/>
+                            </div>
+
+                            <div dir="rtl" class="text-right" style="width: 43%;">
+                                <br/>
+                                <strong>
+                                    <t t-esc="company_ar_name"/>
+                                    <br/>
+                                    <span>تلفون:</span>
+                                    <t t-esc="company_phone"/>
+                                    <br/>
+                                    <span>فاكس:</span>
+                                    <t t-esc="company_mobile"/>
+                                    <br/>
+                                    <span>ص.ب:</span>
+                                    <t t-esc="ar_state"/>
+                                    -
+                                    <t t-esc="zip_code"/>
+                                    <br/>
+                                    <span>العنوان:</span>
+                                    <t t-esc="ar_street"/>
+                                    -
+                                    <t t-esc="ar_state"/>
+                                    -
+                                    <t t-esc="ar_country"/>
+                                </strong>
+                                <br/>
+                            </div>
+                        </div>
+                    </font>
+                </div>
+                <div class="article">
+                    <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                    <font style="font-family: 'Arial-Bold';">
+                        <div class="row"
+                             style="width: 99%;height: 55px;margin-left: 7px;">
+
+                            <div style="width: 38%;"/>
+
+                            <div class="text-center pull-center"
+                                 style="border: 1px solid black;width: 24%;border-radius: 5px;">
+                                <span class="pull-center text-center" style="font-size: 37px;">Items Purchases
+                                </span>
+                            </div>
+
+                            <div dir="rtl" class="text-right" style="width: 38%;"/>
+
+                        </div>
+                        <br/>
+                        <div class="text-center"
+                             style="border: 1px solid black;width: 100%;border-radius: 5px;margin-left: 3px;">
+                            <strong class="text-center">
+                                <span>From Date:</span>
+                                <t t-esc="from_date"/>
+                                <span>To Date:</span>
+                                <t t-esc="to_date"/>
+                            </strong>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered" style="width: 92%;">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>S/No.</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Purchase Order</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Purchase State</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Invoice Date</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Invoice Number</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Invoice State</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Account Number</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Supplier Name</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Supplier Reference</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Item Code</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Item Name</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Length</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Width</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Height</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Truck No.</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Receipt No.</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>QTY</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Product UOM</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>UOM Category</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Destination Location</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Price</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Amount</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Vat</strong>
+                                    </th>
+                                    <th class="text-center"
+                                        style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Total</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="docs" t-as="doc">
+                                    <tr style="font-family: 'Arial';">
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="doc_index+1"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.order_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.order_id.state"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.invoice_lines[0].move_id.invoice_date if doc.invoice_lines else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.invoice_lines[0].move_id.name if doc.invoice_lines else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="doc.get_invoice_state()"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.invoice_lines[0].account_id.name if doc.invoice_lines else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.order_id.partner_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.order_id.partner_ref"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_id.default_code"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.length"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.width"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.height"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.order_id.picking_ids[0].truck_ref if doc.order_id.picking_ids else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.order_id.picking_ids[0].name if doc.order_id.picking_ids else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_qty"/>
+                                        </td>
+
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_uom.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_uom_category_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="doc.move_ids[0].picking_id.location_dest_id.name or ''"/>
+                                        </td>
+
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.price_unit"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.price_subtotal"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.price_tax"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.price_subtotal + doc.price_tax)"
+                                                  t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </font>
+
+                </div>
+                <div t-attf-class="footer o_standard_footer">
+                    <div class="text-center" style="border-top: 2px solid black;">
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            /
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+        </template>
+    </data>
+</odoo>

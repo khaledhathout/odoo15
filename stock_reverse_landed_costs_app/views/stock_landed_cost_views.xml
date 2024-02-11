@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id='inherit_view_stock_landed_cost_form' model='ir.ui.view'>
+            <field name="name">inherit.stock.landed.cost.form</field>
+            <field name="model">stock.landed.cost</field>
+            <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_cancel']" position="attributes">
+                    <attribute name="states">draft,done</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="after">
+                    <button name="action_draft" states="cancel" type="object" class="btn btn-primary" string="Set to Draft"/>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_title')]" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_account_moves" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('account_move_count', '=', 0)]}">
+                            <field name="account_move_count" widget="statinfo" string="Moves"/>
+                        </button>
+                    </div>
+                </xpath>
+
+                <!-- <xpath expr="//field[@name='vendor_bill_id']" position="after">
+                    <field name="exchange_currency"/>
+                    <field name="exchange_amount"/>
+                </xpath> -->
+
+                <xpath expr="//field[@name='picking_ids']" position="before">
+                    <field name="order_id"/>
+                </xpath>
+
+                <xpath expr="//field[@name='picking_ids']" position="replace">
+                    <field name="picking_ids" widget="many2many_tags" 
+                                    options="{'no_create_edit': True}" attrs="{'invisible': [('target_model', '!=', 'picking')]}"
+                                    domain="[('company_id', '=', company_id), ('move_lines.stock_valuation_layer_ids', '!=', False),
+                                    ('purchase_id','=', order_id)]"/>
+                </xpath>
+
+                <xpath expr="//field[@name='cost_lines']/tree/field[@name='price_unit']" position="before">
+                    <field name="exchange_currency"/>
+                    <field name="exchange_amount"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

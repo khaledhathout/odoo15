@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<record id="action_backdate" model="ir.actions.server">
+		<field name="name">Back Date</field>
+		<field name="state">code</field>
+		<field name="type">ir.actions.server</field>
+		<field name="model_id" ref="model_mrp_production"/>
+		<field name="binding_model_id" ref="model_mrp_production"/>
+		<field name="binding_view_types">list,form</field>
+		<field name="code">action=records.action_backdate()</field>
+	</record>
+
+	<record id="view_mrp_order_inherit" model="ir.ui.view">
+		<field name="name">view.mrp.order.inherit</field>
+		<field name="model">mrp.production</field>
+		<field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='company_id']" position="after">
+				<field name="note" readonly="1"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>
+         

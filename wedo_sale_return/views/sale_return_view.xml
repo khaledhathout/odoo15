@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sale_return_form" model="ir.ui.view">
+            <field name="name">sale.return.form</field>
+            <field name="model">sale.return</field>
+            <field name="arch" type="xml">
+                <form string="Sale Return">
+                    <header>
+                        <button name="action_confirm" states="draft" string="Confirm" type="object" class="oe_highlight"
+                                groups="wedo_sale_return.group_sale_return_user"/>
+                        <button name="action_reset_draft" states="cancel,confirm" string="Reset Draft" type="object"
+                                class="oe_highlight"
+                                groups="wedo_sale_return.group_sale_return_user"/>
+                        <button name="action_process" string="Process" type="object" states="confirm"
+                                class="oe_highlight"
+                                groups="wedo_sale_return.group_sale_return_manager"/>
+                        <button name="action_cancel" type="object" states="done,draft" string="Cancel"
+                                class="oe_highlight"
+                                groups="wedo_sale_return.group_sale_return_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="buttons">
+                            <button name="action_open_picking_invoice" type="object"
+                                    class="oe_stat_button" icon="fa-file-text"
+                                    attrs="{'invisible': [('invoice_count','=', 0)]}">
+                                <field name="invoice_count" widget="statinfo"/>
+                            </button>
+                            <button name="action_open_picking" type="object"
+                                    class="oe_stat_button" icon="fa-truck"
+                                    attrs="{'invisible': [('picking_count','=', 0)]}">
+                                <field name="picking_count" widget="statinfo"/>
+                            </button>
+                            <button name="action_open_task" type="object"
+                                    class="oe_stat_button" icon="fa-file-text"
+                                    attrs="{'invisible': [('task_count','=', 0)]}">
+                                <field name="task_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Paid" attrs="{'invisible': [('paid', '=', False)]}" />
+                        <field name="paid" invisible="1"/>
+                        <div class="oe_title">
+                            <span class="o_form_label">Order Name</span>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date_order" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                                <field name="reference" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                                <field name="reason_id" attrs="{'readonly': [('state','!=', 'draft')]}"
+                                       options="{'no_create_edit': True,'no_create': True}"/>
+                                <field name="type" attrs="{'readonly': [('state','!=', 'draft')]}" widget="radio"/>
+                            </group>
+                            <group>
+                                <field name="partner_id" widget="res_partner_many2one"
+                                       context="{'res_partner_search_mode':'customer','show_address':1,'show_vat':True}"
+                                       placeholder="Name, TIN, Email, or Reference"
+                                       attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                                <field name="sale_order_id"
+                                       domain="[('partner_id','=',partner_id),
+                                                ('state', 'in', ['sale','done'])]"
+                                       attrs="{'readonly': [('state','!=', 'draft')],
+                                               'invisible': [('sale','!=', True)],'required': [('sale','=', True)]}"/>
+                                <field name="analytic_account_id" required="True" force_save="1"
+                                       attrs="{'readonly': ['|', ('state','!=', 'draft'), ('sale','=', True)]}"/>
+                                <field name="effective_date"/>
+                                <label for="pricelist_id" groups="product.group_product_pricelist"/>
+                                <div groups="product.group_product_pricelist" class="o_row">
+                                    <field name="pricelist_id" force_save="1" options="{'no_open':True,'no_create': True}"
+                                           attrs="{'readonly': ['|',('state','!=', 'draft'),('sale_order_id','!=', False)]}"/>
+                                    <!--button name="update_prices" type="object"
+                                            string=" Update Prices"
+                                            help="Recompute all prices based on this pricelist"
+                                            class="btn-link mb-1 px-0" icon="fa-refresh"
+                                            confirm="This will update all unit prices based on the currently set pricelist."
+                                            attrs="{'invisible': [('show_update_pricelist', '=', False),('state','!=', 'draft')]}"/-->
+                                </div>
+                            </group>
+
+                            <group string="Details">
+                                <field name="return_journal_id" attrs="{'readonly': [('state','!=', 'draft')]}"
+                                       domain="[('type','=','sale'),('company_id','=',company_id)]"/>
+                                <field name="location_id" options="{'no_create': True}" required="1"
+                                       domain="[('return_location', '=', True)]"
+                                       attrs="{'readonly': [('state','!=', 'draft')]}"
+                                       groups="stock.group_stock_multi_locations"/>
+                                <field name="picking_type_id" invisible="0" required="1" options="{'no_create': True}"
+                                       attrs="{'readonly': [('state','!=', 'draft')]}"
+                                       groups="stock.group_stock_multi_locations"/>
+                                <field name="currency_id" groups="base.group_multi_currency" force_save="1"
+                                       attrs="{'readonly': ['|',('state','!=', 'draft'),('sale_order_id','!=', False)]}"/>
+                                <field name="company_id" attrs="{'readonly': [('state','!=', 'draft')]}"
+                                       groups="base.group_multi_company"/>
+                            </group>
+                            <group string="Exchange" attrs="{'invisible': [('type', '!=', 'exchange')]}">
+                                <label for="exchange_order_id" string="Order"/>
+                                <div class="o_row">
+                                    <field name="exchange_order_id" force_save="1" readonly="1"/>
+                                    <button name="add_exchange_order" type="object"
+                                            string="Add" class="btn-link mb-1 px-0"
+                                            attrs="{'invisible': [('exchange_order_id', '!=', False)]}"/>
+                                </div>
+                            </group>
+                            <group string="Approval Reason"
+                                   attrs="{'invisible': [('state', '!=', 'confirm'), ('approval_reason', '=', False)]}">
+                                <field name="approval_reason" widget="radio"
+                                       attrs="{'required': [('state','=', 'confirm')],
+                                               'readonly': [('state','!=', 'confirm')]}"/>
+                                <field name="other_reason"
+                                       attrs="{'required': [('approval_reason', '=', 'other')],
+                                               'invisible': [('approval_reason','!=', 'other')],
+                                               'readonly': [('state', '!=', 'confirm')]}"/>
+                            </group>
+
+                            <group invisible="1">
+                                <field name="picking_ids" widget="many2many_tags" force_save="1" readonly="1"/>
+                                <field name="default_location_dest_id_usage"/>
+                                <field name="user_id" force_save="1"/>
+                                <field name="show_update_pricelist"/>
+                                <field name="sale"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Lines" name="lines">
+<!--                                <group>-->
+<!--                                    <group>-->
+<!--                                        <field name="services" attrs="{'readonly':[('state','!=', 'draft')]}" nolabel="1"-->
+<!--                                               domain="[('project_id','in',fsm_project_ids),('fsm_return','=',True)]" widget="many2many_checkboxes" />-->
+<!--                                        <field name="fsm_project_ids" invisible="1"/>-->
+<!--                                    </group>-->
+<!--                                </group>-->
+                                <field name="order_line_ids" widget="section_and_note_one2many" mode="tree">
+                                    <tree string="Lines" editable="bottom">
+                                        <control>
+                                            <create name="add_line_control" string="Add a line"/>
+
+                                            <create name="add_section_control" string="Add a section"
+                                                    context="{'default_display_type': 'line_section'}"/>
+                                            <create name="add_note_control" string="Add a note"
+                                                    context="{'default_display_type': 'line_note'}"/>
+                                        </control>
+                                        <field name="sale_order_id" invisible="1"/>
+                                        <field name="display_type" invisible="1"/>
+                                        <field name="product_id" force_save="1" attrs="{'readonly':[('parent.sale','=',True)]}"/>
+                                        <field name="name" widget="section_and_note_text" optional="show" force_save="1"
+                                               attrs="{'readonly': [('display_type','not in', ('line_section', 'line_note'))]}"/>
+                                        <field name="product_qty" attrs="{'readonly':[('parent.sale','=',True)]}" force_save="1"/>
+                                        <field name="product_uom" force_save="1" attrs="{'readonly':[('parent.sale','=',True)]}"/>
+                                        <field name="price_unit" force_save="1" attrs="{'readonly':[('parent.sale','=',True)]}"/>
+                                        <field name="qty_return" force_save="1" />
+                                        <field name="tax_id" force_save="1" attrs="{'readonly':[('parent.sale','=',True)]}"
+                                               domain="[('company_id','=',company_id),('type_tax_use','=','sale')]"
+                                               widget="many2many_tags"/>
+
+                                        <field name="discount" force_save="1" attrs="{'readonly':[('parent.sale','=',True)]}"/>
+                                        <field name="discount_fixed" force_save="1" attrs="{'readonly':[('parent.sale','=',True)]}"/>
+                                        <field name="price_subtotal" force_save="1"/>
+                                        <field name="received_qty" force_save="1" readonly="1"/>
+                                        <field name="invoiced_qty" force_save="1" readonly="1"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="price_tax" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group name="note_group" class="mt-2 mt-md-0">
+                                    <group class="oe_subtotal_footer oe_right" name="sale_total">
+                                        <field name="amount_untax"/>
+                                        <field name="amount_tax"/>
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="total"/>
+                                        </div>
+                                        <field name="total" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                        <field name="exchange_order_total" string="New Order Total"
+                                               attrs="{'invisible': [('type','!=', 'exchange')]}"/>
+
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label"
+                                             attrs="{'invisible': [('type','!=', 'exchange')]}">
+                                            <label for="net_amount" string="Customer have to Pay"
+                                               attrs="{'invisible': [('net_amount', '&gt;=', 0)]}"/>
+                                            <label for="net_amount" string="Pay back to Customer"
+                                               attrs="{'invisible': [('net_amount', '&lt;=', 0)]}"/>
+                                            <label for="net_amount" string="Net"
+                                               attrs="{'invisible': [('net_amount', '!=', 0)]}"/>
+                                        </div>
+                                        <field name="net_amount" nolabel="1" class="oe_subtotal_footer_separator"
+                                               attrs="{'invisible': [('type','!=', 'exchange')]}"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="sale_return_view_tree" model="ir.ui.view">
+            <field name="name">sale.return.view.tree</field>
+            <field name="model">sale.return</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="sale_order_id"/>
+                    <field name="date_order"/>
+                    <field name="type"/>
+                    <field name="total"/>
+                    <field name="state" widget="badge" decoration-success="state == 'done'"
+                           decoration-warning="state == 'confirm'" decoration-info="state == 'draft'"/>
+                    <field name="paid" widget='boolean_toggle'/>
+                </tree>
+            </field>
+        </record>
+        <record id="sale_return_view_pivot" model="ir.ui.view">
+            <field name="name">sale.return.view.pivot</field>
+            <field name="model">sale.return</field>
+            <field name="arch" type="xml">
+                <pivot display_quantity="True" sample="1">
+                    <field name="partner_id" type="row"/>
+                    <field name="total" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="sale_return_view_graph" model="ir.ui.view">
+            <field name="name">sale.return.view.graph</field>
+            <field name="model">sale.return</field>
+            <field name="arch" type="xml">
+                <graph string="Sale Return" sample="1">
+                    <field name="partner_id" type="row"/>
+                    <field name="total" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <record id="sale_return_search" model="ir.ui.view">
+            <field name="name">sale.return.filter</field>
+            <field name="model">sale.return</field>
+            <field name="arch" type="xml">
+                <search string="Sale Return Filter">
+                    <field name="sale"/>
+                    <field name="name"/>
+                    <field name="picking_ids"/>
+                    <field name="sale_order_id"/>
+                    <field name="return_journal_id"/>
+                    <field name="partner_id"/>
+                    <field name="date_order"/>
+                    <field name="state"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" name="groupby_partner" domain="[]"
+                                context="{'group_by': 'partner_id'}"/>
+                        <filter string="Sale" name="groupby_sale" domain="[]" context="{'group_by': 'sale'}"/>
+                        <filter string="State" name="groupby_state" domain="[]" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sale_return_action">
+            <field name="name">Sale Return</field>
+            <field name="res_model">sale.return</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="view_id" ref="sale_return_view_tree"/>
+            <field name="search_view_id" ref="sale_return_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a request for return
+                </p>
+            </field>
+        </record>
+
+        <!-- Top menu item -->
+        <menuitem name="Sale Return"
+                  id="menu_return_sale_root" groups="wedo_sale_return.group_sale_return_user"
+                  web_icon="wedo_sale_return,static/description/icon.png"
+                  sequence="4"/>
+
+        <menuitem id="menu_sale_form_action" parent="menu_return_sale_root" action="sale_return_action" sequence="1"
+                  groups="wedo_sale_return.group_sale_return_user"/>
+
+        <!--Reason-->
+
+        <record id="sale_return_reason_form" model="ir.ui.view">
+            <field name="name">sale.return.reason.form</field>
+            <field name="model">sale.return.reason</field>
+            <field name="arch" type="xml">
+                <form string="Sale Return Reason">
+
+                    <sheet>
+                        <div class="oe_title">
+                            <span class="o_form_label">Reason</span>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="sale_return_reason_view_tree" model="ir.ui.view">
+            <field name="name">sale.return.reason.view.tree</field>
+            <field name="model">sale.return.reason</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sale_return_reason_search" model="ir.ui.view">
+            <field name="name">sale.return.reason.filter</field>
+            <field name="model">sale.return.reason</field>
+            <field name="arch" type="xml">
+                <search string="Sale Return Reason">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sale_return_reason_action">
+            <field name="name">Sale Return Reason</field>
+            <field name="res_model">sale.return.reason</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sale_return_reason_view_tree"/>
+            <field name="search_view_id" ref="sale_return_reason_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a return Reason
+                </p>
+            </field>
+        </record>
+
+        <record id="retrn_from_non_order" model="ir.ui.view">
+            <field name="name">sale.return.form</field>
+            <field name="model">sale.return</field>
+            <field name="inherit_id" ref="wedo_sale_return.sale_return_form"/> 
+            <field name="groups_id" eval="[(4,ref('wedo_sale_return.group_return_without_sale_order'))]"/>
+            <field name="arch" type="xml">
+                <field name="sale_order_id" position="before">
+                    <field name="sale"/>
+                </field>
+            </field>
+        </record>
+
+        <menuitem id="menu_sale_reason_form_action" parent="menu_return_sale_root" action="sale_return_reason_action"
+                  sequence="2" groups="wedo_sale_return.group_sale_return_manager"/>
+
+        <menuitem id="menu_sale_return_reporting" parent="menu_return_sale_root" name="Reporting"
+                  sequence="99" groups="wedo_sale_return.group_sale_return_user"/>
+
+        <menuitem id="menu_purchase_return_order_report" name="Sale Return Order Report"
+                  action="sale_return_report_wizard_action"
+                  parent="menu_sale_return_reporting" sequence="1"
+                  groups="wedo_sale_return.group_sale_return_user"/>
+
+    </data>
+</odoo>

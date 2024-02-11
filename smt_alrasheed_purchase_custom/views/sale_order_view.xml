@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <!-- Inherited sale.order form view -->
+        <record id="inherit_sale_order_form" model="ir.ui.view">
+            <field name="name">inherit.sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[2]" position="inside">
+                    <field name="show_measure" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="before">
+                    <field name="length" optinal="show" attrs="{'column_invisible': [('parent.show_measure', '=', False)]}"/>
+                    <field name="width" optinal="show" attrs="{'column_invisible': [('parent.show_measure', '=', False)]}"/>
+                    <field name="height" optinal="show" attrs="{'column_invisible': [('parent.show_measure', '=', False)]}"/>
+                    <field name="unit_qty" attrs="{'column_invisible': [('parent.show_measure', '=', False)]}"/>
+
+                </xpath>
+
+                <xpath expr='//field[@name="order_line"]/tree' position="inside">
+                    <field name="line_processed" invisible="1"/>
+                    <button name="action_process_line" string="Process" type="object" class="btn-primary"
+                            attrs="{'invisible': ['|', '|', ('line_processed', '=', True), ('parent.state', '=', 'draft'),
+                                                            ('parent.show_measure', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="menu_sale_order_report" name="Sale Order Report"
+                  action="sale_report_wizard_action"
+                  parent="sale.menu_sale_report" sequence="999"/>
+    </data>
+</odoo>

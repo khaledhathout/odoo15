@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="purchase_wizard_view_form" model="ir.ui.view">
+            <field name="name">purchase.wizard.view.form</field>
+            <field name="model">purchase.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Report">
+                    <sheet>
+                        <group>
+                            <label for="from_date" string="Dates"/>
+                            <div class="o_row o_row_readonly">
+                                <span class="oe_inline">
+                                    From
+                                </span>
+                                <field name="from_date" required="1" class="oe_inline" nolabel="1"/>
+                                <span class="oe_inline">
+                                    To
+                                </span>
+                                <field name="to_date" required="1" class="oe_inline" nolabel="1"/>
+                            </div>
+                        </group>
+                        <footer>
+                            <button name="get_report" string="PDF Report" type="object" class="btn-primary" icon="fa-file-pdf-o"/>
+                            OR
+                            <button name="get_report_xlsx" string="Excel Report" type="object" class="btn-primary" icon="fa-file-excel-o"/>
+                            OR
+                            <button string="Cancel" class="btn-danger" special="cancel" icon="fa-close"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="purchase_report_wizard_action"
+                    name="Purchase Report"
+                    res_model="purchase.report.wizard"
+                    view_mode="form"
+                    target="new"
+        />
+
+    </data>
+</odoo>

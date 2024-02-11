@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="sale_return_template">
+            <t t-call="web.html_container">
+                <div class="header" style="border-bottom: 2px solid black;">
+                    <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                    <font style="font-family: 'Arial-Bold';">
+                        <div class="row"
+                             style="width: 100%;height: 145px;margin-left: 5px;">
+                            <div style="width: 43%">
+                                <br/>
+                                <strong>
+                                    <t t-esc="company_name"/>
+                                    <br/>
+                                    <span>Website:</span>
+                                    <t t-esc="company_web"/>
+                                    <br/>
+                                    <span>E-mail:</span>
+                                    <t t-esc="company_email"/>
+                                    <br/>
+                                    <span>C.r.:</span>
+                                    <t t-esc="company_cr"/>
+                                    <br/>
+                                    <span>Address:</span>
+                                    <t t-esc="street"/>
+                                    -
+                                    <t t-esc="state"/>
+                                    -
+                                    <t t-esc="country"/>
+                                </strong>
+                            </div>
+
+                            <div class="text-center pull-center" style="width: 14%;margin-top: 16px;">
+                                <img t-att-src="'data:image/png/*;base64,%s' % to_text(logo)"
+                                     style="width: 120px; height: 120px;"/>
+                            </div>
+
+                            <div dir="rtl" class="text-right" style="width: 43%;">
+                                <br/>
+                                <strong>
+                                    <t t-esc="company_ar_name"/>
+                                    <br/>
+                                    <span>تلفون:</span>
+                                    <t t-esc="company_phone"/>
+                                    <br/>
+                                    <span>فاكس:</span>
+                                    <t t-esc="company_mobile"/>
+                                    <br/>
+                                    <span>الضريبي:</span>
+                                    <t t-esc="vat"/>
+                                    <br/>
+                                    <span>العنوان:</span>
+                                    <t t-esc="ar_street"/>
+                                    -
+                                    <t t-esc="ar_state"/>
+                                    -
+                                    <t t-esc="ar_country"/>
+                                </strong>
+                                <br/>
+                            </div>
+                        </div>
+                    </font>
+                </div>
+                <div class="article">
+                    <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                    <font style="font-family: 'Arial-Bold';">
+                        <div class="row"
+                             style="width: 99%;height: 55px;margin-left: 7px;">
+
+                            <div style="width: 27%;"/>
+
+                            <div class="text-center pull-center"
+                                 style="border: 1px solid black;width: 46%;border-radius: 5px;">
+                                <span dir="rtl" class="pull-center text-center" style="font-size: 37px;">مردودات مبيعات
+                                    اﻷصناف حسب رقم الصنف
+                                </span>
+                            </div>
+
+                            <div dir="rtl" class="text-right" style="width: 27%;"/>
+
+                        </div>
+                        <br/>
+                        <div dir="قفم" class="text-center"
+                             style="width: 100%;margin-left: 3px;">
+                            <strong class="text-center">
+                                <span>من التاريخ:</span>
+                                <t t-esc="from_date"/>
+                                <span>إلى التاريخ:</span>
+                                <t t-esc="to_date"/>
+                            </strong>
+                        </div>
+                        <br/>
+                        <table dir="rtl" class="table table-bordered" style="width: 92%;">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>رقم الفاتورة</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>الحالة</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>التاريخ</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>إسم المندوب</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>إسم العميل</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>رقم اﻹستلام</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>رقم السيارة</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>مرجع الشحنة</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>رقم الصنف</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>إسم الصنف</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>طول</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>عرض</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>إرتفاع</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>اللوت</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>كمية</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>متر مربع</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>متر طولي</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>السعر</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>قيمة</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>الملاحظات</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="docs" t-as="doc">
+                                    <tr style="font-family: 'Arial';">
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.order_id.invoice_ids[0].name if doc.order_id.invoice_ids else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="doc.get_invoice_state()"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.date_order"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.order_id.sale_order_id.user_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.order_id.partner_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.order_id.picking_ids[0].name if doc.order_id.picking_ids else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.order_id.picking_ids[0].truck_ref if doc.order_id.picking_ids else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.order_id.picking_ids[0].picking_ref if doc.order_id.picking_ids else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_id.default_code"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.sale_order_id.length"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.sale_order_id.width"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.sale_order_id.height"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.sale_order_id.lot_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.qty_return"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.sale_order_id.m2"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.sale_order_id.lm"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.price_unit"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.price_subtotal"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.order_id.picking_ids[0].note if doc.order_id.picking_ids else '')"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </font>
+
+                </div>
+                <div t-attf-class="footer o_standard_footer">
+                    <div class="text-center" style="border-top: 2px solid black;">
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            /
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+        </template>
+    </data>
+</odoo>

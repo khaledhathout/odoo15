@@ -1,0 +1,24 @@
+Hello Dear Customer,
+
+If you want to use this module than you need to go in the __manifest__.py file
+
+and in that file 
+
+    #'depends': ['account','l10n_sa_invoice'],
+    
+    You have to Uncomment line above one and comment below one line:
+    
+     'depends': ['account'],
+     
+     With just putting # before starting synax.
+     
+     and than restart you server.
+     
+     
+ Key Note:
+ 
+ Make sure your branch should be updated branch on of after 1st december 2021.
+ 
+ than and than this module will work.
+ 
+

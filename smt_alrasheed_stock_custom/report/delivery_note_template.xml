@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="delivery_note_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="header" style="border-bottom: 4px solid green;">
+                        <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                        <font style="font-family: 'Arial-Bold';">
+                            <div class="row"
+                                 style="width: 100%;height: 145px;margin-left: 5px;">
+                                <div style="width: 35%">
+                                    <br/>
+                                </div>
+
+                                <div class="text-center pull-center"
+                                     style="width: 30%;margin-top: 16px;font-size: 20px;">
+                                    <br/>
+                                    <br/>
+                                    <strong>
+                                        <u>Delivery Note</u>
+                                    </strong>
+                                    <br/>
+                                    <strong>سند صرف بضاعة</strong>
+                                </div>
+
+                                <div dir="rtl" class="text-right" style="width: 35%;">
+                                    <br/>
+                                    <img t-att-src="'data:image/png/*;base64,%s' % to_text(logo)"
+                                         style="width: 120px; height: 120px;"/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </font>
+                    </div>
+
+                    <div class="article">
+                        <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                        <font style="font-family: 'Arial-Bold';">
+                            <div class="row"
+                                 style="width: 100%;height: 132px;margin-left: 3px;font-size: 15px;">
+                                <div style="width: 44%;border: 1px solid black;height: 120px;">
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 1px;">
+                                        <div dir="rtl" class="col-12 bm-2 text-center"
+                                             style="border-bottom: 1px solid black;background-color:#c9c9fc;">
+                                            <strong>إسم العميل CUSTOMER NAME</strong>
+                                        </div>
+                                    </div>
+                                    <span>M/s.</span>
+                                    <span t-field="doc.partner_id.name"/>
+                                    <br/>
+                                    <span t-field="doc.partner_id.contact_address_complete"/>
+                                </div>
+
+                                <div class="text-center pull-center" style="width: 2%;margin-top: 16px;">
+
+                                </div>
+
+                                <div style="width: 54%;">
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div class="col-7 bm-2"
+                                             style="border: 1px solid black;background-color:#c9c9fc;">
+                                            <strong>DATE: تاريخ</strong>
+                                        </div>
+                                        <div class="col-5 bm-2" style="border: 1px solid black;">
+                                            <span t-field="doc.date" t-options="{'widget': 'date'}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div dir="rtl" class="col-7 bm-2"
+                                             style="border: 1px solid black;background-color:#c9c9fc;">
+                                            <strong>رقم أمرشراء :#PO</strong>
+                                        </div>
+                                        <div class="col-5 bm-2" style="border: 1px solid black;">
+                                            <span t-field="doc.origin"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div dir="rtl" class="col-7 bm-2"
+                                             style="border: 1px solid black;background-color:#c9c9fc;">
+                                            <strong>تاريخ أمرشراء :#PO DATE</strong>
+                                        </div>
+                                        <div class="col-5 bm-2" style="border: 1px solid black;">
+                                            <span t-field="doc.purchase_date"
+                                                  t-options="{'widget': 'date'}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div dir="rtl" class="col-7 bm-2"
+                                             style="border: 1px solid black;background-color:#c9c9fc;">
+                                            <strong>موقع التسليم :DELIVERY LOCATION</strong>
+                                        </div>
+                                        <div class="col-5 bm-2" style="border: 1px solid black;">
+                                            <span t-field="doc.location_dest_id.display_name"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                        <div dir="rtl" class="col-7 bm-2"
+                                             style="border: 1px solid black;background-color:#c9c9fc;">
+                                            <strong>أمر التسليم :#OUR DO</strong>
+                                        </div>
+                                        <div class="col-5 bm-2" style="border: 1px solid black;">
+                                            <span t-field="doc.name"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <table class="table table-bordered" style="width: 100%;margin-left: 3px;">
+                                <t t-set="total_quantity" t-value="0"/>
+                                <t t-foreach="docs" t-as="doc">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#c9c9fc;">
+                                                <strong>SNo.</strong>
+                                                <br/>
+                                                <strong>الرقم</strong>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#c9c9fc;">
+                                                <strong>Item Code</strong>
+                                                <br/>
+                                                <strong>رقم الصنف</strong>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#c9c9fc;">
+                                                <strong>DESCRIPTION OF MATERIAL</strong>
+                                                <br/>
+                                                <strong>وصف المواد</strong>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#c9c9fc;">
+                                                <strong>PACKING DETAIL</strong>
+                                                <br/>
+                                                <strong>تفاصيل التعبئة</strong>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#c9c9fc;">
+                                                <strong>UNIT</strong>
+                                                <br/>
+                                                <strong>وحدة</strong>
+                                            </th>
+                                            <th class="text-center"
+                                                style="border: 1px solid black;background-color:#c9c9fc;">
+                                                <strong>QTY</strong>
+                                                <br/>
+                                                <strong>الكمية</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="doc.move_ids_without_package" t-as="move" style="font-family: 'Arial';">
+                                            <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                                <span t-esc="move_index+1"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                                <span t-field="move.product_id.default_code"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                                <span t-field="move.product_id.name"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                                <span t-field="move.product_id.Pak_details"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                                <span t-field="move.product_uom.name"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                                <span t-field="move.quantity_done"/>
+                                            </td>
+                                            <t t-set="total_quantity" t-value="total_quantity + move.quantity_done"/>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" style="border: 1px solid black;line-height: 20px;">
+                                                <strong>TOTAL</strong>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                                <span t-esc="total_quantity"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </t>
+                            </table>
+                            <div style="width: 100%;margin-left: 3px;">
+                                <strong>
+                                    <u>TRANSPORTATION DETAIL:</u>
+                                </strong>
+                            </div>
+                            <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                <div class="col-4 bm-2 text-center" style="border: 1px solid black;">
+                                    <strong>Container #</strong>
+                                </div>
+                                <div class="col-4 bm-2 text-center" style="border: 1px solid black;">
+                                    <strong>Seal #</strong>
+                                </div>
+                                <div class="col-4 bm-2 text-center" style="border: 1px solid black;">
+                                    <strong>Tyre Weight</strong>
+                                </div>
+                            </div>
+                            <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                <div class="col-4 bm-2" style="border: 1px solid black;height: 25px;"/>
+                                <div class="col-4 bm-2" style="border: 1px solid black;height: 25px;"/>
+                                <div class="col-4 bm-2" style="border: 1px solid black;height: 25px;"/>
+                            </div>
+                            <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                <div class="col-4 bm-2 text-center" style="border: 1px solid black;">
+                                    <strong>TRUCK #</strong>
+                                </div>
+                                <div class="col-4 bm-2 text-center" style="border: 1px solid black;">
+                                    <strong>DRIVER NAME</strong>
+                                </div>
+                                <div class="col-4 bm-2 text-center" style="border: 1px solid black;">
+                                    <strong>DRIVER MOBILE</strong>
+                                </div>
+                            </div>
+                            <div class="row mt32 mb32" style="width: 100%;margin-left: 3px;">
+                                <div class="col-4 bm-2 text-center" style="border: 1px solid black;">
+                                    <span t-field="doc.truck_ref"/>
+                                </div>
+                                <div class="col-4 bm-2 text-center" style="border: 1px solid black;">
+                                    <span t-field="doc.driver_name"/>
+                                </div>
+                                <div class="col-4 bm-2 text-center" style="border: 1px solid black;">
+                                    <span t-field="doc.driver_mobile"/>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="row"
+                                 style="width: 100%;height: 132px;margin-left: 3px;">
+                                <div style="width: 48%;border: 1px solid black;height: 75px;">
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 1px;">
+                                        <div class="col-6 bm-2"
+                                             style="border-bottom: 1px solid black;">
+                                            <span>ISSUED BY</span>
+                                        </div>
+                                        <div dir="rtl" class="col-6 bm-2 text-right"
+                                             style="border-bottom: 1px solid black;">
+                                            <span>صادر عن</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 1px;">
+                                        <div class="col-6 bm-2"
+                                             style="border-bottom: 1px solid black;">
+                                            <span>NAME :</span>
+                                        </div>
+                                        <div dir="rtl" class="col-6 bm-2 text-right"
+                                             style="border-bottom: 1px solid black;">
+                                            <span>اﻹسم</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 1px;">
+                                        <div class="col-6 bm-2">
+                                            <span>SIGNATURE</span>
+                                        </div>
+                                        <div dir="rtl" class="col-6 bm-2 text-right">
+                                            <span>التوقيع</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center pull-center" style="width: 4%;margin-top: 16px;"/>
+
+                                <div style="width: 48%;border: 1px solid black;">
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 1px;">
+                                        <div class="col-6 bm-2"
+                                             style="border-bottom: 1px solid black;">
+                                            <span>RECEIVED BY</span>
+                                        </div>
+                                        <div dir="rtl" class="col-6 bm-2 text-right"
+                                             style="border-bottom: 1px solid black;">
+                                            <span>استلم من</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 1px;">
+                                        <div class="col-6 bm-2"
+                                             style="border-bottom: 1px solid black;">
+                                            <span>NAME :</span>
+                                        </div>
+                                        <div dir="rtl" class="col-6 bm-2 text-right"
+                                             style="border-bottom: 1px solid black;">
+                                            <span>اﻹسم</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt32 mb32" style="width: 100%;margin-left: 1px;">
+                                        <div class="col-6 bm-2">
+                                            <span>STAMP</span>
+                                        </div>
+                                        <div dir="rtl" class="col-6 bm-2 text-right"
+                                             style="height: 70px;">
+                                            <span>الختم</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </font>
+                    </div>
+
+                </t>
+            </t>
+
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+
+        <record id="notification_base_form" model="ir.ui.view">
+            <field name="name">notification.base.form</field>
+            <field name="model">notification.base</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1 class="mt0">
+                                <field name="name"  placeholder="Name ..."/>
+                            </h1>
+                        </div>
+                        <group col="4" string="Base Config">
+                            <field name="active" />
+                            <field name="company_id"  options="{'no_create': True, 'no_open': True}"/>
+                            <field name="model_ids" widget="many2many_tags"  options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <notebook>
+                            <page name="Line" string="Line">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="model_id"/>
+                                        <field name="type"/>
+                                        <field name="user_ids" options="{'no_create': True, 'no_open': True}" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="notification_base_tree" model="ir.ui.view">
+            <field name="name">notification.base.tree</field>
+            <field name="model">notification.base</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="notification_base_tree_actions">
+            <field name="name">Smart Notification</field>
+            <field name="res_model">notification.base</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="notification_base_actions_menu_root" name="Smart Access Control" parent="base.menu_administration" groups="smart_access_control.group_smart_access_control" sequence="200"/>
+        <menuitem name="User smart Access Control" id="notification_base_actions_menu_action" sequence="5" parent="smart_access_control.notification_base_actions_menu_root" action="notification_base_tree_actions"/>
+    </data>
+
+</odoo>

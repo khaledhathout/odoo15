@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="global_discount_sale_order_form_inherited" model="ir.ui.view">
+            <field name="name">global.discount.sale_order.form.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page" position="inside">
+                    <field name="enable_sale_discount" invisible="1"/>
+                    <div class="discount_container" attrs="{'invisible':[('enable_sale_discount','!=',True)]}">
+                        <label for="global_discount_type" string="Universal Discount Type:"/>
+                        <field name="global_discount_type" class="oe_inline"/>
+                    </div>
+                    <div class="discount_container" attrs="{'invisible':[('enable_sale_discount','!=',True)]}">
+                        <label for="global_discount_rate" string="Universal Discount:" />
+                        <field name="global_discount_rate" class="oe_inline"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='tax_totals_json']" position="after">
+                    <field name="amount_discount" readonly="1" force_save="1" attrs="{'invisible':[('enable_sale_discount','!=',True)]}"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="after">
+                    <field name="global_discount" invisible="1" force_save="1" optional="show"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

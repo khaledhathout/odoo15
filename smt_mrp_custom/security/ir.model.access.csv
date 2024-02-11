@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+mrp_bom_equipment_cost_user,mrp_bom_equipment_cost_name,smt_mrp_custom.model_mrp_bom_equipment_cost,,1,1,1,1
+access_mrp_lot_lines_user,access_mrp_lot_lines_user,model_lot_lines,,1,1,1,1
+access_production_report_wizard,access_production_report_wizard,model_production_report_wizard,,1,1,1,1

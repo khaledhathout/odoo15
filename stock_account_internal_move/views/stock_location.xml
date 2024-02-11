@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_location_form" model="ir.ui.view">
+        <field name="name">stock.location.form</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[field[@name='valuation_in_account_id']]" position="attributes">
+                <attribute name="attrs">
+                    {'invisible': [('usage', 'not in', ('internal', 'inventory', 'production'))]}
+                </attribute>
+            </xpath>
+            <field name="valuation_in_account_id" position="before">
+                <field name="force_accounting_entries"
+                       attrs="{'invisible': [('usage', '!=', 'internal')]}"/>
+            </field>
+        </field>
+    </record>
+    <!-- Inherit Form View to Modify it -->
+    <record id="stock_picking_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <!-- Add your fields or attributes here -->
+                <field name="code" invisible="1"/>
+                <field name="account_id"/>
+<!--                <field name="analytic_account_id"/>-->
+                <field name="is_internal_move"/>
+            </xpath>
+
+<xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
+                       position="before">
+                <!-- Add your fields or attributes here -->
+                <field name="analytic_account_id"/>
+            </xpath>
+
+
+             <xpath expr="//field[@name='is_internal_move']" position="attributes">
+                <!-- Add your fields or attributes here -->
+                <attribute name="attrs">{'invisible':[('code','!=','internal')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='account_id']" position="attributes">
+                <!-- Add your fields or attributes here -->
+                <attribute name="attrs">{'invisible':[('is_internal_move','!=',True)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='analytic_account_id']" position="attributes">
+                <!-- Add your fields or attributes here -->
+                <attribute name="attrs">{'column_invisible':[('parent.is_internal_move','!=',True)]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

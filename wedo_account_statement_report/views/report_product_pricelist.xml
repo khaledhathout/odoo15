@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017 Carlos Dauden <carlos.dauden@tecnativa.com>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <template id="report_product_pricelist_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-set="pricelist" t-value="o.get_pricelist_to_print()"/>
+                <div class="page">
+                    <h2>Price List</h2>
+                    <div class="row mt32 mb32">
+                        <div class="col-3">
+                            <strong>Date</strong>:
+                            <br/>
+                            <t t-if="o.date">
+                                <span
+                                        t-field="o.date"
+                                        t-options='{"format": "YYYY-MM-dd"}'
+                                />
+                            </t>
+                            <t t-if="not o.date">
+                                <t t-esc="time.strftime('%Y-%m-%d')"/>
+                            </t>
+                        </div>
+                    </div>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr t-if="o.partner_id">
+                                <th colspan="100" class="text-center">
+                                    <span t-field="o.partner_id.name"/>
+                                </th>
+                            </tr>
+                            <tr t-if="not o.partner_id">
+                                <tr t-if="o.partner_ids">
+                                    <th colspan="100" class="text-center">
+                                        <span t-field="o.partner_ids[0].name"/>
+                                    </th>
+                                </tr>
+                            </tr>
+                            <tr>
+                                <th t-if="o.show_image" class="text-center">
+                                    <strong>Image</strong>
+                                </th>
+                                <th t-if="o.show_barcode" class="text-center">
+                                    <strong>Barcode</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Description</strong>
+                                </th>
+                                <th t-if="o.show_packaging" class="text-center">
+                                    <strong>Packaging</strong>
+                                </th>
+                                <th t-if="o.show_arabic_desc" class="text-center">
+                                    <strong>Arabic Description</strong>
+                                </th>
+                                <th t-if="o.show_qty" class="text-center">
+                                    <strong>Quantity</strong>
+                                </th>
+                                <th t-if="o.show_standard_price" class="text-center">
+                                    <strong>Cost Price</strong>
+                                </th>
+                                <th t-if="o.show_sale_price" class="text-center">
+                                    <strong>Sale Price</strong>
+                                </th>
+                                <th t-if="p" class="text-center">
+                                    <strong>List Price</strong>
+                                </th>
+                                <th t-if="o.show_expiration_date" class="text-center">
+                                    <strong>Expiration Date</strong>
+                                </th>
+
+                                <t t-foreach="pricelist" t-as="price">
+                                    <th t-if="price" class="text-center">
+                                        <strong>
+                                            <span t-field="price.name"/>
+                                        </strong>
+                                    </th>
+                                    <th t-if="o.show_packaging" class="text-center">
+                                        <strong><span t-field="price.name"/>&amp;nbsp;Package Price
+                                        </strong>
+                                    </th>
+                                </t>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="o.last_ordered_products">
+                                <t
+                                        t-set="products"
+                                        t-value="o.get_last_ordered_products_to_print().filtered(lambda x: x.qty_available > 0.0)"
+                                />
+                            </t>
+                            <t t-if="not o.last_ordered_products">
+                                <t t-if="not o.show_variants">
+                                    <t t-set="products"
+                                       t-value="o.product_tmpl_ids.filtered(lambda x: x.qty_available > 0.0)"/>
+                                </t>
+                                <t t-if="o.show_variants">
+                                    <t
+                                            t-set="products"
+                                            t-value="o.product_ids.filtered(lambda x: x.qty_available > 0.0) or o.product_tmpl_ids.filtered(lambda x: x.qty_available > 0.0).mapped('product_variant_ids')"
+                                    />
+                                </t>
+                            </t>
+                            <t
+                                    t-foreach="(o.categ_ids or products.mapped('categ_id') or o.categ_ids.search([])).sorted(key=lambda x:x.name)"
+                                    t-as="category"
+                            >
+                                <t
+                                        t-set="category_products"
+                                        t-value="products and products.with_context(categ_id=category.id).filtered(lambda x: x.categ_id.id == x.env.context['categ_id'] and x.qty_available > 0.0) or
+                                            ((not o.last_ordered_products) and products.search([('sale_ok','=',True), ('categ_id','=',category.id),('qty_available','>',0.0)]) or products.browse())"
+                                />
+                                <t t-if="o.order_field == 'name'">
+                                    <t
+                                            t-set="category_products"
+                                            t-value="category_products.sorted(lambda x: x.name)"
+                                    />
+                                </t>
+                                <t t-if="o.order_field == 'default_code'">
+                                    <t
+                                            t-set="category_products"
+                                            t-value="category_products.sorted(lambda x: x.default_code or '')"
+                                    />
+                                </t>
+
+                                <t t-if="o.uom_ids">
+                                    <t
+                                            t-set="uom_products"
+                                            t-value="products and products.with_context(categ_id=category.id).filtered(lambda x: x.categ_id.id == x.env.context['categ_id'] and x.qty_available > 0.0) or
+                                            ((not o.last_ordered_products) and products.search([('sale_ok','=',True), ('uom_id','=',o.uom_ids.ids), ('categ_id','=',category.id),('qty_available','>',0.0)]) or products.browse())"
+                                    />
+                                    <t
+                                            t-set="category_products"
+                                            t-value="uom_products"
+                                    />
+                                </t>
+<!--                                <t t-if="o.package_ids">-->
+<!--                                    <t-->
+<!--                                            t-set="package_products"-->
+<!--                                            t-value="products and products.with_context(categ_id=category.id).filtered(lambda x: x.categ_id.id == x.env.context['categ_id'] and x.qty_available > 0.0) or-->
+<!--                                            ((not o.last_ordered_products) and products.search([('sale_ok','=',True), ('packaging_id','=',o.package_ids.ids), ('categ_id','=',category.id),('qty_available','>',0.0)]) or products.browse())"-->
+<!--                                    />-->
+<!--                                    <t-->
+<!--                                            t-set="category_products"-->
+<!--                                            t-value="package_products"-->
+<!--                                    />-->
+<!--                                </t>-->
+                                <t t-if="o.location_ids">
+                                    <t
+                                            t-set="location_products"
+                                            t-value="o.get_products_in_locations(o.location_ids,category)"
+                                    />
+                                    <t
+                                            t-set="category_products"
+                                            t-value="location_products"
+                                    />
+                                </t>
+                                <tr t-if="category_products">
+                                    <td colspan="100">
+                                        <strong t-field="category.name"/>
+                                    </td>
+                                </tr>
+
+                                <tr t-foreach="category_products" t-as="product">
+
+                                    <td t-if="o.show_image" class="text-right">
+                                        <span t-field="product.image_1920"
+                                              t-options='{"widget": "image", "style":"width: 50px;height: 50px"}'/>
+                                    </td>
+                                    <td t-if="o.show_barcode" class="text-right">
+                                        <span t-field="product.barcode"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="product.display_name"/>
+                                    </td>
+                                    <td t-if="o.show_packaging" class="text-right">
+                                        <span t-field="product.packaging_id.name"/>
+                                    </td>
+                                    <td t-if="o.show_arabic_desc" class="text-right">
+                                        <span t-field="product.display_name_arabic"/>
+                                    </td>
+                                    <td t-if="o.show_qty" class="text-center">
+                                        <span t-field="product.qty_available"/>
+                                    </td>
+                                    <td t-if="o.show_standard_price" class="text-center">
+                                        <span t-field="product.standard_price"/>
+                                    </td>
+                                    <td t-if="o.show_sale_price" class="text-center">
+                                        <span t-field="product.list_price"/>
+                                    </td>
+
+                                    <td t-if="o.show_expiration_date" class="text-right">
+                                        <t t-set="exp_date" t-value="o._get_exp_date(product)"/>
+                                        <span t-esc="exp_date"/>
+                                    </td>
+
+                                    <t t-foreach="pricelist" t-as="p">
+                                        <t t-set="prices" t-value="p._compute_price_rule([(product.with_context(pricelist=p.id, date=o.date),1.0,
+                                                                                         product.with_context(pricelist=p.id, date=o.date).responsible_id)],
+                                                                                        forein_price_unit=True,report=True)"/>
+                                        <td t-if="p" class="text-center">
+                                            <span t-esc="prices"/>
+                                        </td>
+                                        <td t-if="o.show_packaging" class="text-center">
+                                            <t t-set="pack_price"
+                                               t-value="prices * product.packaging_id.qty"/>
+                                            <span t-esc="pack_price"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="report_product_pricelist">
+        <t t-foreach="docs" t-as="o">
+            <t
+                    t-call="product_pricelist_direct_print.report_product_pricelist_document"
+                    t-lang="o.env.user.lang"
+            />
+        </t>
+    </template>
+    <report
+            id="action_report_product_pricelist"
+            model="product.pricelist.print"
+            string="Product Price List"
+            report_type="qweb-pdf"
+            name="product_pricelist_direct_print.report_product_pricelist"
+            file="product_pricelist_direct_print.report_product_pricelist"
+    />
+</odoo>

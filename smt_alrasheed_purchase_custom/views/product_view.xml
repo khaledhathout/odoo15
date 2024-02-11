@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="inherit_product_template_only_form_view">
+            <field name="name">product_template_form_view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='inventory']" position="inside">
+                    <group
+                        string="Dimensions"
+                        name="dimensions"
+                        colspan="2"
+                    >
+                        <field name="length" string="Length" />
+                        <field name="width" string="Width" />
+                        <field name="height" string="Height" />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="uom_product_uom_categ_form_view">
+            <field name="name">uom category form</field>
+            <field name="model">uom.category</field>
+            <field name="inherit_id" ref="uom.product_uom_categ_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='uom_ids']/tree/field[@name='rounding']" position="after">
+                    <field name="equation"/>
+                </xpath>
+            </field>
+        </record>
+</data>
+</odoo>

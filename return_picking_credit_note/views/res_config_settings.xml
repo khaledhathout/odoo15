@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="view_picking_form" model="ir.ui.view">
+		<field name="name">stock.picking.form.l10n.it.ddt</field>
+		<field name="model">stock.picking</field>
+		<field name="inherit_id" ref="stock.view_picking_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//div[@name='button_box']" position="inside">
+				<button name="action_open_move" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('account_move_ids_count', '=', 0)]}">
+					<div class="o_field_widget o_stat_info">
+						<span class="o_stat_value">
+							<field name="account_move_ids_count" nolabel="1"/>
+						</span>
+						<span class="o_stat_text">
+							Credit/Debit Note
+						</span>
+					</div>
+				</button>
+			</xpath>
+		</field>
+	</record>
+</odoo>

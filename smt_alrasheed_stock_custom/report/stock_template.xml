@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="stock_template">
+            <t t-call="web.html_container">
+                <div class="header" style="border-bottom: 2px solid black;">
+                    <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                    <font style="font-family: 'Arial-Bold';">
+                        <div class="row"
+                             style="width: 100%;height: 145px;margin-left: 5px;">
+                            <div style="width: 43%">
+                                <br/>
+                                <strong>
+                                    <t t-esc="company_name"/>
+                                    <br/>
+                                    <span>Website:</span>
+                                    <t t-esc="company_web"/>
+                                    <br/>
+                                    <span>E-mail:</span>
+                                    <t t-esc="company_email"/>
+                                    <br/>
+                                    <span>C.r.:</span>
+                                    <t t-esc="company_cr"/>
+                                    <br/>
+                                    <span>Address:</span>
+                                    <t t-esc="street"/>
+                                    -
+                                    <t t-esc="state"/>
+                                    -
+                                    <t t-esc="country"/>
+                                </strong>
+                            </div>
+
+                            <div class="text-center pull-center" style="width: 14%;margin-top: 16px;">
+                                <img t-att-src="'data:image/png/*;base64,%s' % to_text(logo)"
+                                     style="width: 120px; height: 120px;"/>
+                            </div>
+
+                            <div dir="rtl" class="text-right" style="width: 43%;">
+                                <br/>
+                                <strong>
+                                    <t t-esc="company_ar_name"/>
+                                    <br/>
+                                    <span>تلفون:</span>
+                                    <t t-esc="company_phone"/>
+                                    <br/>
+                                    <span>فاكس:</span>
+                                    <t t-esc="company_mobile"/>
+                                    <br/>
+                                    <span>ص.ب:</span>
+                                    <t t-esc="ar_state"/>
+                                    -
+                                    <t t-esc="zip_code"/>
+                                    <br/>
+                                    <span>العنوان:</span>
+                                    <t t-esc="ar_street"/>
+                                    -
+                                    <t t-esc="ar_state"/>
+                                    -
+                                    <t t-esc="ar_country"/>
+                                </strong>
+                                <br/>
+                            </div>
+                        </div>
+                    </font>
+                </div>
+                <div class="article">
+                    <link rel="stylesheet" href="/smt_alrasheed_purchase_custom/static/src/css/font.css"/>
+                    <font style="font-family: 'Arial-Bold';">
+                        <div class="row"
+                             style="width: 99%;height: 55px;margin-left: 7px;">
+
+                            <div style="width: 35%;"/>
+
+                            <div class="text-center pull-center"
+                                 style="border: 1px solid black;width: 30%;border-radius: 5px;">
+                                <span class="pull-center text-center" style="font-size: 37px;">Stock Moves With Details
+                                </span>
+                            </div>
+
+                            <div dir="rtl" class="text-right" style="width: 35%;"/>
+
+                        </div>
+                        <br/>
+                        <div class="text-center"
+                             style="border: 1px solid black;width: 100%;border-radius: 5px;margin-left: 3px;">
+                            <strong class="text-center">
+                                <span>From Date:</span>
+                                <t t-esc="from_date"/>
+                                <span>To Date:</span>
+                                <t t-esc="to_date"/>
+                            </strong>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered" style="width: 92%;">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>S/No.</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Operation Type</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Reference</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Date</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Partner</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Account</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Analytic Account</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Source Location</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Destination Location</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Source Doc.</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Responsible</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Vehicle Number</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Driver Name</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Well Location</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Well Number</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Product</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Product Category</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Serial No</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>QTY</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>UOM</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Valuation Amount</strong>
+                                    </th>
+                                    <th class="text-center" style="border: 1px solid black;background-color:#ccd1d1;">
+                                        <strong>Note</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="docs" t-as="doc">
+                                    <tr style="font-family: 'Arial';">
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="doc_index+1"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.picking_type_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.reference"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.date"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.partner_id.name"/>
+                                        </td>
+                                         <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.picking_id.account_id.name"/>
+                                        </td>
+                                         <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.analytic_account_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.location_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.location_dest_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.origin"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.picking_id.user_id.name if doc.picking_id.user_id else '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.picking_id.truck_ref or '')"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.picking_id.driver_name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.picking_id.location_well"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.picking_id.well_ref"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_id.categ_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="', '.join(map(lambda x: x.name, doc.lot_ids))"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_qty"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-field="doc.product_uom.name"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="abs(doc.valuation_value)"/>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid black;line-height: 20px;">
+                                            <span t-esc="(doc.picking_id.note or '')"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </font>
+
+                </div>
+                <div t-attf-class="footer o_standard_footer">
+                    <div class="text-center" style="border-top: 2px solid black;">
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            /
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+        </template>
+    </data>
+</odoo>

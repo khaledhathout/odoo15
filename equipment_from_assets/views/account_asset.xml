@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<odoo>
+	<record id="view_account_asset_form" model="ir.ui.view">
+	    <field name="name">account.asset</field>
+	    <field name="model">account.asset</field>
+	    <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+	    <field name="arch" type="xml">
+			<xpath expr="//form/sheet/div[@name='button_box']" position="inside">
+                <button
+					type="object"
+					name="action_open_maintenance"
+					class="oe_stat_button"
+					icon="fa-gear"
+					string="Equipment"
+					attrs="{'invisible':[('equipment_id','=',False)]}">
+					<field name="equipment_id" invisible="1"/>
+					</button>
+			</xpath>
+			<xpath expr="//header" position="inside">
+				<button string="Create Equipment" attrs="{'invisible':[('equipment_id','!=',False)]}" name="create_equipment" type="object" class="oe_highlight"/>
+			</xpath>
+        </field>
+    </record>
+
+	<record id="compute_depreciation_board" model="ir.actions.server">
+		<field name="name">Compute</field>
+		<field name="state">code</field>
+		<field name="type">ir.actions.server</field>
+		<field name="model_id" ref="model_account_asset"/>
+		<field name="binding_model_id" ref="model_account_asset"/>
+		<field name="binding_view_types">list,form</field>
+		<field name="code">
+			for rec in records:
+				 rec.compute_depreciation_board()
+		</field>
+	</record>
+
+
+	<record id="action_validate" model="ir.actions.server">
+		<field name="name">Confirm</field>
+		<field name="state">code</field>
+		<field name="type">ir.actions.server</field>
+		<field name="model_id" ref="model_account_asset"/>
+		<field name="binding_model_id" ref="model_account_asset"/>
+		<field name="binding_view_types">list,form</field>
+		<field name="code">
+			for rec in records:
+				 rec.validate()
+		</field>
+	</record>
+
+	<record id="action_set_draft" model="ir.actions.server">
+		<field name="name">Set to Draft</field>
+		<field name="state">code</field>
+		<field name="type">ir.actions.server</field>
+		<field name="model_id" ref="model_account_asset"/>
+		<field name="binding_model_id" ref="model_account_asset"/>
+		<field name="binding_view_types">list,form</field>
+		<field name="code">
+			for rec in records:
+				 rec.depreciation_move_ids.button_draft()
+				 rec.set_to_draft()
+		</field>
+	</record>
+</odoo>

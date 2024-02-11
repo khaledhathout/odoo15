@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+
+        <record id="ks_global_discount_invoice_view_form" model="ir.ui.view">
+            <field name="name">ks.global.discount.account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']" position="before">
+                <field name="global_discount" invisible="1" force_save="1" optional="hide"/>
+            </xpath>            
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='credit']" position="before">
+                <field name="global_discount" invisible="1" force_save="1" optional="hide"/>
+            </xpath>            
+
+                <xpath expr="//form/sheet/notebook/page[1]/group" position="after">
+                    <field name="enable_purchase_discount" invisible="1"/>
+                    <field name="enable_sale_discount" invisible="1"/>
+
+                    <div class="ks_container" attrs="{'invisible':[('enable_purchase_discount','!=',True),('enable_sale_discount','!=',True)]}">
+
+                        <field name="amount_discount" invisible="1"/>
+                        <label for="global_discount_type" string="Universal Discount Type:"/>
+                        <field name="global_discount_type" class="oe_inline"/>
+                    </div>
+                    <div class="ks_container" attrs="{'invisible':[('enable_purchase_discount','!=',True),('enable_sale_discount','!=',True)]}">
+                        <label for="global_discount_rate" string="Universal Discount :"
+                               />
+                        <field name="global_discount_rate" class="oe_inline"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='tax_totals_json']" position="after">
+                    <field name="amount_discount" readonly="1" force_save="1" attrs="{'invisible':[('enable_purchase_discount','!=',True),('enable_sale_discount','!=',True)]}" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

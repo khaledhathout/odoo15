@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="bom_structrue_inherit" inherit_id="mrp.report_mrp_bom_line">
+        <xpath expr="//tr[@class='o_mrp_bom_report_line o_mrp_bom_cost']" position="after">
+            <tr>
+                <td name="td_opr_inherit">
+<!--                    <span t-att-style="space_td"/>-->
+                    <Strong>
+                    Direct Material Cost
+                    </Strong>
+                </td>
+                <td/>
+            </tr>
+            <tr t-foreach="data['material']" t-as="m">
+                <td ><span class="text-center" t-att-style="space_td" t-esc="m['product']"/></td>
+                <td t-esc="m['operation'].name"/>
+                <td/>
+                <td t-esc="m['qty']"/>
+                <td t-esc="m['uom'].name"/>
+                <td t-esc="m['cost']"/>
+                <td t-esc="m['total']"/>
+            </tr>
+            <tr>
+                <td name="td_opr_inherit">
+                    <Strong>
+                    Direct Equipment Cost
+                    </Strong>
+                </td>
+                <td/>
+            </tr>
+            <tr t-foreach="data['equipment']" t-as="e">
+                <td><span class="text-center" t-att-style="space_td" t-esc="e['equipment_id']"/></td>
+                <td t-esc="e['workcenter_id']"/>
+                <td/>
+                <td t-esc="e['qty']"/>
+                <td>N/A</td>
+                <td t-esc="e['cost']"/>
+                <td t-esc="e['total_cost']"/>
+            </tr>
+            <tr>
+                <td name="td_opr_inherit">
+                    <Strong>
+                    Direct Overhead Cost
+                    </Strong>
+                </td>
+                <td/>
+            </tr>
+            <tr t-foreach="data['overhead']" t-as="o">
+                <td><span class="text-center" t-att-style="space_td" t-esc="o['operation_id']"/></td>
+                <td t-esc="o['workcenter_id']"/>
+                <td></td>
+                <td></td>
+                <td t-esc="o['qty']"/>
+<!--                <td t-esc="o['uom_id']"/>-->
+                <td>N/A</td>
+
+                <td t-esc="o['cost']"/>
+                <td t-esc="o['total_cost']"/>
+            </tr>
+        </xpath>
+    </template>
+</odoo>

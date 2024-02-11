@@ -1,0 +1,152 @@
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError, ValidationError
+from lxml import etree
+import json
+class GlobalDiscountInvoice(models.Model):
+    # _inherit = "account.invoice"
+    """ changing the model to account.move """
+    _inherit = "account.move"
+
+
+    @api.model
+    def create(self,vals):
+        if 'amount_discout' in vals and vals['amount_discount']:
+
+            self = self.with_context(skip_recompute=True)
+
+        res = super(GlobalDiscountInvoice,self).create(vals)
+
+        if self._context.get('set_universal_line'):
+            res.with_context(check_move_validity=False).calculate_discount_amount()
+
+            res._check_balanced()
+        return res
+
+    global_discount_type = fields.Selection([
+        ('percent', 'Percentage'),
+        ('amount', 'Amount')],
+        string='Universal Discount Type',
+        readonly=True,
+        states={'draft': [('readonly', False)],
+                'sent': [('readonly', False)]},
+        default='percent')
+
+    global_discount_rate = fields.Float('Universal Discount',
+                                           readonly=True,
+                                           states={'draft': [('readonly', False)],
+                                                   'sent': [('readonly', False)]})
+    amount_discount = fields.Monetary(string='Universal Discount',track_visibility='always')
+
+    enable_purchase_discount = fields.Boolean(compute='verify_discount')
+    enable_sale_discount = fields.Boolean(compute='verify_discount')
+
+    @api.depends('company_id.enable_sale_discount','company_id.enable_purchase_discount')
+    def verify_discount(self):
+        for rec in self:
+            rec.enable_purchase_discount = rec.company_id.enable_purchase_discount
+            rec.enable_sale_discount = rec.company_id.enable_sale_discount
+
+
+    @api.onchange(
+        'global_discount_type',
+        'global_discount_rate',
+        'amount_untaxed','invoice_line_ids')
+    def calculate_discount_amount(self):
+        for rec in self:
+            rec.reset_discount_line()            
+            if rec.global_discount_type == "amount":
+                rec.amount_discount = rec.global_discount_rate if rec.amount_untaxed > 0 else 0
+            elif rec.global_discount_type == "percent":
+                if rec.global_discount_rate != 0.0:
+                    rec.amount_discount = (rec.amount_untaxed) * rec.global_discount_rate / 100
+                else:
+                    rec.amount_discount = 0
+            elif not rec.global_discount_type:
+                rec.global_discount_rate = 0
+                rec.amount_discount = 0
+            #if rec.amount_discount != 0:    
+            rec.recalculate_discount_line()
+
+    def reset_discount_line(self):
+        for rec in self:
+            discount_line = rec.invoice_line_ids.filtered(lambda l:l.global_discount)
+            if discount_line and not self._context.get('skip_recompute'):
+                rec.invoice_line_ids = rec.invoice_line_ids.filtered(lambda l:not l.global_discount)
+                rec._onchange_invoice_line_ids()
+                rec.line_ids._onchange_price_subtotal()
+                rec._onchange_recompute_dynamic_lines()
+
+    def recalculate_discount_line(self):
+        for rec in self:
+            if rec.amount_discount !=0 and not self._context.get('skip_recompute'):
+                line = []
+                line.append((0,0,{
+                    'quantity':-1,
+                    'product_id':rec.get_global_discount_product_id().id,
+                    'global_discount':True ,               
+                    'currency_id':rec.currency_id.id
+                    }))
+                
+                rec.invoice_line_ids = line
+                discount_line = rec.invoice_line_ids.filtered(lambda l:l.global_discount)[0]
+                discount_line._onchange_product_id()
+                discount_line.recompute_tax_line=True
+
+                if discount_line :
+                    discount_line.update({'price_unit':rec.amount_discount})                
+
+                rec._onchange_invoice_line_ids()
+                rec.line_ids._onchange_price_subtotal()
+                rec._onchange_recompute_dynamic_lines()
+
+    def get_global_discount_product_id(self):
+        product_id = self.env['product.product'].search([('detailed_type','!=','product'),('global_discount','=',True)])
+        if not product_id:
+            vals = self._prepare_deposit_product()
+            product_id = self.env['product.product'].create(vals)
+
+        return product_id
+
+    def _prepare_deposit_product(self):
+        return {
+            'name': 'Universal Discount',
+            'active':True,
+            'type': 'service',
+            'invoice_policy': 'order',
+            'property_account_income_id': self.company_id.sales_discount_account.id,
+            'property_account_expense_id': self.company_id.purchase_discount_account.id,
+            'global_discount':True,
+            'company_id': False,
+        }
+
+    @api.constrains('global_discount_rate')
+    def ks_check_discount_value(self):
+        if self.global_discount_type == "percent":
+            if self.global_discount_rate > 100 or self.global_discount_rate < 0:
+                raise ValidationError('You cannot enter percentage value greater than 100.')
+        else:
+            if self.global_discount_rate < 0 or self.amount_untaxed < 0:
+                raise ValidationError(
+                    'You cannot enter discount amount greater than actual cost or value lower than 0.')
+
+
+    @api.model
+    def _prepare_refund(self, invoice, date_invoice=None, date=None, description=None, journal_id=None):
+        ks_res = super(KsGlobalDiscountInvoice, self)._prepare_refund(invoice, date_invoice=None, date=None,
+                                                                      description=None, journal_id=None)
+        ks_res['global_discount_rate'] = self.global_discount_rate
+        ks_res['global_discount_type'] = self.global_discount_type
+        return ks_res
+
+
+class KsGlobalDiscountInvoiceLine(models.Model):
+    """ changing the model to account.move """
+    _inherit = "account.move.line"
+
+    global_discount = fields.Boolean(string="Global Discount")
+
+    @api.model
+    def _where_calc(self, domain, active_test=True):
+        if self.env.context.get('commit_assetsbundle'):        
+            domain= domain+ [('global_discount','=',False)]
+        return super(KsGlobalDiscountInvoiceLine,self)._where_calc(domain, active_test=active_test)
