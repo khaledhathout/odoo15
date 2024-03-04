@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_odoo15app_odoo15app,odoo15app.odoo15app,model_odoo15app_odoo15app,base.group_user,1,1,1,1
