@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="translation_view_form" model="ir.ui.view">
+            <field name="name">translation.form</field>
+            <field name="model">translation.wizard</field>
+            <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" invisible="1"/>
+                    <field name="lang" />
+                    <field name="modules" 
+                           widget='many2one_tags' 
+                           options="{'no_create': True, 
+                                   'no_create_edit':True}"/>
+                </group>
+                <div>
+                  <span style="color:red">* </span>Please note that, this Tool is translating the Custom terms available in the Custom Module/Reports/Fields and will not translate the Standard terms as of now. You can select the Specific module needs to be translated and then can check the updated terms in the related module once completed.
+                </div>
+                <footer> 
+                        <button
+                            string="Translate"
+                            name="export_file"
+                            type="object"
+                            class="oe_highlight"
+                            />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record
+            id="wizard_translation_view_action"
+            model="ir.actions.act_window"
+            >
+            <field name="name">Translate Tool</field>
+            <field name="res_model">translation.wizard</field>
+            <field name="view_mode">form,tree</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

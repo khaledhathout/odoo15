@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mail_activity_view_form_popup_knowsystem" model="ir.ui.view">
+        <field name="name">mail.activity.view.form.popup.knowsystem</field>
+        <field name="model">mail.activity</field>
+        <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
+        <field name="arch" type="xml">
+            <field name="note" position="attributes">
+                <attribute name="widget">know_system_composer</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

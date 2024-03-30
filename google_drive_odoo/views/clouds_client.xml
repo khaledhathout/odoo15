@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="clouds_client_view_form" model="ir.ui.view">
+        <field name="name">clouds.client.form.googledrive</field>
+        <field name="model">clouds.client</field>
+        <field name="inherit_id" ref="cloud_base.clouds_client_view_form"/>
+        <field name="arch" type="xml">
+            <group name="main_setting" position="after">
+                <group name="google_drive_settings" attrs="{'invisible': [('cloud_client', 'not in', ['google_drive'])]}">
+                    <field name="googledrive_client_id"
+                           attrs="{'required': [('cloud_client', 'in', ['google_drive'])]}" 
+                           string="App client ID"
+                    />
+                    <field name="googledrive_client_secret" 
+                           password="True"
+                           attrs="{'required': [('cloud_client', 'in', ['google_drive'])]}" 
+                           string="App client secret" 
+                    />
+                    <field name="googledrive_redirect_uri"
+                           attrs="{'required': [('cloud_client', 'in', ['google_drive'])]}" 
+                           placeholder="https://yourodoodomain/google_drive_token" 
+                           string="Redirect URL" 
+                    />
+                    <field name="googleteam_drive" string="Team drives tariffs"/>
+                    <field name="googledrive_drive"
+                           attrs="{'invisible': [('googleteam_drive', '=', False)], 'required': [('googleteam_drive', '=', True)]}"
+                           placeholder="My Drive"
+                           string="Team drive name"
+                    />              
+                </group>
+                <group name="google_drive_tech"
+                       groups="base.group_no_one" 
+                       invisible="1"
+                       attrs="{'invisible': [('cloud_client', 'not in', ['google_drive'])]}"
+                >
+                    <field name="googledrive_session"/> 
+                    <field name="google_drive_key" attrs="{'invisible': [('googleteam_drive', '=', False)]}"/>   
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

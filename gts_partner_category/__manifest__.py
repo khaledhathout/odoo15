@@ -4,15 +4,15 @@
     'summary': 'This module is used to categorize the partner' ,
     'description': """
         Assign categories to customer
-        Assign categories to vendor 
+        Assign categories to vendor
         Assign categories to supplier
         customer category vendor category supplier category
         Partner Hierarchy vendor Hierarchy supplier Hierarchy
         partner By Category
         Customer/Vendor By Category Customer By Category Vendor By Category
-        Partner By Category, Category of Partner, partner by category, category of partner,  
-        partnerbycategory, categoryofpartner, partner-category, category-partner,  
-        partner_category, category_partner,  
+        Partner By Category, Category of Partner, partner by category, category of partner,
+        partnerbycategory, categoryofpartner, partner-category, category-partner,
+        partner_category, category_partner,
         Customer/Vendor By Category Customer By Category Vendor By Category
         Partner Category, PartnerCategory, partner category, partner category,
         Partners Hierarchy, PartnersHierarchy,  partners hierarchy,  partnershierarchy,
@@ -28,9 +28,9 @@
         Category-Supplier, supplier-category, Category_Supplier, Supplier_Category,
         Category of Supplier, customer categories, assign Category of Supplier, Supplier_Categories,
         Categories of Supplier, assign Supplier categories, assign Supplier_Categories,
-        PARTNER BY CATEGORY, CATEGORY OF PARTNER, PARTNER BY CATEGORY, CATEGORY OF PARTNER,  
-        PARTNERBYCATEGORY, CATEGORYOFPARTNER, PARTNER-CATEGORY, CATEGORY-PARTNER,  
-        PARTNER_CATEGORY, CATEGORY_PARTNER,  
+        PARTNER BY CATEGORY, CATEGORY OF PARTNER, PARTNER BY CATEGORY, CATEGORY OF PARTNER,
+        PARTNERBYCATEGORY, CATEGORYOFPARTNER, PARTNER-CATEGORY, CATEGORY-PARTNER,
+        PARTNER_CATEGORY, CATEGORY_PARTNER,
         CUSTOMER/VENDOR BY CATEGORY CUSTOMER BY CATEGORY VENDOR BY CATEGORY
         PARTNER CATEGORY, PARTNERCATEGORY, PARTNER CATEGORY, PARTNER CATEGORY,
         PARTNERS HIERARCHY, PARTNERSHIERARCHY,  PARTNERS HIERARCHY,  PARTNERSHIERARCHY,
@@ -55,7 +55,7 @@
     'depends': ['base', 'sale_management'],
     'data': [
         'security/ir.model.access.csv',
-        'views/partner_view.xml',
+        'views/views.xml',
         'views/partner_category_view.xml',
     ],
     'license': 'OPL-1',

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Just own copy of standard external layout -->
+        <template id="external_layout_knowsystem">
+            <div id="kms_header" t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+                <div id="kms_header_row" class="row">
+                    <div id="kms_header_logo" class="col-3 mb4">
+                        <img id="kms_header_row_img" t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
+                    </div>
+                    <div id="kms_report_header" class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+                </div>
+                <div id="kms_header_min_height" t-if="company.logo or company.report_header" class="row zero_min_height">
+                    <div id="kms_header_col_12" class="col-12">
+                        <div id="kms_header_bordered" style="border-bottom: 1px solid black;"/>
+                    </div>
+                </div>
+                <div id="kms_header_row_2" class="row">
+                    <div id="kms_header_row_2_col_6" class="col-6" name="company_address">
+                        <span id="kms_header_company_details" t-if="company.company_details" t-field="company.company_details"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="kms_main_layout" t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <div id="kms_address_layout" class="pt-5">
+                    <!-- This div ensures that the address is not cropped by the header. -->
+                    <t t-call="web.address_layout"/>
+                </div>
+                <t t-out="0"/>
+            </div>
+
+            <div id="kms_footer" t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+                <div id="kms_footer_main" class="text-center" style="border-top: 1px solid black;">
+                    <ul id="kms_footer_ul" class="list-inline mb4">
+                        <div id="kms_report_footer" t-field="company.report_footer"/>
+                    </ul>
+                    <div id="kms_page" t-if="report_type == 'pdf'" class="text-muted">
+                        Page: <span class="page"/> / <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!-- Just own copy of external layout (to inherit) -->
+        <template id="external_layout_knowsystem_printing">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+            <t t-if="company.knowsystem_custom_layout and company.external_layout_knowsystem_id">
+                <t t-call="{{company.external_layout_knowsystem_id.sudo().key}}"><t t-out="0"/></t>
+            </t>
+            <t t-else="">
+                <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.sudo().key}}"><t t-out="0"/></t>
+                <t t-else="else" t-call="web.external_layout_standard"><t t-out="0"/></t>
+            </t>
+        </template>
+
+        <template id="report_article_document">
+            <t t-call="knowsystem.external_layout_knowsystem_printing">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <h1 t-if="printed_titles" class="text-center">
+                        <span t-out="doc.action_get_published_name()"/>
+                    </h1>
+                    <div>
+                        <t t-out="doc.description"/>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="report_article">
+            <t t-set="printed_titles" t-value="not docs.env['knowsystem.article'].should_title_be_printed()"/>
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="knowsystem.report_article_document"/>
+                </t>
+            </t>
+        </template>
+    </data>
+
+    <data noupdate="1">
+        <record id="paperformat_knowsystem" model="report.paperformat">
+            <field name="name">Custom Paperformat for the articles</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+        <template id="external_layout_knowsystem_custom" inherit_id="knowsystem.external_layout_knowsystem">
+        </template>
+        <template id="report_article_document_custom" inherit_id="knowsystem.report_article_document">
+        </template>
+    </data>
+
+
+</odoo>

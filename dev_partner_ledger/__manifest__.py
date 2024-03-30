@@ -17,17 +17,17 @@
         """
         Odoo app will display Partner Ledger on customer screen
 
-    Partner Ledger 
-    Odoo partner Leadger 
+    Partner Ledger
+    Odoo partner Leadger
     Odoo partner Details ledger
-    Odoo due balance 
+    Odoo due balance
     Odoo Partner ledger Balance
-    
+
     """,
     'summary': 'Odoo app will display Partner Ledger on customer screen,partner Leadger, Partner move line, partner due balance, partner overdue report',
     'depends': ['sale','account'],
     'data': [
-        'views/partner_view.xml',
+        'views/views.xml',
     ],
     'demo': [],
     'test': [],
@@ -38,11 +38,11 @@
     'installable': True,
     'application': True,
     'auto_install': False,
-    
+
     # author and support Details =============#
     'author': 'DevIntelle Consulting Service Pvt.Ltd',
-    'website': 'http://www.devintellecs.com',    
-    'maintainer': 'DevIntelle Consulting Service Pvt.Ltd', 
+    'website': 'http://www.devintellecs.com',
+    'maintainer': 'DevIntelle Consulting Service Pvt.Ltd',
     'support': 'devintelle@gmail.com',
     'price':19.0,
     'currency':'EUR',

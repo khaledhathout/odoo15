@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_paperformat_view_form" model="ir.ui.view">
+        <field name="name">report.paperformat.view.form.knowsystem</field>
+        <field name="model">report.paperformat</field>
+        <field name="priority">10000</field>
+        <field name="arch" type="xml">
+            <form string="Paper format configuration">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="format"/>
+                        <field name="page_height" attrs="{'invisible': [('format','!=','custom')]}" />
+                        <field name="page_width" attrs="{'invisible': [('format','!=','custom')]}" />
+                        <field name="orientation"/>
+                        <field name="margin_top"/>
+                        <field name="margin_bottom"/>
+                        <field name="margin_left"/>
+                        <field name="margin_right"/>
+                        <field name="header_line"/>
+                        <field name="header_spacing"/>
+                        <field name="dpi"/>
+                        <field name="report_ids" 
+                               widget="many2many_tags" 
+                               options="{'not_delete': True}"
+                               invisible="1"
+                        />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="paper_format_action_knowsystem" model="ir.actions.act_window">
+        <field name="name">Paper Format</field>
+        <field name="res_model">report.paperformat</field>
+        <field name="context">{"form_view_ref": "knowsystem.report_paperformat_view_form"}</field>
+        <field name="view_mode">form</field>
+    </record>
+
+</odoo>
