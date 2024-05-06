@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+  <t t-name="organization_chart.orgchart">
+    <div class="o_employee_orgcharts">
+      <div class="container-fluid o_employee_orgchart">
+        <t t-call="organization_chart.employee_orgchart_content"/>
+      </div>
+    </div>
+  </t>
+
+  <t t-name="organization_chart.employee_orgchart_content">
+    <div class="o_employee_orgchart_content">
+      <div id="chart_container" class="chart_container"></div>
+    </div>
+  </t>
+
+  <t t-name="organization_chart.orgchartSearchButtons">
+    <div class="btn-group  d-md-inline-flex float-right">
+      <input type="text" id="js_btn_search" class="o_input js_btn_search" placeholder="Search OrgChart"/>
+      <button type="button" id="js_btn_search_filter" class="btn btn-primary js_btn_search_filter">
+          Filter
+      </button>
+      <button type="button" id="js_btn_search_clear" class="btn btn-secondary js_btn_search_clear">
+          Clear
+      </button>
+    </div>
+  </t>
+
+  <t t-name="organization_chart.orgchartControlButtons">
+    <div class="float-left">
+      <button id="js_btn_reload" class="btn btn-primary js_btn_reload" title="Reload Chart">
+        <i class="fa fa-refresh"/>
+      </button>
+
+      <button id="js_btn_export_png" class="btn btn-secondary js_btn_export_png" title="Export PNG">
+        <i class="fa fa-image"></i>
+      </button>
+
+      <button id="js_btn_export_pdf" class="btn btn-secondary js_btn_export_pdf" title="Export PDF">
+        <i class="fa fa-file-pdf-o"></i>
+      </button>
+
+      <button id="js_btn_switch" class="btn btn-secondary js_btn_switch" title="Switch Chart">
+        <i class="fa fa-exchange"></i>
+      </button>
+
+      <button id="js_btn_zoom_in" class="btn btn-secondary js_btn_zoom_in" title="Zoom In">
+        <i class="fa fa-search-plus"></i>
+      </button>
+
+      <button id="js_btn_zoom_out" class="btn btn-secondary js_btn_zoom_out" title="Zoom Out">
+        <i class="fa fa-search-minus"></i>
+      </button>
+
+      <button id="js_btn_path" class="btn btn-secondary js_btn_path" title="Path">
+        <i class="fa fa-arrow-up"></i>
+      </button>
+
+      <button id="js_btn_expand" class="btn btn-secondary js_btn_expand" title="Expand">
+        <i class="fa fa fa-expand"></i>
+      </button>
+
+    </div>
+  </t>
+</templates>
